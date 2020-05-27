@@ -3,7 +3,7 @@
   "id": "@shopgate-project/fashion-swatches",
   "components": [
     {
-      "id": "ProductPrice",
+      "id": "PlpSwatches",
       "path": "frontend/components/PlpSwatches/index.jsx",
       "target": "product-item.price.after",
       "type": "portals"
