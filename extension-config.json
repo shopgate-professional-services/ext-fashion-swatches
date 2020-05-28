@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "id": "@shopgate-project/fashion-swatches",
+  "components": [
+    {
+      "id": "PlpSwatches",
+      "path": "frontend/components/PlpSwatches/index.jsx",
+      "target": "product-item.price.after",
+      "type": "portals"
+    }
+  ],
+  "configuration": {
+    "swatchStyle": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": {
+        "plp": {
+          "border": "1px solid blue"
+        },
+        "pdp": {
+          "borderRadius": "none",
+          "border": "10px solid red"
+        }
+      },
+      "params": {
+        "label": "CSS styling for swatches as glamor object",
+        "type": "json",
+        "required": true
+      }
+    },
+    "propertyWithColors": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "hexCodes",
+      "params": {
+        "label": "Name of the product property which contains to hexcodes/images of all variants",
+        "type": "text",
+        "required": true
+      }
+    }
+  },
+  "steps": []
+}
