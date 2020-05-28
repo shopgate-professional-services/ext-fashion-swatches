@@ -1,5 +1,7 @@
 import { css } from 'glamor';
-import { swatchStylePlp } from '../../config';
+import { swatchStyle } from '../../config';
+
+const { plp = {} } = swatchStyle;
 
 const imgSize = 16;
 
@@ -12,10 +14,10 @@ const list = css({
 
 const listItem = css({
   marginRight: 5,
-  marginBottom: 10,
-  ...swatchStylePlp,
+  marginBottom: 5,
   overflow: 'hidden',
   position: 'relative',
+  ...plp,
 });
 
 /**

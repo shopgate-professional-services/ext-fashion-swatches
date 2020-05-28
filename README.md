@@ -3,14 +3,21 @@
 This extension adds color swatches to PLP and PDP. Configured attributes/characteristics are shown in a fashio optimized styling on PDP.
 
 ## Configuration
-### swatchStylePlp (json)
-CSS styling for swatches as glamor object for PlP. Can be any css properties and values.
+### swatchStyle (json)
+CSS styling for swatches as glamor object. Can be any css properties and values.
+- plp: styling for swatches on product lists
+- pdp: styling for swatches on product detail page
 
 Example:
 ```
-swatchStylePlp: {
-    "borderRadius": "100%",
-    "border": "2px solid black"
+swatchStyle: {
+    "plp": {
+      "border": "1px solid blue"
+    },
+    "pdp": {
+      "borderRadius": "none",
+      "border": "10px solid red"
+    }
 }
 ```
 
@@ -19,6 +26,11 @@ Name of the product property which contains all colors of children.
 Value of the property should be an array as JSON string.
 
 Example:
+```
+propertyWithColors: "hexCodes"
+```
+
+Example of the product property value:
 ```
 ["#000","#0f0","#aaa"]
 ```

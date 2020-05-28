@@ -12,13 +12,19 @@ export const getPlpSwatches = createSelector(
       return null;
     }
 
-    const swatches = JSON.parse(additionalProperties[propertyWithColors]);
-
-    if (!Array.isArray(swatches)) {
-      logger.warn(`property "${propertyWithColors}" has wrong format. Expected json string, got`, additionalProperties[propertyWithColors]);
+    let swatches = null;
+    try {
+      swatches = JSON.parse(additionalProperties[propertyWithColors]);
+    } catch (e) {
+      logger.warn(`JSON.parse error while parsing "${propertyWithColors}".`, additionalProperties[propertyWithColors], e);
       return null;
     }
 
-    return JSON.parse(additionalProperties[propertyWithColors]);
+    if (!Array.isArray(swatches)) {
+      logger.warn(`property "${propertyWithColors}" has wrong format. Expected array as json string, got`, additionalProperties[propertyWithColors]);
+      return null;
+    }
+
+    return swatches;
   }
 );

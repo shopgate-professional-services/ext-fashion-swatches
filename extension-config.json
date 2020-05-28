@@ -10,12 +10,17 @@
     }
   ],
   "configuration": {
-    "swatchStylePlp": {
+    "swatchStyle": {
       "type": "admin",
       "destination": "frontend",
       "default": {
-        "borderRadius": "100%",
-        "border": "2px solid black"
+        "plp": {
+          "border": "1px solid blue"
+        },
+        "pdp": {
+          "borderRadius": "none",
+          "border": "10px solid red"
+        }
       },
       "params": {
         "label": "CSS styling for swatches as glamor object",
