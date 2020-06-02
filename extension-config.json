@@ -1,14 +1,6 @@
 {
   "version": "1.0.0",
   "id": "@shopgate-project/fashion-swatches",
-  "components": [
-    {
-      "id": "PlpSwatches",
-      "path": "frontend/components/PlpSwatches/index.jsx",
-      "target": "product-item.price.after",
-      "type": "portals"
-    }
-  ],
   "configuration": {
     "swatchStyle": {
       "type": "admin",
@@ -37,7 +29,64 @@
         "type": "text",
         "required": true
       }
+    },
+    "swatchSizeStyle": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": {
+        "plp": null,
+        "pdp": {
+          "default": null,
+          "selected": null,
+          "disabled": null
+        }
+      },
+      "params": {
+        "label": "CSS styling for size swatches as glamor object",
+        "type": "json",
+        "required": true
+      }
+    },
+    "sizeProperty": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": null,
+      "params": {
+        "label": "The csv of product properties names which is used as size swatch (eg. Size,Shoe size,Grosse)",
+        "type": "text",
+        "required": true
+      }
     }
   },
+  "components": [
+    {
+      "id": "PlpSwatches",
+      "path": "frontend/components/PlpSwatches/index.jsx",
+      "target": "product-item.price.after",
+      "type": "portals"
+    },
+    {
+      "id": "PdpSizeSwatch",
+      "path": "frontend/components/PdpSizeSwatch",
+      "target": ["sticky-pdp-buttons.favorites.after", "product.header.before"],
+      "type": "portals"
+    },
+    {
+      "id": "PdpVariantCharacteristics",
+      "path": "frontend/portals/PdpVariantCharacteristics",
+      "target": "product.variant-select",
+      "type": "portals"
+    },
+    {
+      "id": "subscribersVariants",
+      "path": "frontend/variants/subscriptions.js",
+      "type": "subscribers"
+    },
+    {
+      "id": "variants",
+      "path": "frontend/variants/reducers.js",
+      "type": "reducers"
+    }
+  ],
   "steps": []
 }

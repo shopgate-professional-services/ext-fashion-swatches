@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getPlpSwatches } from '../../selectors';
+import { getPlpSwatches } from '../../swatches/selectors';
 
 /**
  * @param {Object} state state

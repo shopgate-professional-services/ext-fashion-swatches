@@ -35,6 +35,15 @@ Example of the product property value:
 ["#000","#0f0","#aaa"]
 ```
 
+### sizeProperty (csv string)
+Comma separated names of the product properties which contains size information.
+Value of the property should be csv string.
+
+Example:
+```
+sizeProperty: "Size,Shoe size"
+```
+
 ## About Shopgate
 
 Shopgate is the leading mobile commerce platform.
