@@ -1,48 +1,79 @@
 # Shopgate Connect - Fashion swatches
 
-This extension adds color swatches to PLP and PDP. Configured attributes/characteristics are shown in a fashio optimized styling on PDP.
+This extension adds color swatches to PLP and PDP.
+Configured attributes/characteristics are shown in a fashion optimized styling on PDP.
 
 ## Configuration
-### swatchStyle (json)
+
+### swatchColorStyle (json)
 CSS styling for swatches as glamor object. Can be any css properties and values.
 - plp: styling for swatches on product lists
 - pdp: styling for swatches on product detail page
+    - default: default state
+    - selected: selected state
+    - disabled: disabled state (no available product, etc)
 
-Example:
-```
-swatchStyle: {
+### swatchSizeStyle (json)
+CSS styling for swatches as glamor object. Can be any css properties and values.
+- pdp: styling for swatches on product detail page
+    - default: default state
+    - selected: selected state
+    - disabled: disabled state (no available product, etc)
+
+### propertyWithColors (string[])
+Name of the parent product property which contains all colors of children.
+Value of the property should be an array as JSON string.
+
+### propertyWithColor (string)
+Name of the child product property which contains hex color.
+
+### colorAttribute (csv string)
+The csv of product attributes names which are used as color swatch (eg. Color,Shoe color,Farbe)
+
+### sizeAttribute (csv string)
+The csv of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)
+
+#### Example of full config:
+```json
+{
+  "swatchColorStyle": {
     "plp": {
       "border": "1px solid blue"
     },
     "pdp": {
-      "borderRadius": "none",
-      "border": "10px solid red"
+      "default": null,
+      "selected": {
+        "border": "2px solid blue"
+      },
+      "disabled":  {
+        "opacity": "0.5"
+      }
     }
+  },
+  "swatchSizeStyle": {
+    "pdp": {
+      "default": null,
+      "selected": {
+        "border": "2px solid blue"
+      },
+      "disabled":  {
+        "opacity": "0.5"
+      }
+    }
+  },
+  "propertyWithColors": "Colors",
+  "propertyWithColor": "Hex color",
+  "colorAttribute": "Color,Farbe,Shoe color",
+  "sizeAttribute": "Size,Shoe size,Grosse"
 }
 ```
 
-### propertyWithColors (string)
-Name of the product property which contains all colors of children.
-Value of the property should be an array as JSON string.
+## Dependencies
 
-Example:
-```
-propertyWithColors: "hexCodes"
-```
-
-Example of the product property value:
-```
-["#000","#0f0","#aaa"]
-```
-
-### sizeProperty (csv string)
-Comma separated names of the product properties which contains size information.
-Value of the property should be csv string.
-
-Example:
-```
-sizeProperty: "Size,Shoe size"
-```
+- @shopgate/products-add-properties
+    - `addProperties` config. Add the product properties that are configured for this extension. 
+        - propertyWithColors
+        - propertyWithColor
 
 ## About Shopgate
 

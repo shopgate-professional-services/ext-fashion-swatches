@@ -8,7 +8,7 @@ export const useNavigateToVariant = (products) => {
 
   /** @see ProductCharacteristics.checkSelectedCharacteristics */
   useEffect(() => {
-    if (!products) {
+    if (!products || !characteristics) {
       return;
     }
     const prs = products.filter(product => (

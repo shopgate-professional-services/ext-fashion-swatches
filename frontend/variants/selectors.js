@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { sizeProperties } from './config';
+import { getColorSwatch, getSizeSwatch, getSwatchCharacteristicIds as getIds } from './helpers';
 
 /**
  * @param {Object} state .
@@ -24,24 +24,32 @@ export const getProductVariants = createSelector(
 /**
  * @returns {null|Object[]}
  */
-export const getSizeCharacteristic = createSelector(
+export const getProductVariantsProducts = createSelector(
   getProductVariants,
-  (variants) => {
-    if (!variants || !sizeProperties) {
-      return null;
-    }
-
-    return variants.characteristics.filter(char => (
-      sizeProperties.includes(char.label)
-    ))[0] || null;
-  }
+  variants => variants && variants.products
 );
 
 /**
  * @returns {null|Object[]}
  */
-export const getSizeCharacteristicId = createSelector(
-  getSizeCharacteristic,
-  char => char && char.id
+export const getSizeCharacteristic = createSelector(
+  getProductVariants,
+  variants => getSizeSwatch(variants)
 );
 
+/**
+ * @returns {null|Object[]}
+ */
+export const getColorCharacteristic = createSelector(
+  getProductVariants,
+  variants => getColorSwatch(variants)
+);
+
+/**
+ * @returns {null|Object[]}
+ */
+export const getSwatchCharacteristicIds = createSelector(
+  getSizeCharacteristic,
+  getColorCharacteristic,
+  (one, two) => getIds(one, two)
+);

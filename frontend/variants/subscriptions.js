@@ -1,8 +1,10 @@
+import omit from 'lodash.omit';
 import { appDidStart$, shouldFetchData } from '@shopgate/engage/core';
 import { fetchProductVariants } from '@shopgate/engage/product';
 import receiveProductVariants from '@shopgate/pwa-common-commerce/product/action-creators/receiveProductVariants';
-import { sizeProperties } from './config';
+import { sizeAttributes, colorAttributes } from './config';
 import { receiveSwatchesVariants } from './action-creators';
+import { getColorSwatch, getSizeSwatch, getSwatchCharacteristicIds } from './helpers';
 
 /**
  * Subscriptions
@@ -10,8 +12,11 @@ import { receiveSwatchesVariants } from './action-creators';
  */
 export default (subscribe) => {
   const swatchProperties = [];
-  if (sizeProperties) {
-    swatchProperties.push(...sizeProperties);
+  if (sizeAttributes) {
+    swatchProperties.push(...sizeAttributes);
+  }
+  if (colorAttributes) {
+    swatchProperties.push(...colorAttributes);
   }
 
   if (swatchProperties.length) {
@@ -26,16 +31,26 @@ export default (subscribe) => {
 
         dispatch(fetchProductVariants.original(productId))
           .then((result) => {
+            const colorSwatch = getColorSwatch(result);
+            const sizeSwatch = getSizeSwatch(result);
+
+            const charIds = getSwatchCharacteristicIds(colorSwatch, sizeSwatch);
+
             dispatch(receiveProductVariants(productId, {
               ...result,
               characteristics: result.characteristics.filter(char => (
-                !swatchProperties.includes(char.label)
+                !charIds.includes(char.id)
               )),
+              products: result.products.map(product => ({
+                ...product,
+                characteristics: omit(product.characteristics || {}, ...charIds),
+              })),
             }));
+
             dispatch(receiveSwatchesVariants(productId, {
               ...result,
               characteristics: result.characteristics.filter(char => (
-                swatchProperties.includes(char.label)
+                charIds.includes(char.id)
               )),
             }));
           });

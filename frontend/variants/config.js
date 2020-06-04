@@ -1,10 +1,20 @@
-import { sizeProperty } from '../config';
+import { sizeAttribute, colorAttribute } from '../config';
 
 /**
- * Convert Size,Shoe size , Grosse into [Size,Shoe size,Grosse]
+ * Convert csv string into string[]
  */
-export const sizeProperties = sizeProperty
-  ? sizeProperty
+export const sizeAttributes = sizeAttribute
+  ? sizeAttribute
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean)
+  : null;
+
+/**
+ * Convert csv string into string[]
+ */
+export const colorAttributes = colorAttribute
+  ? colorAttribute
     .split(',')
     .map(s => s.trim())
     .filter(Boolean)

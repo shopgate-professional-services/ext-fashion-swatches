@@ -7,7 +7,8 @@
     "lint": "eslint --parser babel-eslint --ignore-path ../.gitignore --ext .js --ext .jsx ."
   },
   "dependencies": {
-    "lodash.ismatch": "^4.4.0"
+    "lodash.ismatch": "^4.4.0",
+    "lodash.omit": "^4.4.0"
   },
   "devDependencies": {
     "@shopgate/engage": "^6.11.0",

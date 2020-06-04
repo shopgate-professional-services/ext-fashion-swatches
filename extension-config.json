@@ -2,20 +2,19 @@
   "version": "1.0.0",
   "id": "@shopgate-project/fashion-swatches",
   "configuration": {
-    "swatchStyle": {
+    "swatchColorStyle": {
       "type": "admin",
       "destination": "frontend",
       "default": {
-        "plp": {
-          "border": "1px solid blue"
-        },
+        "plp": null,
         "pdp": {
-          "borderRadius": "none",
-          "border": "10px solid red"
+          "default": null,
+          "selected": null,
+          "disabled": null
         }
       },
       "params": {
-        "label": "CSS styling for swatches as glamor object",
+        "label": "CSS styling for color swatches as glamor object",
         "type": "json",
         "required": true
       }
@@ -23,9 +22,19 @@
     "propertyWithColors": {
       "type": "admin",
       "destination": "frontend",
-      "default": "hexCodes",
+      "default": null,
       "params": {
-        "label": "Name of the product property which contains to hexcodes/images of all variants",
+        "label": "Name of the parent product property which contains color hexcodes of all variants",
+        "type": "text",
+        "required": true
+      }
+    },
+    "propertyWithColor": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": null,
+      "params": {
+        "label": "Name of the child product property which contains color hexcode",
         "type": "text",
         "required": true
       }
@@ -34,7 +43,6 @@
       "type": "admin",
       "destination": "frontend",
       "default": {
-        "plp": null,
         "pdp": {
           "default": null,
           "selected": null,
@@ -47,12 +55,22 @@
         "required": true
       }
     },
-    "sizeProperty": {
+    "colorAttribute": {
       "type": "admin",
       "destination": "frontend",
       "default": null,
       "params": {
-        "label": "The csv of product properties names which is used as size swatch (eg. Size,Shoe size,Grosse)",
+        "label": "The csv of product attributes names which are used as color swatch (eg. Color,Shoe color,Farbe)",
+        "type": "text",
+        "required": true
+      }
+    },
+    "sizeAttribute": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": null,
+      "params": {
+        "label": "The csv of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)",
         "type": "text",
         "required": true
       }
@@ -63,6 +81,12 @@
       "id": "PlpSwatches",
       "path": "frontend/components/PlpSwatches/index.jsx",
       "target": "product-item.price.after",
+      "type": "portals"
+    },
+    {
+      "id": "PdpColorSwatch",
+      "path": "frontend/components/PdpColorSwatch",
+      "target": ["sticky-pdp-buttons.favorites.after", "product.header.before"],
       "type": "portals"
     },
     {
