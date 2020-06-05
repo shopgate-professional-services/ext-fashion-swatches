@@ -22,7 +22,7 @@
     "propertyWithColors": {
       "type": "admin",
       "destination": "frontend",
-      "default": null,
+      "default": "Colors",
       "params": {
         "label": "Name of the parent product property which contains color hexcodes of all variants",
         "type": "text",
@@ -32,7 +32,7 @@
     "propertyWithColor": {
       "type": "admin",
       "destination": "frontend",
-      "default": null,
+      "default": "Color",
       "params": {
         "label": "Name of the child product property which contains color hexcode",
         "type": "text",
@@ -58,7 +58,7 @@
     "colorAttribute": {
       "type": "admin",
       "destination": "frontend",
-      "default": null,
+      "default": "Color",
       "params": {
         "label": "The csv of product attributes names which are used as color swatch (eg. Color,Shoe color,Farbe)",
         "type": "text",
@@ -68,7 +68,7 @@
     "sizeAttribute": {
       "type": "admin",
       "destination": "frontend",
-      "default": null,
+      "default": "Shoe size",
       "params": {
         "label": "The csv of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)",
         "type": "text",
@@ -86,13 +86,13 @@
     {
       "id": "PdpColorSwatch",
       "path": "frontend/components/PdpColorSwatch",
-      "target": ["sticky-pdp-buttons.favorites.after", "product.header.before"],
+      "target": "product.sticky-buttons.between",
       "type": "portals"
     },
     {
       "id": "PdpSizeSwatch",
       "path": "frontend/components/PdpSizeSwatch",
-      "target": ["sticky-pdp-buttons.favorites.after", "product.header.before"],
+      "target": "product.sticky-buttons.between",
       "type": "portals"
     },
     {

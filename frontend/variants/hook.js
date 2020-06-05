@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useCallback } from 'react';
 import isMatch from 'lodash.ismatch';
 import { router, ThemeContext } from '@shopgate/engage/core';
 
@@ -32,4 +32,18 @@ export const useConditioner = (name, condition) => {
       conditioner.removeConditioner(name);
     };
   }, [condition, conditioner, name]);
+};
+
+export const useSwatchValueSelect = (swatch) => {
+  const { contexts: { ProductContext } } = useContext(ThemeContext);
+  const { characteristics, setCharacteristics } = useContext(ProductContext);
+
+  return useCallback((value) => {
+    if (value.selectable && (!characteristics || characteristics[swatch.id] !== value.id)) {
+      setCharacteristics({
+        ...characteristics,
+        [swatch.id]: value.id,
+      });
+    }
+  }, [swatch, setCharacteristics, characteristics]);
 };
