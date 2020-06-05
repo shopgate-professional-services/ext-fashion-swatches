@@ -55,11 +55,13 @@ const PdpSizeSwatch = ({ swatch, products }) => {
     }));
   }, [swatch, products, characteristics]);
 
+  // TODO: get defaultValue from config
   return (
     <FoldableSwatches
       onClick={select}
       values={values}
       requireSelection={requireSelection}
+      defaultValue={{ swatchLabel: 'GR.', swatchColor: '#fff' }}
     />
   );
 };

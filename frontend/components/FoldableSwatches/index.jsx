@@ -22,7 +22,9 @@ const styles = {
  * @param {Object} props Props
  * @return {JSX}
  */
-const FoldableSwatches = ({ values, onClick, requireSelection }) => {
+const FoldableSwatches = ({
+  values, onClick, requireSelection, defaultValue,
+}) => {
   const [isFolded, setIsFolded] = useState(true);
 
   // Receive props
@@ -45,7 +47,7 @@ const FoldableSwatches = ({ values, onClick, requireSelection }) => {
   if (isFolded) {
     const selection = values.find(v => v.selected);
     const hasSelection = !!selection;
-    const selectedValue = selection || values[0];
+    const selectedValue = selection || defaultValue || values[0];
 
     return (
       <Swatch
@@ -75,6 +77,7 @@ const FoldableSwatches = ({ values, onClick, requireSelection }) => {
 
 FoldableSwatches.propTypes = {
   onClick: PropTypes.func.isRequired,
+  defaultValue: PropTypes.shape(),
   requireSelection: PropTypes.bool,
   values: PropTypes.arrayOf(PropTypes.shape()),
 };
@@ -82,6 +85,7 @@ FoldableSwatches.propTypes = {
 FoldableSwatches.defaultProps = {
   requireSelection: false,
   values: null,
+  defaultValue: null,
 };
 
 export default FoldableSwatches;
