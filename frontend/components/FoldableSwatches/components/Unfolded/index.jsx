@@ -13,7 +13,7 @@ const styles = {
     overflowScrolling: 'touch',
     WebkitOverflowScrolling: 'touch',
     overflow: 'scroll',
-    width: '100%',
+    maxWidth: '100%',
     display: 'flex',
     ' li': {
       marginRight: 12,
