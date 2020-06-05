@@ -16,7 +16,7 @@ const styles = {
     justifyContent: 'center',
     fontSize: '1.25rem',
     lineHeight: '1.4',
-    boxShadow: '0 8px 13px rgba(0, 0, 0, 0.25)',
+    boxShadow: '1px 5px 7px rgba(0, 0, 0, 0.25)',
   }).toString(),
 };
 

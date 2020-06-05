@@ -8,11 +8,13 @@ import { transitions } from '../../../styles';
 
 const styles = {
   swatches: css({
+    paddingTop: 12,
+    paddingBottom: 12,
+    overflowScrolling: 'touch',
+    WebkitOverflowScrolling: 'touch',
+    overflow: 'scroll',
     width: '100%',
-    marginTop: 12,
-    marginBottom: 12,
     display: 'flex',
-    justifyContent: 'flex-end',
     ' li': {
       marginRight: 12,
     },
