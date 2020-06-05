@@ -22,16 +22,16 @@ export const useNavigateToVariant = (products) => {
   }, [characteristics, variantId, products]);
 };
 
-export const useConditioner = (name, condition) => {
+export const useConditioner = (name, condition, priority = 1) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { conditioner } = useContext(ProductContext);
 
   useEffect(() => {
-    conditioner.addConditioner(name, condition);
+    conditioner.addConditioner(name, condition, priority);
     return () => {
       conditioner.removeConditioner(name);
     };
-  }, [condition, conditioner, name]);
+  }, [condition, conditioner, name, priority]);
 };
 
 export const useSwatchValueSelect = (swatch) => {

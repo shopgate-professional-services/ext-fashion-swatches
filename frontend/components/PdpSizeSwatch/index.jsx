@@ -1,4 +1,6 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, {
+  useContext, useEffect, useMemo, useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import isMatch from 'lodash.ismatch';
 import { logger, ThemeContext, withCurrentProduct } from '@shopgate/engage/core';
@@ -20,7 +22,7 @@ const PdpSizeSwatch = ({ swatch, products }) => {
       return true;
     }
     const result = Boolean(characteristics && !!characteristics[swatch.id]);
-    logger.assert(result, 'PdpColorSwatch is not fulfilled');
+    logger.assert(result, 'PdpSizeSwatch is not fulfilled');
     if (!result) {
       setRequireSelection(true);
     }
@@ -28,6 +30,12 @@ const PdpSizeSwatch = ({ swatch, products }) => {
   });
   useNavigateToVariant(products);
   const select = useSwatchValueSelect(swatch);
+
+  useEffect(() => {
+    if (requireSelection) {
+      setTimeout(() => setRequireSelection(false), 500);
+    }
+  }, [requireSelection]);
 
   const values = useMemo(() => {
     if (!swatch || !swatch.values.length) {
@@ -51,8 +59,7 @@ const PdpSizeSwatch = ({ swatch, products }) => {
     <FoldableSwatches
       onClick={select}
       values={values}
-      folded={!requireSelection}
-      highlight={!!requireSelection}
+      requireSelection={requireSelection}
     />
   );
 };

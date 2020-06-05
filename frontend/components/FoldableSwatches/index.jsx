@@ -22,13 +22,16 @@ const styles = {
  * @param {Object} props Props
  * @return {JSX}
  */
-const FoldableSwatches = ({
-  values, onClick, folded, highlight,
-}) => {
-  const [isFolded, setIsFolded] = useState(folded);
+const FoldableSwatches = ({ values, onClick, requireSelection }) => {
+  const [isFolded, setIsFolded] = useState(true);
 
   // Receive props
-  useEffect(() => setIsFolded(folded), [folded]);
+  useEffect(() => setIsFolded((wasFolded) => {
+    if (wasFolded && requireSelection) {
+      return false;
+    }
+    return wasFolded;
+  }), [requireSelection]);
 
   const unfoldedClick = useCallback((value) => {
     onClick(value);
@@ -65,21 +68,19 @@ const FoldableSwatches = ({
     <Unfolded
       onClick={unfoldedClick}
       values={values}
-      highlight={highlight}
+      highlight={requireSelection}
     />
   );
 };
 
 FoldableSwatches.propTypes = {
   onClick: PropTypes.func.isRequired,
-  folded: PropTypes.bool,
-  highlight: PropTypes.bool,
+  requireSelection: PropTypes.bool,
   values: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 FoldableSwatches.defaultProps = {
-  folded: true,
-  highlight: false,
+  requireSelection: false,
   values: null,
 };
 

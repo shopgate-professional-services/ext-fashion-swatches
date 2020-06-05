@@ -1,4 +1,6 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, {
+  useContext, useMemo, useState, useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { logger, ThemeContext, withCurrentProduct } from '@shopgate/engage/core';
 import { useConditioner, useNavigateToVariant, useSwatchValueSelect } from '../../variants/hook';
@@ -24,9 +26,16 @@ const PdpColorSwatch = ({ swatch, products }) => {
       setRequireSelection(true);
     }
     return result;
-  });
+  }, -1);
+
   useNavigateToVariant(products);
   const select = useSwatchValueSelect(swatch);
+
+  useEffect(() => {
+    if (requireSelection) {
+      setTimeout(() => setRequireSelection(false), 500);
+    }
+  }, [requireSelection]);
 
   const values = useMemo(() => {
     if (!swatch || !swatch.values.length) {
@@ -45,8 +54,7 @@ const PdpColorSwatch = ({ swatch, products }) => {
     <FoldableSwatches
       onClick={select}
       values={values}
-      folded={!requireSelection}
-      highlight={!!requireSelection}
+      requireSelection={requireSelection}
     />
   );
 };

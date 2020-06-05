@@ -8,9 +8,11 @@ import { transitions } from '../../../styles';
 
 const styles = {
   swatches: css({
+    width: '100%',
     marginTop: 12,
     marginBottom: 12,
     display: 'flex',
+    justifyContent: 'flex-end',
     ' li': {
       marginRight: 12,
     },
@@ -45,27 +47,24 @@ const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
       timeout={500}
       onEntered={() => setHighlighted(false)}
     >
-      {state => {
-        console.warn('@@@@@', state);
-        return (
-          <ul style={transitions[state]} className={styles.swatches}>
-            {values.map(value => (
-              <Swatch
-                key={value.id}
-                tagName="li"
-                style={{ ...value.swatchColor && { background: value.swatchColor } }}
-                className={classnames({
-                  [styles.selected]: value.selected,
-                  [styles.disabled]: !value.selectable,
-                })}
-                onClick={() => onClick(value)}
-              >
-                {value.swatchLabel}
-              </Swatch>
-            ))}
-          </ul>
-        );
-      }}
+      {state => (
+        <ul style={transitions[state]} className={styles.swatches}>
+          {values.map(value => (
+            <Swatch
+              key={value.id}
+              tagName="li"
+              style={{ ...value.swatchColor && { background: value.swatchColor } }}
+              className={classnames({
+                [styles.selected]: value.selected,
+                [styles.disabled]: !value.selectable,
+              })}
+              onClick={() => onClick(value)}
+            >
+              {value.swatchLabel}
+            </Swatch>
+          ))}
+        </ul>
+      )}
     </Transition>
   );
 };
