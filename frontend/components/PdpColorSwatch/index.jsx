@@ -25,7 +25,7 @@ const colorCircle = `radial-gradient(circle at 38% 7% ,rgba(255,255,000,1) 20%,r
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpColorSwatch = ({ swatch, products }) => {
+const PdpColorSwatch = ({ swatch, swatchCharacteristicIds, products }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { characteristics } = useContext(ProductContext);
   const [requireSelection, setRequireSelection] = useState(false);
@@ -40,10 +40,10 @@ const PdpColorSwatch = ({ swatch, products }) => {
       setRequireSelection(true);
     }
     return result;
-  }, -1);
+  }, 10);
 
   useNavigateToVariant(products);
-  const select = useSwatchValueSelect(swatch);
+  const select = useSwatchValueSelect(swatch, swatchCharacteristicIds);
 
   useEffect(() => {
     if (requireSelection) {
@@ -77,11 +77,13 @@ const PdpColorSwatch = ({ swatch, products }) => {
 PdpColorSwatch.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape()),
   swatch: PropTypes.shape(),
+  swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 PdpColorSwatch.defaultProps = {
   products: null,
   swatch: null,
+  swatchCharacteristicIds: null,
 };
 
 export default withCurrentProduct(connect(PdpColorSwatch));
