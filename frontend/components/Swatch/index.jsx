@@ -8,6 +8,7 @@ const styles = {
   default: css({
     width: 44,
     height: 44,
+    margin: '3px 0',
     borderRadius: '100%',
     flexShrink: 0,
     background: themeConfig.colors.light,

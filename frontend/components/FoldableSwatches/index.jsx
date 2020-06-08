@@ -53,8 +53,6 @@ const FoldableSwatches = ({
       <Swatch
         style={{
           ...selectedValue.swatchColor && { background: selectedValue.swatchColor },
-          marginTop: 12,
-          marginBottom: 12,
         }}
         className={classnames({
           [styles.selected]: hasSelection,

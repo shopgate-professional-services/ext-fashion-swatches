@@ -36,6 +36,11 @@ export default (subscribe) => {
 
             const charIds = getSwatchCharacteristicIds(colorSwatch, sizeSwatch);
 
+            if (!charIds) {
+              dispatch(receiveProductVariants(productId, result));
+              return;
+            }
+
             dispatch(receiveProductVariants(productId, {
               ...result,
               characteristics: result.characteristics.filter(char => (
