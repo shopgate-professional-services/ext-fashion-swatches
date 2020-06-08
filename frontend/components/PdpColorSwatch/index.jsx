@@ -40,7 +40,7 @@ const PdpColorSwatch = ({ swatch, swatchCharacteristicIds, products }) => {
       setRequireSelection(true);
     }
     return result;
-  }, 10);
+  }, -10);
 
   useNavigateToVariant(products);
   const select = useSwatchValueSelect(swatch, swatchCharacteristicIds);

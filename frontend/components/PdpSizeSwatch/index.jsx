@@ -27,7 +27,7 @@ const PdpSizeSwatch = ({ swatch, products }) => {
       setRequireSelection(true);
     }
     return result;
-  }, 11);
+  }, -9);
   useNavigateToVariant(products);
   const select = useSwatchValueSelect(swatch);
 

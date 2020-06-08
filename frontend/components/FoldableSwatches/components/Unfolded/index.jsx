@@ -56,7 +56,7 @@ const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
       onEntered={() => setHighlighted(false)}
     >
       {state => (
-        <ul style={transitions[state]} className={styles.swatches} ref={ulRef}>
+        <ul className={`${styles.swatches} ${transitions[state]}`} ref={ulRef}>
           {values.map(value => (
             <Swatch
               key={value.id}
