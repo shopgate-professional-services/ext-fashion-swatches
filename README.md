@@ -69,9 +69,9 @@ The csv of product attributes names which are used as size swatch (eg. Size,Shoe
 ```
 
 ## Dependencies
-
+- @shopgate-project/sticky-pdp-buttons
 - @shopgate/products-add-properties
-    - `addProperties` config. Add the product properties that are configured for this extension. 
+    - `addProperties` config. Add the product properties that are configured for this extension.
         - propertyWithColors
         - propertyWithColor
 
