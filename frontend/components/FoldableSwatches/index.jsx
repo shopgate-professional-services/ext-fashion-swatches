@@ -4,12 +4,21 @@ import { css } from 'glamor';
 import classnames from 'classnames';
 import Swatch from '../Swatch';
 import Unfolded from './components/Unfolded';
+import { swatchColorStyle, swatchSizeStyle } from '../../config';
+
+const { pdp: colorStyle } = swatchColorStyle;
+const { pdp: sizeStyle } = swatchSizeStyle;
 
 const styles = {
   swatches: css({
     margin: 20,
     display: 'flex',
   }),
+  swatch: css({
+    marginTop: 12,
+    marginBottom: 12,
+    marginRight: 15,
+  }).toString(),
   selected: css({
     border: '2px solid #000',
   }).toString(),
@@ -52,12 +61,17 @@ const FoldableSwatches = ({
     return (
       <Swatch
         style={{
-          ...selectedValue.swatchColor && { background: selectedValue.swatchColor },
-          marginTop: 12,
-          marginBottom: 12,
-          marginRight: 15,
+          ...selectedValue.swatchColor && {
+            background: selectedValue.swatchColor,
+            ...colorStyle.default,
+            ...hasSelection && colorStyle.selected,
+          },
+          ...selectedValue.swatchLabel && {
+            ...sizeStyle.default,
+            ...hasSelection && sizeStyle.selected,
+          },
         }}
-        className={classnames({
+        className={classnames(styles.swatch, {
           [styles.selected]: hasSelection,
         })}
         onClick={() => setIsFolded(false)}

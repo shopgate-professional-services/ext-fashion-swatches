@@ -5,6 +5,10 @@ import { css } from 'glamor';
 import classnames from 'classnames';
 import Swatch from '../../../Swatch';
 import { transitions } from '../../../styles';
+import { swatchColorStyle, swatchSizeStyle } from '../../../../config';
+
+const { pdp: colorStyle = {} } = swatchColorStyle;
+const { pdp: sizeStyle = {} } = swatchSizeStyle;
 
 const styles = {
   swatches: css({
@@ -59,7 +63,19 @@ const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
             <Swatch
               key={value.id}
               tagName="li"
-              style={{ ...value.swatchColor && { background: value.swatchColor } }}
+              style={{
+                ...value.swatchColor && {
+                  background: value.swatchColor,
+                  ...colorStyle.default,
+                  ...value.selected && colorStyle.selected,
+                  ...!value.selectable && colorStyle.disabled,
+                },
+                ...value.swatchLabel && {
+                  ...sizeStyle.default,
+                  ...value.selected && sizeStyle.selected,
+                  ...!value.selectable && sizeStyle.disabled,
+                },
+              }}
               className={classnames({
                 [styles.selected]: value.selected,
                 [styles.disabled]: !value.selectable,
