@@ -12,8 +12,6 @@ const { pdp: sizeStyle = {} } = swatchSizeStyle;
 
 const styles = {
   swatches: css({
-    paddingTop: 12,
-    paddingBottom: 12,
     overflowScrolling: 'touch',
     WebkitOverflowScrolling: 'touch',
     overflow: 'scroll',
