@@ -15,8 +15,6 @@ const styles = {
     display: 'flex',
   }),
   swatch: css({
-    marginTop: 12,
-    marginBottom: 12,
     marginRight: 15,
   }).toString(),
   selected: css({
