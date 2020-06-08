@@ -15,7 +15,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '1.25rem',
+    fontSize: 14,
     lineHeight: '1.4',
     boxShadow: '2px 1px 5px rgba(0, 0, 0, 0.25)',
   }).toString(),
