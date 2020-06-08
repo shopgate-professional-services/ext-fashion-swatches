@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import { css } from 'glamor';
 import classnames from 'classnames';
 import Swatch from '../../../Swatch';
 import { transitions } from '../../../styles';
+import { swatchColorStyle, swatchSizeStyle } from '../../../../config';
+
+const { pdp: colorStyle = {} } = swatchColorStyle;
+const { pdp: sizeStyle = {} } = swatchSizeStyle;
 
 const styles = {
   swatches: css({
@@ -19,7 +23,7 @@ const styles = {
       marginRight: 12,
     },
     ' li:last-child': {
-      marginRight: 0,
+      marginRight: 15,
     },
   }),
   selected: css({
@@ -36,10 +40,14 @@ const styles = {
  */
 const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
   const [highlighted, setHighlighted] = useState(false);
+  const ulRef = useRef(null);
 
   useEffect(() => {
     if (highlight) {
       setHighlighted(true);
+      if (ulRef.current) {
+        ulRef.current.scrollLeft = 999;
+      }
     }
   }, [highlight]);
 
@@ -50,12 +58,24 @@ const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
       onEntered={() => setHighlighted(false)}
     >
       {state => (
-        <ul style={transitions[state]} className={styles.swatches}>
+        <ul style={transitions[state]} className={styles.swatches} ref={ulRef}>
           {values.map(value => (
             <Swatch
               key={value.id}
               tagName="li"
-              style={{ ...value.swatchColor && { background: value.swatchColor } }}
+              style={{
+                ...value.swatchColor && {
+                  background: value.swatchColor,
+                  ...colorStyle.default,
+                  ...value.selected && colorStyle.selected,
+                  ...!value.selectable && colorStyle.disabled,
+                },
+                ...value.swatchLabel && {
+                  ...sizeStyle.default,
+                  ...value.selected && sizeStyle.selected,
+                  ...!value.selectable && sizeStyle.disabled,
+                },
+              }}
               className={classnames({
                 [styles.selected]: value.selected,
                 [styles.disabled]: !value.selectable,
