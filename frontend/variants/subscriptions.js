@@ -41,15 +41,17 @@ export default (subscribe) => {
               return;
             }
 
+            const characteristics = result.characteristics.filter(char => (
+              !charIds.includes(char.id)
+            ));
+
             dispatch(receiveProductVariants(productId, {
               ...result,
-              characteristics: result.characteristics.filter(char => (
-                !charIds.includes(char.id)
-              )),
-              products: result.products.map(product => ({
+              characteristics,
+              products: characteristics.length ? result.products.map(product => ({
                 ...product,
                 characteristics: omit(product.characteristics || {}, ...charIds),
-              })),
+              })) : [],
             }));
 
             dispatch(receiveSwatchesVariants(productId, {

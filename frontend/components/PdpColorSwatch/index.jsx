@@ -29,7 +29,7 @@ const PdpColorSwatch = ({ swatch, swatchCharacteristicIds, products }) => {
     return result;
   }, -10);
 
-  useNavigateToVariant(products);
+  useNavigateToVariant(products, swatchCharacteristicIds);
   const select = useSwatchValueSelect(swatch, swatchCharacteristicIds);
 
   useEffect(() => {

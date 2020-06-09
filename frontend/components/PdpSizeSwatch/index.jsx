@@ -13,7 +13,7 @@ import { swatchSizeUnselectedValue } from '../../config';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpSizeSwatch = ({ swatch, products }) => {
+const PdpSizeSwatch = ({ swatch, products, swatchCharacteristicIds }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { characteristics } = useContext(ProductContext);
   const [requireSelection, setRequireSelection] = useState(false);
@@ -29,7 +29,7 @@ const PdpSizeSwatch = ({ swatch, products }) => {
     }
     return result;
   }, -9);
-  useNavigateToVariant(products);
+  useNavigateToVariant(products, swatchCharacteristicIds);
   const select = useSwatchValueSelect(swatch);
 
   useEffect(() => {
@@ -70,11 +70,13 @@ const PdpSizeSwatch = ({ swatch, products }) => {
 PdpSizeSwatch.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape()),
   swatch: PropTypes.shape(),
+  swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 PdpSizeSwatch.defaultProps = {
   products: null,
   swatch: null,
+  swatchCharacteristicIds: null,
 };
 
 export default withCurrentProduct(connect(PdpSizeSwatch));

@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { getProductVariantsProducts, getSizeCharacteristic } from '../../variants/selectors';
+import {
+  getProductVariantsProducts,
+  getSizeCharacteristic,
+  getSwatchCharacteristicIds,
+} from '../../variants/selectors';
 
 /**
  * @param {Object} state state
@@ -8,6 +12,7 @@ import { getProductVariantsProducts, getSizeCharacteristic } from '../../variant
  */
 const mapStateToProps = (state, { productId }) => ({
   swatch: getSizeCharacteristic(state, { productId }),
+  swatchCharacteristicIds: getSwatchCharacteristicIds(state, { productId }),
   products: getProductVariantsProducts(state, { productId }),
 });
 
