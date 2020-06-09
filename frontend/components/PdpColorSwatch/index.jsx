@@ -1,9 +1,9 @@
 import React, {
-  useContext, useMemo, useState, useEffect,
+  useContext, useEffect, useMemo, useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import { logger, ThemeContext, withCurrentProduct } from '@shopgate/engage/core';
-import { useConditioner, useNavigateToVariant, useSwatchValueSelect } from '../../variants/hook';
+import { logger, ThemeContext } from '@shopgate/engage/core';
+import { useConditioner, useSwatchValueSelect } from '../../variants/hook';
 import connect from './connector';
 import FoldableSwatches from '../FoldableSwatches';
 import { swatchColorUnselectedValue } from '../../config';
@@ -12,7 +12,7 @@ import { swatchColorUnselectedValue } from '../../config';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpColorSwatch = ({ swatch, swatchCharacteristicIds, products }) => {
+const PdpColorSwatch = ({ swatch, swatchCharacteristicIds }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { characteristics } = useContext(ProductContext);
   const [requireSelection, setRequireSelection] = useState(false);
@@ -29,7 +29,6 @@ const PdpColorSwatch = ({ swatch, swatchCharacteristicIds, products }) => {
     return result;
   }, -10);
 
-  useNavigateToVariant(products, swatchCharacteristicIds);
   const select = useSwatchValueSelect(swatch, swatchCharacteristicIds);
 
   useEffect(() => {
@@ -62,15 +61,13 @@ const PdpColorSwatch = ({ swatch, swatchCharacteristicIds, products }) => {
 };
 
 PdpColorSwatch.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.shape()),
   swatch: PropTypes.shape(),
   swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 PdpColorSwatch.defaultProps = {
-  products: null,
   swatch: null,
   swatchCharacteristicIds: null,
 };
 
-export default withCurrentProduct(connect(PdpColorSwatch));
+export default connect(PdpColorSwatch);

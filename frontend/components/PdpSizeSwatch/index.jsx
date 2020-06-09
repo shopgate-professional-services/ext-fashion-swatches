@@ -3,8 +3,8 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import isMatch from 'lodash.ismatch';
-import { logger, ThemeContext, withCurrentProduct } from '@shopgate/engage/core';
-import { useConditioner, useNavigateToVariant, useSwatchValueSelect } from '../../variants/hook';
+import { logger, ThemeContext } from '@shopgate/engage/core';
+import { useConditioner, useSwatchValueSelect } from '../../variants/hook';
 import connect from './connector';
 import FoldableSwatches from '../FoldableSwatches';
 import { swatchSizeUnselectedValue } from '../../config';
@@ -13,7 +13,7 @@ import { swatchSizeUnselectedValue } from '../../config';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpSizeSwatch = ({ swatch, products, swatchCharacteristicIds }) => {
+const PdpSizeSwatch = ({ swatch, products }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { characteristics } = useContext(ProductContext);
   const [requireSelection, setRequireSelection] = useState(false);
@@ -29,7 +29,7 @@ const PdpSizeSwatch = ({ swatch, products, swatchCharacteristicIds }) => {
     }
     return result;
   }, -9);
-  useNavigateToVariant(products, swatchCharacteristicIds);
+
   const select = useSwatchValueSelect(swatch);
 
   useEffect(() => {
@@ -70,13 +70,11 @@ const PdpSizeSwatch = ({ swatch, products, swatchCharacteristicIds }) => {
 PdpSizeSwatch.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape()),
   swatch: PropTypes.shape(),
-  swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 PdpSizeSwatch.defaultProps = {
   products: null,
   swatch: null,
-  swatchCharacteristicIds: null,
 };
 
-export default withCurrentProduct(connect(PdpSizeSwatch));
+export default connect(PdpSizeSwatch);

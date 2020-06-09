@@ -108,14 +108,8 @@
       "type": "portals"
     },
     {
-      "id": "PdpColorSwatch",
-      "path": "frontend/components/PdpColorSwatch",
-      "target": "product.sticky-buttons.between",
-      "type": "portals"
-    },
-    {
-      "id": "PdpSizeSwatch",
-      "path": "frontend/components/PdpSizeSwatch",
+      "id": "PdpSwatches",
+      "path": "frontend/components/PdpSwatches",
       "target": "product.sticky-buttons.between",
       "type": "portals"
     },
