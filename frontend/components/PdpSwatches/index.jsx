@@ -14,27 +14,30 @@ const PdpSwatches = ({ swatchCharacteristicIds, products }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const pdpContext = useContext(ProductContext);
 
+  const { variantId, characteristics } = pdpContext;
+
   useNavigateToVariant(products, swatchCharacteristicIds);
 
   const prodContext = useMemo(() => {
-    if (pdpContext.variantId) {
+    if (variantId) {
       const missingChars = swatchCharacteristicIds.filter(char => (
-        !pdpContext.characteristics || !pdpContext.characteristics[char]
+        !characteristics || !characteristics[char]
       ));
-      if (missingChars.length) {
-        // Route was updated to variant, but context does not have chars
-        const product = products.find(p => p.id === pdpContext.variantId);
+
+      // Route was updated to variant, but context does not have chars
+      if (missingChars.length === 0) {
+        const product = products.find(p => p.id === variantId);
         return {
           ...pdpContext,
           characteristics: {
-            ...pdpContext.characteristics,
+            ...characteristics,
             ...product.characteristics,
           },
         };
       }
     }
     return pdpContext;
-  }, [products, pdpContext, swatchCharacteristicIds]);
+  }, [products, pdpContext, variantId, characteristics, swatchCharacteristicIds]);
 
   return (
     <ProductContext.Provider value={prodContext}>
