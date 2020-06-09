@@ -7,6 +7,7 @@ import { logger, ThemeContext, withCurrentProduct } from '@shopgate/engage/core'
 import { useConditioner, useNavigateToVariant, useSwatchValueSelect } from '../../variants/hook';
 import connect from './connector';
 import FoldableSwatches from '../FoldableSwatches';
+import { swatchSizeUnselectedValue } from '../../config';
 
 /**
  * @param {Object} props Props
@@ -61,7 +62,7 @@ const PdpSizeSwatch = ({ swatch, products }) => {
       onClick={select}
       values={values}
       requireSelection={requireSelection}
-      defaultValue={{ swatchLabel: 'GR.', swatchColor: '#fff' }}
+      defaultValue={swatchSizeUnselectedValue}
     />
   );
 };
