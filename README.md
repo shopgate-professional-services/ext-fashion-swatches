@@ -27,10 +27,10 @@ Value of the property should be an array as JSON string.
 ### propertyWithColor (string)
 Name of the child product property which contains hex color.
 
-### colorAttribute (csv string)
+### colorAttribute (string[])
 The csv of product attributes names which are used as color swatch (eg. Color,Shoe color,Farbe)
 
-### sizeAttribute (csv string)
+### sizeAttribute (string[])
 The csv of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)
 
 #### Example of full config:
@@ -63,8 +63,8 @@ The csv of product attributes names which are used as size swatch (eg. Size,Shoe
   },
   "propertyWithColors": "Colors",
   "propertyWithColor": "Hex color",
-  "colorAttribute": "Color,Farbe,Shoe color",
-  "sizeAttribute": "Size,Shoe size,Grosse"
+  "colorAttribute": ["Color", "Farbe", "Shoe color"],
+  "sizeAttribute": ["Size", "Shoe size", "Grosse"]
 }
 ```
 

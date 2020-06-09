@@ -4,8 +4,7 @@ import { sizeAttribute, colorAttribute } from '../config';
  * Convert csv string into string[]
  */
 export const sizeAttributes = sizeAttribute
-  ? sizeAttribute
-    .split(',')
+  ? [].concat(sizeAttribute)
     .map(s => s.trim())
     .filter(Boolean)
   : null;
@@ -14,8 +13,7 @@ export const sizeAttributes = sizeAttribute
  * Convert csv string into string[]
  */
 export const colorAttributes = colorAttribute
-  ? colorAttribute
-    .split(',')
+  ? [].concat(colorAttribute)
     .map(s => s.trim())
     .filter(Boolean)
   : null;

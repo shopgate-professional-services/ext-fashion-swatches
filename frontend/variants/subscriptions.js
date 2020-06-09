@@ -29,7 +29,7 @@ export default (subscribe) => {
           return Promise.resolve(null);
         }
 
-        dispatch(fetchProductVariants.original(productId))
+        return dispatch(fetchProductVariants.original(productId))
           .then((result) => {
             const colorSwatch = getColorSwatch(result);
             const sizeSwatch = getSizeSwatch(result);

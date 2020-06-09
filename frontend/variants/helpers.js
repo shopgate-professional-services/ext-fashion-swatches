@@ -11,9 +11,9 @@ export const getSizeSwatch = (variants) => {
     return null;
   }
 
-  return variants.characteristics.filter(char => (
+  return variants.characteristics.find(char => (
     sizeAttributes.includes(char.label)
-  ))[0] || null;
+  )) || null;
 };
 
 /**
@@ -26,10 +26,9 @@ export const getColorSwatch = (variants) => {
     return null;
   }
 
-  const colorSwatch = variants.characteristics.filter(char => (
+  const colorSwatch = variants.characteristics.find(char => (
     colorAttributes.includes(char.label)
-  ))[0];
-
+  ));
   if (!colorSwatch) {
     return null;
   }
