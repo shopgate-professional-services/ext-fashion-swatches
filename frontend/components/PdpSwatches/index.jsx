@@ -25,7 +25,7 @@ const PdpSwatches = ({ swatchCharacteristicIds, products }) => {
       ));
 
       // Route was updated to variant, but context does not have chars
-      if (missingChars.length === 0) {
+      if (missingChars.length === swatchCharacteristicIds.length) {
         const product = products.find(p => p.id === variantId);
         return {
           ...pdpContext,
