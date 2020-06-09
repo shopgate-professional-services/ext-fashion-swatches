@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef, useLayoutEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import { css } from 'glamor';
@@ -43,11 +45,14 @@ const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
   useEffect(() => {
     if (highlight) {
       setHighlighted(true);
-      if (ulRef.current) {
-        ulRef.current.scrollLeft = 999;
-      }
     }
   }, [highlight]);
+
+  useLayoutEffect(() => {
+    if (ulRef.current) {
+      ulRef.current.scrollLeft = 999;
+    }
+  }, [values]);
 
   return (
     <Transition
