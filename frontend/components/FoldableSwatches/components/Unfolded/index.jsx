@@ -20,6 +20,7 @@ const styles = {
     maxWidth: '100%',
     display: 'flex',
     margin: '5px 0 4px 0',
+    paddingLeft: 2,
     boxShadow: 'none !important',
     ' li': {
       marginRight: 20,
