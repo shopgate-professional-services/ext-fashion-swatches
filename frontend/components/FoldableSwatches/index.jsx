@@ -18,7 +18,7 @@ const styles = {
     marginRight: 15,
   }).toString(),
   selected: css({
-    border: '2px solid #000',
+    boxShadow: '0px 0px 0px 2px rgba(0,0,0,0.7)',
   }).toString(),
   disabled: css({
     opacity: 0.1,

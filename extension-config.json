@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.0-rc.2",
   "id": "@shopgate-project/fashion-swatches",
   "configuration": {
     "swatchColorStyle": {
@@ -9,7 +9,9 @@
         "plp": null,
         "pdp": {
           "default": null,
-          "selected": null,
+          "selected": {
+            "boxShadow": "0px 0px 0px 2px white"
+          },
           "disabled": null
         }
       },
@@ -22,7 +24,7 @@
     "propertyWithColors": {
       "type": "admin",
       "destination": "frontend",
-      "default": "Colors",
+      "default": "hexCodes",
       "params": {
         "label": "Name of the parent product property which contains color hexcodes of all variants",
         "type": "text",
@@ -32,7 +34,7 @@
     "propertyWithColor": {
       "type": "admin",
       "destination": "frontend",
-      "default": "Color",
+      "default": "hexCode",
       "params": {
         "label": "Name of the child product property which contains color hexcode",
         "type": "text",
@@ -45,7 +47,11 @@
       "default": {
         "pdp": {
           "default": null,
-          "selected": null,
+          "selected": {
+            "background": "#000",
+            "color": "#fff",
+            "boxShadow": "none"
+          },
           "disabled": null
         }
       },
@@ -82,7 +88,7 @@
     "colorAttribute": {
       "type": "admin",
       "destination": "frontend",
-      "default": "Color",
+      "default": "Farbe",
       "params": {
         "label": "The csv of product attributes names which are used as color swatch (eg. Color,Shoe color,Farbe)",
         "type": "text",
@@ -92,7 +98,7 @@
     "sizeAttribute": {
       "type": "admin",
       "destination": "frontend",
-      "default": "Shoe size",
+      "default": "Größe",
       "params": {
         "label": "The csv of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)",
         "type": "text",

@@ -19,15 +19,20 @@ const styles = {
     overflow: 'scroll',
     maxWidth: '100%',
     display: 'flex',
+    margin: '5px 0 4px 0',
     ' li': {
-      marginRight: 12,
+      marginRight: 20,
     },
     ' li:last-child': {
-      marginRight: 15,
+      marginRight: 20,
     },
   }),
   selected: css({
-    border: '2px solid #000',
+    boxShadow: '0px 0px 0px 2px rgba(0,0,0,0.7)',
+  }).toString(),
+  swatch: css({
+    height: 35,
+    width: 35,
   }).toString(),
   disabled: css({
     opacity: 0.1,
@@ -82,7 +87,7 @@ const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
               className={classnames({
                 [styles.selected]: value.selected,
                 [styles.disabled]: !value.selectable,
-              })}
+              }, styles.swatch)}
               onClick={() => onClick(value)}
             >
               {value.swatchLabel}
