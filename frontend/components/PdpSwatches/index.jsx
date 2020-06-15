@@ -19,6 +19,9 @@ const PdpSwatches = ({ swatchCharacteristicIds, products }) => {
   useNavigateToVariant(products, swatchCharacteristicIds);
 
   const prodContext = useMemo(() => {
+    if (!swatchCharacteristicIds) {
+      return pdpContext;
+    }
     if (variantId) {
       const missingChars = swatchCharacteristicIds.filter(char => (
         !characteristics || !characteristics[char]
@@ -38,6 +41,10 @@ const PdpSwatches = ({ swatchCharacteristicIds, products }) => {
     }
     return pdpContext;
   }, [products, pdpContext, variantId, characteristics, swatchCharacteristicIds]);
+
+  if (!swatchCharacteristicIds) {
+    return null;
+  }
 
   return (
     <ProductContext.Provider value={prodContext}>
