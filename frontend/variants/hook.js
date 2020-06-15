@@ -42,7 +42,7 @@ export const useConditioner = (name, condition, priority = 1) => {
   }, [condition, conditioner, name, priority]);
 };
 
-export const useSwatchValueSelect = (swatch, swatchCharacteristicIds = []) => {
+export const useSwatchValueSelect = (swatch, swatchCharacteristicIds = [], products = []) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { characteristics, setCharacteristics } = useContext(ProductContext);
 
@@ -58,11 +58,25 @@ export const useSwatchValueSelect = (swatch, swatchCharacteristicIds = []) => {
 
   return useCallback((value) => {
     if (value.selectable && (!characteristics || characteristics[swatch.id] !== value.id)) {
-      setCharacteristics({
+      const newChars = {
         ...characteristics,
-        ...resetChars,
         [swatch.id]: value.id,
-      });
+      };
+
+      const matchedProduct = products && products.some(product => (
+        isMatch(product.characteristics, newChars)
+      ));
+
+      // Check if new selection has a product, reset otherwise
+      if (matchedProduct) {
+        setCharacteristics(newChars);
+      } else {
+        setCharacteristics({
+          ...characteristics,
+          ...resetChars,
+          [swatch.id]: value.id,
+        });
+      }
     }
-  }, [swatch, setCharacteristics, characteristics, resetChars]);
+  }, [products, swatch, setCharacteristics, characteristics, resetChars]);
 };
