@@ -1,7 +1,7 @@
 import { css } from 'glamor';
-import { swatchStyle } from '../../config';
+import { swatchColorStyle } from '../../config';
 
-const { plp = {} } = swatchStyle;
+const { plp = {} } = swatchColorStyle;
 
 const imgSize = 16;
 
@@ -17,6 +17,7 @@ const listItem = css({
   marginBottom: 5,
   overflow: 'hidden',
   position: 'relative',
+  borderRadius: '100%',
   ...plp,
 });
 

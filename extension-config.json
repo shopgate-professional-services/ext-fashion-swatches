@@ -1,29 +1,22 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.0-rc.2",
   "id": "@shopgate-project/fashion-swatches",
-  "components": [
-    {
-      "id": "PlpSwatches",
-      "path": "frontend/components/PlpSwatches/index.jsx",
-      "target": "product-item.price.after",
-      "type": "portals"
-    }
-  ],
   "configuration": {
-    "swatchStyle": {
+    "swatchColorStyle": {
       "type": "admin",
       "destination": "frontend",
       "default": {
-        "plp": {
-          "border": "1px solid blue"
-        },
+        "plp": null,
         "pdp": {
-          "borderRadius": "none",
-          "border": "10px solid red"
+          "default": null,
+          "selected": {
+            "boxShadow": "0px 0px 0px 2px white"
+          },
+          "disabled": null
         }
       },
       "params": {
-        "label": "CSS styling for swatches as glamor object",
+        "label": "CSS styling for color swatches as glamor object",
         "type": "json",
         "required": true
       }
@@ -33,11 +26,115 @@
       "destination": "frontend",
       "default": "hexCodes",
       "params": {
-        "label": "Name of the product property which contains to hexcodes/images of all variants",
+        "label": "Name of the parent product property which contains color hexcodes of all variants",
+        "type": "text",
+        "required": true
+      }
+    },
+    "propertyWithColor": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "hexCode",
+      "params": {
+        "label": "Name of the child product property which contains color hexcode",
+        "type": "text",
+        "required": true
+      }
+    },
+    "swatchSizeStyle": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": {
+        "pdp": {
+          "default": null,
+          "selected": {
+            "background": "#000",
+            "color": "#fff",
+            "boxShadow": "none"
+          },
+          "disabled": null
+        }
+      },
+      "params": {
+        "label": "CSS styling for size swatches as glamor object",
+        "type": "json",
+        "required": true
+      }
+    },
+    "swatchSizeUnselectedValue": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": {
+        "swatchLabel": "GR.",
+        "swatchColor": "#fff"
+      },
+      "params": {
+        "label": "Swatch that should be shown if no size is selected",
+        "type": "json"
+      }
+    },
+    "swatchColorUnselectedValue": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": {
+        "swatchLabel": "",
+        "swatchColor": "radial-gradient(circle at 38% 7% ,rgba(255,255,000,1) 20%,rgba(255,255,000,.0) 38%), radial-gradient(circle at 50% 0%,rgba(128,255,000,1) 22%,rgba(128,255,000,.0) 48%), radial-gradient(circle at 75% 7% ,rgba(000,255,000,1) 22%,rgba(000,255,000,.0) 48%), radial-gradient(circle at 93% 24%  ,rgba(000,255,128,1) 22%,rgba(000,255,128,.0) 48%), radial-gradient(circle at 100% 50%,rgba(000,255,255,1) 22%,rgba(000,255,255,.0) 48%), radial-gradient(circle at 93% 75% ,rgba(000,128,255,1) 22%,rgba(000,128,255,.0) 48%), radial-gradient(circle at 75% 93%,rgba(000,000,255,1) 22%,rgba(000,000,255,.0) 48%), radial-gradient(circle at 50% 100% ,rgba(128,000,255,1) 22%,rgba(128,000,255,.0) 48%), radial-gradient(circle at 25% 93%,rgba(255,000,255,1) 22%,rgba(255,000,255,.0) 48%), radial-gradient(circle at 7% 75%,rgba(255,000,128,1) 22%,rgba(255,000,128,.0) 48%), radial-gradient(circle at 0% 50%,rgba(255,000,000,1) 22%,rgba(255,000,000,.0) 48%), radial-gradient(circle at 7% 25%,rgba(255,128,000,1) 22%,rgba(255,128,000,.0) 48%)"
+      },
+      "params": {
+        "label": "Swatch that should be shown if no color is selected",
+        "type": "json"
+      }
+    },
+    "colorAttribute": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "Farbe",
+      "params": {
+        "label": "The csv of product attributes names which are used as color swatch (eg. Color,Shoe color,Farbe)",
+        "type": "text",
+        "required": true
+      }
+    },
+    "sizeAttribute": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "Größe",
+      "params": {
+        "label": "The csv of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)",
         "type": "text",
         "required": true
       }
     }
   },
+  "components": [
+    {
+      "id": "PlpSwatches",
+      "path": "frontend/components/PlpSwatches/index.jsx",
+      "target": "product-item.price.after",
+      "type": "portals"
+    },
+    {
+      "id": "PdpSwatches",
+      "path": "frontend/components/PdpSwatches",
+      "target": "product.sticky-buttons.between",
+      "type": "portals"
+    },
+    {
+      "id": "PdpVariantCharacteristics",
+      "path": "frontend/portals/PdpVariantCharacteristics",
+      "target": "product.variant-select",
+      "type": "portals"
+    },
+    {
+      "id": "subscribersVariants",
+      "path": "frontend/variants/subscriptions.js",
+      "type": "subscribers"
+    },
+    {
+      "id": "variants",
+      "path": "frontend/variants/reducers.js",
+      "type": "reducers"
+    }
+  ],
   "steps": []
 }
