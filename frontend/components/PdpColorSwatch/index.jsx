@@ -12,7 +12,7 @@ import { swatchColorUnselectedValue } from '../../config';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpColorSwatch = ({ swatch, swatchCharacteristicIds }) => {
+const PdpColorSwatch = ({ products, swatch, swatchCharacteristicIds }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { characteristics } = useContext(ProductContext);
   const [requireSelection, setRequireSelection] = useState(false);
@@ -29,7 +29,7 @@ const PdpColorSwatch = ({ swatch, swatchCharacteristicIds }) => {
     return result;
   }, -10);
 
-  const select = useSwatchValueSelect(swatch, swatchCharacteristicIds);
+  const select = useSwatchValueSelect(swatch, swatchCharacteristicIds, products);
 
   useEffect(() => {
     if (requireSelection) {
@@ -61,11 +61,13 @@ const PdpColorSwatch = ({ swatch, swatchCharacteristicIds }) => {
 };
 
 PdpColorSwatch.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.shape()),
   swatch: PropTypes.shape(),
   swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 PdpColorSwatch.defaultProps = {
+  products: null,
   swatch: null,
   swatchCharacteristicIds: null,
 };
