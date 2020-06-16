@@ -69,7 +69,7 @@ const PdpMediaSection = ({ children, products }) => {
 
   return React.cloneElement(children, {
     ...children.props,
-    className: `${children.props.className.toString()} ${wrapper}`,
+    className: children.props.className ? `${children.props.className.toString()} ${wrapper}` : wrapper,
   }, children.props.children);
 };
 
