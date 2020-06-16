@@ -29,7 +29,7 @@ const PdpMediaSection = ({ children, products }) => {
 
     const {
       featuredImageBaseUrl,
-    } = products.find(p => isMatch(p.characteristics, omitted)) || {};
+    } = products.find(p => p.featuredImageBaseUrl && isMatch(p.characteristics, omitted)) || {};
 
     setBg(getFullImageSource(featuredImageBaseUrl, pdpResolutions[pdpResolutions.length - 1]));
   }, [characteristics, products, pdpResolutions]);
@@ -53,7 +53,7 @@ const PdpMediaSection = ({ children, products }) => {
   const filteredChars = Object.keys(characteristics).filter(key => !!characteristics[key]);
   // Compare to first product chars length
   const ready = filteredChars.length === Object.keys(products[0].characteristics).length;
-
+console.warn(ready, bg, loaded);
   const wrapper = bg && loaded[bg] ? css({
     label: 'media-wrapper',
     ' > div:first-child': {
