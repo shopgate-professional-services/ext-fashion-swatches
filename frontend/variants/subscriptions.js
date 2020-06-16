@@ -1,11 +1,13 @@
 import omit from 'lodash.omit';
-import { appDidStart$, shouldFetchData } from '@shopgate/engage/core';
-import { fetchProductVariants, REQUEST_PRODUCT_VARIANTS } from '@shopgate/engage/product';
+import { appDidStart$, shouldFetchData, main$ } from '@shopgate/engage/core';
+import { fetchProductsById, fetchProductVariants, REQUEST_PRODUCT_VARIANTS } from '@shopgate/engage/product'
 import receiveProductVariants from '@shopgate/pwa-common-commerce/product/action-creators/receiveProductVariants';
 import errorProductVariants from '@shopgate/pwa-common-commerce/product/action-creators/errorProductVariants';
 import { sizeAttributes, colorAttributes } from './config';
 import { receiveSwatchesVariants } from './action-creators';
 import { getColorSwatch, getSizeSwatch, getSwatchCharacteristicIds } from './helpers';
+import { SUCCESS_ADD_PRODUCTS_TO_CART } from '@shopgate/pwa-common-commerce/cart/constants'
+import { RECEIVE_SWATCHES_VARIANTS } from './constants'
 
 /**
  * Subscriptions
@@ -76,6 +78,26 @@ export default (subscribe) => {
 
         return result;
       });
+    });
+
+    // 2. Fetch product data for unique variants (first product of each color, etc)
+    const fetchVariantData$ = main$.filter(({ action }) => (
+      action.type === RECEIVE_SWATCHES_VARIANTS
+    ));
+    subscribe(fetchVariantData$, ({ dispatch, action }) => {
+      const { variants: { characteristics, products } } = action;
+      if (!characteristics || !characteristics.length) {
+        return;
+      }
+      const [{ id, values }] = characteristics;
+      const productIds = values
+        .map(val => val.id)
+        .map(valId => products.find(product => product.characteristics[id] === valId))
+        .filter(Boolean)
+        .map(product => product.id);
+      if (productIds.length) {
+        dispatch(fetchProductsById(productIds));
+      }
     });
   }
 };

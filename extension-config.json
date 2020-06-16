@@ -126,6 +126,12 @@
       "type": "portals"
     },
     {
+      "id": "PdpMediaSection",
+      "path": "frontend/portals/PdpMediaSection",
+      "target": "product.sticky-media",
+      "type": "portals"
+    },
+    {
       "id": "subscribersVariants",
       "path": "frontend/variants/subscriptions.js",
       "type": "subscribers"
