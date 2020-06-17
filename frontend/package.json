@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "lodash.ismatch": "^4.4.0",
-    "lodash.omit": "^4.4.0"
+    "lodash.omit": "^4.4.0",
+    "lodash.pick": "^4.4.0"
   },
   "devDependencies": {
     "@shopgate/engage": "^6.11.0",
