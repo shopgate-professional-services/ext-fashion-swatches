@@ -1,12 +1,11 @@
 import React, {
-  useState, useEffect, useRef, useLayoutEffect, Fragment,
+  useState, useEffect, useRef, useLayoutEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import { css } from 'glamor';
 import classnames from 'classnames';
 import Swatch from '../../../Swatch';
-import LabeledWrapper from './components/LabeledWrapper';
 import { transitions } from '../../../styles';
 import { swatchColorStyle, swatchSizeStyle } from '../../../../config';
 
@@ -39,6 +38,14 @@ const styles = {
       marginRight: 20,
     },
   }).toString(),
+  labelSwatch: css({
+    '&&': {
+      width: 'auto',
+      padding: '0 12px',
+      fontWeight: 600,
+      borderRadius: '18px',
+    },
+  }).toString(),
   disabled: css({
     opacity: 0.1,
   }).toString(),
@@ -67,12 +74,14 @@ const FoldableSwatchesUnfolded = ({
 
   useLayoutEffect(() => {
     if (ulRef.current) {
-      const selected = values.findIndex(v => !!v.selected);
-      ulRef.current.scrollLeft = selected * 55;
+      let selected = values.findIndex(v => !!v.selected);
+      if (selected === -1 && !label) {
+        // Scroll to most right without label and selection
+        selected = values.length - 1;
+      }
+      ulRef.current.scrollLeft = (selected + 1) * 55;
     }
   }, [values, label]);
-
-  const Wrapper = label ? LabeledWrapper : Fragment;
 
   return (
     <Transition
@@ -81,43 +90,50 @@ const FoldableSwatchesUnfolded = ({
       onEntered={() => setHighlighted(false)}
     >
       {state => (
-        <Wrapper label={label}>
-          <ul
-            className={classnames(
-              styles.swatches,
-              transitions[state],
-              transitions[fade]
-            )}
-            ref={ulRef}
-          >
-            {values.map(value => (
-              <Swatch
-                key={value.id}
-                tagName="li"
-                style={{
-                  ...value.swatchColor && {
-                    background: value.swatchColor,
-                    ...colorStyle.default,
-                    ...value.selected && colorStyle.selected,
-                    ...!value.selectable && colorStyle.disabled,
-                  },
-                  ...value.swatchLabel && {
-                    ...sizeStyle.default,
-                    ...value.selected && sizeStyle.selected,
-                    ...!value.selectable && sizeStyle.disabled,
-                  },
-                }}
-                className={classnames({
-                  [styles.selected]: value.selected,
-                  [styles.disabled]: !value.selectable,
-                }, styles.swatch)}
-                onClick={() => onClick(value)}
-              >
-                {value.swatchLabel}
-              </Swatch>
-            ))}
-          </ul>
-        </Wrapper>
+        <ul
+          className={classnames(
+            styles.swatches,
+            transitions[state],
+            transitions[fade]
+          )}
+          ref={ulRef}
+        >
+          {label && (
+            <Swatch
+              key="label"
+              style={sizeStyle.default}
+              className={classnames(styles.swatch, styles.labelSwatch)}
+            >
+              {label}
+            </Swatch>
+          )}
+          {values.map(value => (
+            <Swatch
+              key={value.id}
+              tagName="li"
+              style={{
+                ...value.swatchColor && {
+                  background: value.swatchColor,
+                  ...colorStyle.default,
+                  ...value.selected && colorStyle.selected,
+                  ...!value.selectable && colorStyle.disabled,
+                },
+                ...value.swatchLabel && {
+                  ...sizeStyle.default,
+                  ...value.selected && sizeStyle.selected,
+                  ...!value.selectable && sizeStyle.disabled,
+                },
+              }}
+              className={classnames({
+                [styles.selected]: value.selected,
+                [styles.disabled]: !value.selectable,
+              }, styles.swatch)}
+              onClick={() => onClick(value)}
+            >
+              {value.swatchLabel}
+            </Swatch>
+          ))}
+        </ul>
       )}
     </Transition>
   );
