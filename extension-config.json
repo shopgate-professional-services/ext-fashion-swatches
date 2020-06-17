@@ -104,6 +104,21 @@
         "type": "text",
         "required": true
       }
+    },
+    "swatchLabels": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": {
+        "enabled": false,
+        "labels": {
+          "Color": false,
+          "Size": "Size"
+        }
+      },
+      "params": {
+        "label": "Swatches optional labels",
+        "type": "json"
+      }
     }
   },
   "components": [

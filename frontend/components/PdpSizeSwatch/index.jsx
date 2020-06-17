@@ -7,7 +7,7 @@ import { logger, ThemeContext } from '@shopgate/engage/core';
 import { useConditioner, useSwatchValueSelect } from '../../variants/hook';
 import connect from './connector';
 import FoldableSwatches from '../FoldableSwatches';
-import { swatchSizeUnselectedValue } from '../../config';
+import { swatchSizeUnselectedValue, swatchLabels } from '../../config';
 
 /**
  * @param {Object} props Props
@@ -56,13 +56,20 @@ const PdpSizeSwatch = ({ swatch, products }) => {
     }));
   }, [swatch, products, characteristics]);
 
-  // TODO: get defaultValue from config
+  let label;
+  if (swatchLabels.enabled) {
+    if (swatchLabels.labels[swatch.label] !== false) {
+      label = swatchLabels.labels[swatch.label] || swatch.label;
+    }
+  }
+
   return (
     <FoldableSwatches
       onClick={select}
       values={values}
       requireSelection={requireSelection}
       defaultValue={swatchSizeUnselectedValue}
+      label={label}
     />
   );
 };

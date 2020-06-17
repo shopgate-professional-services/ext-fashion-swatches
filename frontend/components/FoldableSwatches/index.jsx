@@ -30,7 +30,7 @@ const styles = {
  * @return {JSX}
  */
 const FoldableSwatches = ({
-  values, onClick, requireSelection, defaultValue,
+  values, onClick, requireSelection, defaultValue, label,
 }) => {
   const [isFolded, setIsFolded] = useState(true);
 
@@ -84,6 +84,7 @@ const FoldableSwatches = ({
       onClick={unfoldedClick}
       values={values}
       highlight={requireSelection}
+      label={label}
     />
   );
 };
@@ -91,12 +92,14 @@ const FoldableSwatches = ({
 FoldableSwatches.propTypes = {
   onClick: PropTypes.func.isRequired,
   defaultValue: PropTypes.shape(),
+  label: PropTypes.string,
   requireSelection: PropTypes.bool,
   values: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 FoldableSwatches.defaultProps = {
   requireSelection: false,
+  label: null,
   values: null,
   defaultValue: null,
 };
