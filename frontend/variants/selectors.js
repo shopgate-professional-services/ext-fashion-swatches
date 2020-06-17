@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import { getColorSwatch, getSizeSwatch, getSwatchCharacteristicIds as getIds } from './helpers';
-import { getProductDataById, getProducts } from '@shopgate/pwa-common-commerce/product/selectors/product'
+import { getProducts } from '@shopgate/engage/product';
+import { getColorSwatch, getSizeSwatches, getSwatchCharacteristicIds as getIds } from './helpers';
 
 /**
  * @param {Object} state .
@@ -54,9 +54,9 @@ export const getProductVariantsProductsData = createSelector(
 /**
  * @returns {null|Object[]}
  */
-export const getSizeCharacteristic = createSelector(
+export const getSizeCharacteristics = createSelector(
   getProductVariants,
-  variants => getSizeSwatch(variants)
+  variants => getSizeSwatches(variants)
 );
 
 /**
@@ -71,7 +71,7 @@ export const getColorCharacteristic = createSelector(
  * @returns {null|Object[]}
  */
 export const getSwatchCharacteristicIds = createSelector(
-  getSizeCharacteristic,
   getColorCharacteristic,
-  (one, two) => getIds(one, two)
+  getSizeCharacteristics,
+  (one, two) => getIds(one, ...two)
 );

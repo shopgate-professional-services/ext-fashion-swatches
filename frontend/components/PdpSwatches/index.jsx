@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ThemeContext, withCurrentProduct } from '@shopgate/engage/core';
 import { useNavigateToVariant } from '../../variants/hook';
 import PdpColorSwatch from '../PdpColorSwatch';
-import PdpSizeSwatch from '../PdpSizeSwatch';
+import PdpSizeSwatches from '../PdpSizeSwatches';
 import connect from './connector';
 
 /**
@@ -49,7 +49,7 @@ const PdpSwatches = ({ swatchCharacteristicIds, products }) => {
   return (
     <ProductContext.Provider value={prodContext}>
       <PdpColorSwatch productId={pdpContext.productId} />
-      <PdpSizeSwatch productId={pdpContext.productId} />
+      <PdpSizeSwatches productId={pdpContext.productId} />
     </ProductContext.Provider>
   );
 };

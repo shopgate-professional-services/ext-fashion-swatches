@@ -6,14 +6,16 @@ import { colorAttributes, sizeAttributes } from './config';
  * @param {Object} variants .
  * @returns {*|null}
  */
-export const getSizeSwatch = (variants) => {
+export const getSizeSwatches = (variants) => {
   if (!variants || !sizeAttributes) {
     return null;
   }
 
-  return variants.characteristics.find(char => (
+  const sizeSwatches = variants.characteristics.filter(char => (
     sizeAttributes.includes(char.label)
-  )) || null;
+  ));
+
+  return sizeSwatches.length ? sizeSwatches : null;
 };
 
 /**
