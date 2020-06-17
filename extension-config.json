@@ -65,7 +65,7 @@
       "type": "admin",
       "destination": "frontend",
       "default": {
-        "Size": {
+        "Größe": {
           "swatchLabel": "GR.",
           "swatchColor": "#fff"
         }
@@ -100,10 +100,10 @@
     "sizeAttribute": {
       "type": "admin",
       "destination": "frontend",
-      "default": "Größe",
+      "default": ["Größe"],
       "params": {
         "label": "String array of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)",
-        "type": "text",
+        "type": "json",
         "required": true
       }
     }
