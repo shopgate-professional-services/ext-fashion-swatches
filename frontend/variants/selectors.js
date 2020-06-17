@@ -70,6 +70,14 @@ export const getColorCharacteristic = createSelector(
 /**
  * @returns {null|Object[]}
  */
+export const getColorCharacteristicId = createSelector(
+  getColorCharacteristic,
+  char => char && char.id
+);
+
+/**
+ * @returns {null|Object[]}
+ */
 export const getSwatchCharacteristicIds = createSelector(
   getColorCharacteristic,
   getSizeCharacteristics,
