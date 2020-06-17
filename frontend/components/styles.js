@@ -22,4 +22,7 @@ export const transitions = {
     backfaceVisibility: 'hidden',
     perspective: 1000,
   }),
+  fadeIn: css({
+    opacity: '1 !important',
+  }),
 };

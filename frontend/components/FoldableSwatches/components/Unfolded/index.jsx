@@ -21,6 +21,8 @@ const styles = {
     display: 'flex',
     margin: '5px 0 4px 0',
     paddingLeft: 2,
+    opacity: 0,
+    transition: 'opacity 1.5s',
     boxShadow: 'none !important',
     ' li': {
       marginRight: 20,
@@ -47,6 +49,7 @@ const styles = {
  */
 const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
   const [highlighted, setHighlighted] = useState(false);
+  const [fade, setFade] = useState('');
   const ulRef = useRef(null);
 
   useEffect(() => {
@@ -54,6 +57,10 @@ const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
       setHighlighted(true);
     }
   }, [highlight]);
+
+  useEffect(() => {
+    setFade('fadeIn');
+  }, []);
 
   useLayoutEffect(() => {
     if (ulRef.current) {
@@ -68,7 +75,7 @@ const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
       onEntered={() => setHighlighted(false)}
     >
       {state => (
-        <ul className={`${styles.swatches} ${transitions[state]}`} ref={ulRef}>
+        <ul className={`${styles.swatches} ${transitions[state]} ${transitions[fade]}`} ref={ulRef}>
           {values.map(value => (
             <Swatch
               key={value.id}
