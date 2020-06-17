@@ -33,6 +33,12 @@ The csv of product attributes names which are used as color swatch (eg. Color,Sh
 ### sizeAttribute (string[])
 The csv of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)
 
+### swatchColorUnselectedValue (json)
+Default value for unselected color (see example).
+
+### swatchSizeUnselectedValue (json)
+Default value for unselected size(s) (see example).
+
 #### Example of full config:
 ```json
 {
@@ -64,7 +70,21 @@ The csv of product attributes names which are used as size swatch (eg. Size,Shoe
   "propertyWithColors": "Colors",
   "propertyWithColor": "Hex color",
   "colorAttribute": ["Color", "Farbe", "Shoe color"],
-  "sizeAttribute": ["Size", "Shoe size", "Grosse"]
+  "sizeAttribute": ["Size", "Shoe width", "Grosse"],
+  "swatchColorUnselectedValue": {
+    "swatchLabel": "",
+    "swatchColor": "radial-gradient(... )"
+  },
+  "swatchSizeUnselectedValue": {
+    "Size": {
+      "swatchLabel": "GR.",
+      "swatchColor": "#fff"
+    },
+    "Shoe width": {
+      "swatchLabel": "Wdh.",
+      "swatchColor": "#fff"
+    }
+  }
 }
 ```
 

@@ -65,11 +65,13 @@
       "type": "admin",
       "destination": "frontend",
       "default": {
-        "swatchLabel": "GR.",
-        "swatchColor": "#fff"
+        "Größe": {
+          "swatchLabel": "GR.",
+          "swatchColor": "#fff"
+        }
       },
       "params": {
-        "label": "Swatch that should be shown if no size is selected",
+        "label": "Swatch that should be shown if no size is selected (per each size swatch)",
         "type": "json"
       }
     },
@@ -98,10 +100,10 @@
     "sizeAttribute": {
       "type": "admin",
       "destination": "frontend",
-      "default": "Größe",
+      "default": ["Größe"],
       "params": {
-        "label": "The csv of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)",
-        "type": "text",
+        "label": "String array of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)",
+        "type": "json",
         "required": true
       }
     }
