@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getProductVariantsProductsData } from '../../variants/selectors';
+import { getProductVariantsProductsData, getColorCharacteristicId } from '../../variants/selectors';
 
 /**
  * @param {Object} state state
@@ -8,6 +8,7 @@ import { getProductVariantsProductsData } from '../../variants/selectors';
  */
 const mapStateToProps = (state, { productId }) => ({
   products: getProductVariantsProductsData(state, { productId }),
+  colorCharacteristicId: getColorCharacteristicId(state, { productId }),
 });
 
 export default connect(mapStateToProps);

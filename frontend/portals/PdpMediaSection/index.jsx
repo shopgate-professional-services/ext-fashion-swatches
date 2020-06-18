@@ -3,8 +3,6 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'glamor';
-import isMatch from 'lodash.ismatch';
-import pick from 'lodash.pick';
 import { getFullImageSource, ThemeContext, withCurrentProduct } from '@shopgate/engage/core';
 import { getProductImageSettings } from '@shopgate/engage/product/helpers';
 import connect from './connector';
@@ -13,22 +11,25 @@ import connect from './connector';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpMediaSection = ({ children, products }) => {
+const PdpMediaSection = ({ children, products, colorCharacteristicId }) => {
   const { HeroImage: pdpResolutions } = getProductImageSettings();
   const { contexts: { ProductContext } } = useContext(ThemeContext);
-  const { characteristics } = useContext(ProductContext);
+  let { characteristics } = useContext(ProductContext);
   const [bg, setBg] = useState(null);
 
+  characteristics = characteristics || {};
+
   useEffect(() => {
-    if (!characteristics || !products) {
+    if (!products || !colorCharacteristicId || !characteristics[colorCharacteristicId]) {
       return;
     }
-    const filteredChars = Object.keys(characteristics).filter(key => !!characteristics[key]);
-    const omitted = pick(characteristics, filteredChars);
 
     const {
       featuredImageBaseUrl,
-    } = products.find(p => p.featuredImageBaseUrl && isMatch(p.characteristics, omitted)) || {};
+    } = products.find(p => (
+      p.featuredImageBaseUrl
+      && p.characteristics[colorCharacteristicId] === characteristics[colorCharacteristicId]
+    )) || {};
 
     if (!featuredImageBaseUrl) {
       return;
@@ -40,9 +41,9 @@ const PdpMediaSection = ({ children, products }) => {
     const image = new window.Image();
     image.onload = () => setBg(newBg);
     image.src = newBg;
-  }, [characteristics, products, pdpResolutions]);
+  }, [characteristics, products, pdpResolutions, colorCharacteristicId]);
 
-  if (!products || !characteristics) {
+  if (!products || !characteristics || !colorCharacteristicId) {
     return children;
   }
 
@@ -52,14 +53,13 @@ const PdpMediaSection = ({ children, products }) => {
 
   const wrapper = bg && css({
     label: 'media-wrapper',
-    ' > div:first-child': {
+    ' > div:first-child > div:first-child': {
       backgroundImage: `url(${bg}) !important`,
     },
-    // Hide slider(image) until ful characteristics selection
-    ...!ready && {
-      ' > div:first-child > div': {
-        visibility: 'hidden',
-      },
+    // Hide slider(image) until full characteristics selection
+    ' > div:first-child > div:first-child > div': {
+      transition: 'visibility 0s 1s',
+      visibility: ready ? 'visible' : 'hidden',
     },
   }).toString();
 
@@ -71,11 +71,13 @@ const PdpMediaSection = ({ children, products }) => {
 
 PdpMediaSection.propTypes = {
   children: PropTypes.node.isRequired,
+  colorCharacteristicId: PropTypes.string,
   products: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 PdpMediaSection.defaultProps = {
   products: null,
+  colorCharacteristicId: null,
 };
 
 export default withCurrentProduct(connect(PdpMediaSection));
