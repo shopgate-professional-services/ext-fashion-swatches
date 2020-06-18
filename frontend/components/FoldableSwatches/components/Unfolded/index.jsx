@@ -19,15 +19,12 @@ const styles = {
     overflow: 'scroll',
     maxWidth: '100%',
     display: 'flex',
-    margin: '5px 0 4px 0',
+    padding: '5px 0 4px 0',
     paddingLeft: 2,
     opacity: 0,
     transition: 'opacity 1.5s',
     boxShadow: 'none !important',
     ' li': {
-      marginRight: 20,
-    },
-    ' li:last-child': {
       marginRight: 20,
     },
   }),

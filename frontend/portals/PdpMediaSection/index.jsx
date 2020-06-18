@@ -53,11 +53,11 @@ const PdpMediaSection = ({ children, products, colorCharacteristicId }) => {
 
   const wrapper = bg && css({
     label: 'media-wrapper',
-    ' > div:first-child': {
+    ' > div:first-child > div:first-child': {
       backgroundImage: `url(${bg}) !important`,
     },
     // Hide slider(image) until full characteristics selection
-    ' > div:first-child > div': {
+    ' > div:first-child > div:first-child > div': {
       transition: 'visibility 0s 1s',
       visibility: ready ? 'visible' : 'hidden',
     },
