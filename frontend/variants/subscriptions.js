@@ -5,7 +5,7 @@ import receiveProductVariants from '@shopgate/pwa-common-commerce/product/action
 import errorProductVariants from '@shopgate/pwa-common-commerce/product/action-creators/errorProductVariants';
 import { sizeAttributes, colorAttributes } from './config';
 import { receiveSwatchesVariants } from './action-creators';
-import { getColorSwatch, getSizeSwatch, getSwatchCharacteristicIds } from './helpers';
+import { getColorSwatch, getSizeSwatches, getSwatchCharacteristicIds } from './helpers';
 import { RECEIVE_SWATCHES_VARIANTS } from './constants';
 
 /**
@@ -50,9 +50,9 @@ export default (subscribe) => {
         }
 
         const colorSwatch = getColorSwatch(result);
-        const sizeSwatch = getSizeSwatch(result);
+        const sizeSwatches = getSizeSwatches(result);
 
-        const charIds = getSwatchCharacteristicIds(colorSwatch, sizeSwatch);
+        const charIds = getSwatchCharacteristicIds(colorSwatch, ...sizeSwatches);
 
         if (!charIds) {
           dispatch(receiveProductVariants(productId, result));

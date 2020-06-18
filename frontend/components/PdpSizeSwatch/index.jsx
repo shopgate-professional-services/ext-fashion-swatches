@@ -3,9 +3,9 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import isMatch from 'lodash.ismatch';
+import omit from 'lodash.omit';
 import { logger, ThemeContext } from '@shopgate/engage/core';
 import { useConditioner, useSwatchValueSelect } from '../../variants/hook';
-import connect from './connector';
 import FoldableSwatches from '../FoldableSwatches';
 import { swatchSizeUnselectedValue, swatchLabels } from '../../config';
 
@@ -13,24 +13,26 @@ import { swatchSizeUnselectedValue, swatchLabels } from '../../config';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpSizeSwatch = ({ swatch, products }) => {
+const PdpSizeSwatch = ({ swatch, products, siblingSizeIds }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
-  const { characteristics } = useContext(ProductContext);
+  let { characteristics } = useContext(ProductContext);
   const [requireSelection, setRequireSelection] = useState(false);
 
-  useConditioner('PdpSizeSwatch', () => {
+  characteristics = characteristics || {};
+
+  useConditioner(`PdpSizeSwatch-${swatch.id}`, () => {
     if (!swatch) {
       return true;
     }
-    const result = Boolean(characteristics && !!characteristics[swatch.id]);
-    logger.assert(result, 'PdpSizeSwatch is not fulfilled');
+    const result = Boolean(characteristics[swatch.id]);
+    logger.assert(result, `PdpSizeSwatch ${swatch.label} is not fulfilled`);
     if (!result) {
       setRequireSelection(true);
     }
     return result;
   }, -9);
 
-  const select = useSwatchValueSelect(swatch);
+  const select = useSwatchValueSelect(swatch, siblingSizeIds, products);
 
   useEffect(() => {
     if (requireSelection) {
@@ -43,18 +45,21 @@ const PdpSizeSwatch = ({ swatch, products }) => {
       return null;
     }
 
-    const { [swatch.id]: ignore, ...selfOmitted } = characteristics || {};
+    const charIds = Object.keys(characteristics).filter(charId => !characteristics[charId]);
+    const valuable = omit(characteristics, ...charIds, ...siblingSizeIds);
+
+    const { [swatch.id]: ignore, ...selfOmitted } = valuable;
 
     return swatch.values.map(value => ({
       ...value,
       swatchLabel: value.label,
-      selected: characteristics && characteristics[swatch.id] === value.id,
-      selectable: !characteristics || products.some(product => isMatch(product.characteristics, {
+      selected: characteristics[swatch.id] === value.id,
+      selectable: products.some(product => isMatch(product.characteristics, {
         ...selfOmitted,
         [swatch.id]: value.id,
       })),
     }));
-  }, [swatch, products, characteristics]);
+  }, [swatch, products, characteristics, siblingSizeIds]);
 
   let label;
   if (swatchLabels.enabled) {
@@ -68,20 +73,20 @@ const PdpSizeSwatch = ({ swatch, products }) => {
       onClick={select}
       values={values}
       requireSelection={requireSelection}
-      defaultValue={swatchSizeUnselectedValue}
       label={label}
+      defaultValue={swatchSizeUnselectedValue[swatch.label]}
     />
   );
 };
 
 PdpSizeSwatch.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.shape()),
-  swatch: PropTypes.shape(),
+  products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  swatch: PropTypes.shape().isRequired,
+  siblingSizeIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 PdpSizeSwatch.defaultProps = {
-  products: null,
-  swatch: null,
+  siblingSizeIds: null,
 };
 
-export default connect(PdpSizeSwatch);
+export default PdpSizeSwatch;
