@@ -21,8 +21,8 @@ export const transitions = {
     transform: 'translate3d(0, 0, 0)',
     backfaceVisibility: 'hidden',
     perspective: 1000,
-  }),
+  }).toString(),
   fadeIn: css({
     opacity: '1 !important',
-  }),
+  }).toString(),
 };

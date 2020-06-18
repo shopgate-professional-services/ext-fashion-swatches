@@ -24,19 +24,27 @@ const styles = {
     opacity: 0,
     transition: 'opacity 1.5s',
     boxShadow: 'none !important',
-    ' li': {
-      marginRight: 20,
-    },
-    ' li:last-child': {
-      marginRight: 20,
-    },
-  }),
+  }).toString(),
+  withLabel: css({
+    width: 'calc(100% - 16px)',
+  }).toString(),
   selected: css({
     boxShadow: '0px 0px 0px 2px rgba(0,0,0,0.7)',
   }).toString(),
   swatch: css({
-    height: 35,
-    width: 35,
+    '&&': {
+      height: 35,
+      width: 35,
+      marginRight: 20,
+    },
+  }).toString(),
+  labelSwatch: css({
+    '&&': {
+      width: 'auto',
+      padding: '0 12px',
+      fontWeight: 600,
+      borderRadius: '18px',
+    },
   }).toString(),
   disabled: css({
     opacity: 0.1,
@@ -47,7 +55,9 @@ const styles = {
  * @param {Object} props Props
  * @return {JSX}
  */
-const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
+const FoldableSwatchesUnfolded = ({
+  values, onClick, highlight, label,
+}) => {
   const [highlighted, setHighlighted] = useState(false);
   const [fade, setFade] = useState('');
   const ulRef = useRef(null);
@@ -64,9 +74,14 @@ const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
 
   useLayoutEffect(() => {
     if (ulRef.current) {
-      ulRef.current.scrollLeft = 999;
+      let selected = values.findIndex(v => !!v.selected);
+      if (selected === -1 && !label) {
+        // Scroll to most right without label and selection
+        selected = values.length - 1;
+      }
+      ulRef.current.scrollLeft = (selected + 1) * 55;
     }
-  }, [values]);
+  }, [values, label]);
 
   return (
     <Transition
@@ -75,7 +90,23 @@ const FoldableSwatchesUnfolded = ({ values, onClick, highlight }) => {
       onEntered={() => setHighlighted(false)}
     >
       {state => (
-        <ul className={`${styles.swatches} ${transitions[state]} ${transitions[fade]}`} ref={ulRef}>
+        <ul
+          className={classnames(
+            styles.swatches,
+            transitions[state],
+            transitions[fade]
+          )}
+          ref={ulRef}
+        >
+          {label && (
+            <Swatch
+              key="label"
+              style={sizeStyle.default}
+              className={classnames(styles.swatch, styles.labelSwatch)}
+            >
+              {label}
+            </Swatch>
+          )}
           {values.map(value => (
             <Swatch
               key={value.id}
@@ -112,10 +143,12 @@ FoldableSwatchesUnfolded.propTypes = {
   onClick: PropTypes.func.isRequired,
   values: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   highlight: PropTypes.bool,
+  label: PropTypes.string,
 };
 
 FoldableSwatchesUnfolded.defaultProps = {
   highlight: false,
+  label: null,
 };
 
 export default FoldableSwatchesUnfolded;
