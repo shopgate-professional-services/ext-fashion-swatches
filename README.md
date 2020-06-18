@@ -33,6 +33,12 @@ The csv of product attributes names which are used as color swatch (eg. Color,Sh
 ### sizeAttribute (string[])
 The csv of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)
 
+### swatchLabels (json)
+Swatches optional labels. A map of property name to custom label. See example.
+
+- `enabled` (boolean) If labels should be shown
+- `labels` (Object) Labels map. If mapped label equal `false`, the label will not be shown.
+
 ### swatchColorUnselectedValue (json)
 Default value for unselected color (see example).
 
@@ -84,7 +90,14 @@ Default value for unselected size(s) (see example).
       "swatchLabel": "Wdh.",
       "swatchColor": "#fff"
     }
-  }
+  },
+  "swatchLabels": {
+      "enabled": true,
+      "labels": {
+        "Color": false,
+        "Shoe size": "Size"
+      }
+    }
 }
 ```
 
