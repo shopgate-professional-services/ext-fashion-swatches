@@ -4,7 +4,7 @@ import {
 import isMatch from 'lodash.ismatch';
 import { router, ThemeContext } from '@shopgate/engage/core';
 
-export const useNavigateToVariant = (products, swatchCharacteristicIds = []) => {
+export const useNavigateToVariant = (products) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { characteristics, variantId } = useContext(ProductContext);
 
@@ -15,7 +15,8 @@ export const useNavigateToVariant = (products, swatchCharacteristicIds = []) => 
     }
 
     const filteredChars = Object.keys(characteristics).filter(key => !!characteristics[key]);
-    if (swatchCharacteristicIds.length !== filteredChars.length) {
+    if (Object.keys(products[0].characteristics).length > filteredChars.length) {
+      // Not all chars yet selected
       return;
     }
 
@@ -27,7 +28,7 @@ export const useNavigateToVariant = (products, swatchCharacteristicIds = []) => 
       const route = router.getCurrentRoute();
       router.update(route.id, { productId: prs[0].id });
     }
-  }, [characteristics, variantId, products, swatchCharacteristicIds]);
+  }, [characteristics, variantId, products]);
 };
 
 export const useConditioner = (name, condition, priority = 1) => {

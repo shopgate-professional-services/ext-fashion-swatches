@@ -16,7 +16,7 @@ const PdpSwatches = ({ swatchCharacteristicIds, products }) => {
 
   const { variantId, characteristics } = pdpContext;
 
-  useNavigateToVariant(products, swatchCharacteristicIds);
+  useNavigateToVariant(products);
 
   const prodContext = useMemo(() => {
     if (!swatchCharacteristicIds) {
