@@ -1,6 +1,6 @@
 {
   "name": "@shopgate-project/fashion-swatches",
-  "version": "1.0.0",
+  "version": "1.0.0-rc.5",
   "description": "Fashion swatch extension",
   "license": "Apache-2.0",
   "scripts": {
