@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ThemeContext, withCurrentProduct } from '@shopgate/engage/core';
-import { useNavigateToVariant } from '../../variants/hook';
+import { useNavigateToVariant, useRouteCharacteristics } from '../../variants/hook';
 import PdpColorSwatch from '../PdpColorSwatch';
 import PdpSizeSwatches from '../PdpSizeSwatches';
 import connect from './connector';
@@ -17,6 +17,7 @@ const PdpSwatches = ({ swatchCharacteristicIds, products }) => {
   const { variantId, characteristics } = pdpContext;
 
   useNavigateToVariant(products);
+  useRouteCharacteristics();
 
   const prodContext = useMemo(() => {
     if (!swatchCharacteristicIds) {

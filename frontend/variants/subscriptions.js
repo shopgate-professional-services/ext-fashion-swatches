@@ -103,6 +103,7 @@ export default (subscribe) => {
         .filter(Boolean)
         .map(product => product.id);
       if (productIds.length) {
+        // Fetch data to have product data prepared
         dispatch(fetchProductsById(productIds));
       }
     });

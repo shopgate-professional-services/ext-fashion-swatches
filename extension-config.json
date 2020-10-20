@@ -143,8 +143,8 @@
       "type": "portals"
     },
     {
-      "id": "PdpMediaSection",
-      "path": "frontend/portals/PdpMediaSection",
+      "id": "PdpMediaSwitch",
+      "path": "frontend/portals/PdpMediaSwitch",
       "target": "product.sticky-media",
       "type": "portals"
     },

@@ -2,7 +2,9 @@ import {
   useEffect, useContext, useCallback, useMemo,
 } from 'react';
 import isMatch from 'lodash.ismatch';
-import { router, ThemeContext } from '@shopgate/engage/core';
+import {
+  router, ThemeContext, useRoute, useNavigation,
+} from '@shopgate/engage/core';
 
 export const useNavigateToVariant = (products) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
@@ -80,4 +82,45 @@ export const useSwatchValueSelect = (swatch, swatchCharacteristicIds = [], produ
       }
     }
   }, [products, swatch, setCharacteristics, characteristics, resetChars]);
+};
+
+export const useIsVariantReady = (products = []) => {
+  const { contexts: { ProductContext } } = useContext(ThemeContext);
+  const { characteristics } = useContext(ProductContext);
+
+  return useMemo(() => {
+    if (!products || !characteristics) {
+      return false;
+    }
+    const filteredChars = Object.keys(characteristics).filter(key => !!characteristics[key]);
+    // Compare to first product chars length
+    return filteredChars.length === Object.keys(products[0].characteristics).length;
+  }, [characteristics, products]);
+};
+
+/**
+ * Remember variant selection into route state and restore for pure PDP
+ * @returns {void}
+ */
+export const useRouteCharacteristics = () => {
+  const { contexts: { ProductContext } } = useContext(ThemeContext);
+  const { variantId, characteristics, setCharacteristics } = useContext(ProductContext);
+  const { state: { preCharacteristics } } = useRoute();
+  const { update } = useNavigation();
+
+  useEffect(() => {
+    if (variantId) {
+      // Do nothing
+      return;
+    }
+
+    if (characteristics && (!preCharacteristics || !isMatch(characteristics, preCharacteristics))) {
+      // Update route with next characteristics
+      update({ preCharacteristics: characteristics });
+    }
+    if (!characteristics && preCharacteristics) {
+      // Restore from route characteristics
+      setCharacteristics(preCharacteristics);
+    }
+  }, [update, setCharacteristics, variantId, preCharacteristics, characteristics]);
 };
