@@ -8,14 +8,15 @@ const styles = {
   default: css({
     width: 44,
     height: 44,
+    textAlign: 'center',
     borderRadius: '100%',
     flexShrink: 0,
     background: themeConfig.colors.light,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 14,
-    lineHeight: '1.4',
+    fontSize: 13,
+    lineHeight: '1',
     boxShadow: '2px 1px 5px rgba(0, 0, 0, 0.25)',
   }).toString(),
 };
