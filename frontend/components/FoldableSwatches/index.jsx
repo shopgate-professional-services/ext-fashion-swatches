@@ -30,9 +30,9 @@ const styles = {
  * @return {JSX}
  */
 const FoldableSwatches = ({
-  values, onClick, requireSelection, defaultValue, label,
+  values, onClick, requireSelection, defaultValue, label, isTablet,
 }) => {
-  const [isFolded, setIsFolded] = useState(true);
+  const [isFolded, setIsFolded] = useState(!isTablet);
 
   // Receive props
   useEffect(() => setIsFolded((wasFolded) => {
@@ -44,8 +44,10 @@ const FoldableSwatches = ({
 
   const unfoldedClick = useCallback((value) => {
     onClick(value);
-    setIsFolded(true);
-  }, [onClick]);
+    if (!isTablet) {
+      setIsFolded(true);
+    }
+  }, [onClick, isTablet]);
 
   if (!values || !values.length) {
     return null;
@@ -90,6 +92,7 @@ const FoldableSwatches = ({
 };
 
 FoldableSwatches.propTypes = {
+  isTablet: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   defaultValue: PropTypes.shape(),
   label: PropTypes.string,

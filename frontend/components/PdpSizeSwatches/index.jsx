@@ -2,15 +2,15 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import connect from './connector';
 import PdpSizeSwatch from '../PdpSizeSwatch';
-
 /**
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpSizeSwatches = ({ swatches, products }) => {
+const PdpSizeSwatches = ({ swatches, products, getDeviceInformation }) => {
   if (!swatches) {
     return null;
   }
+  const isTablet = getDeviceInformation.type === 'tablet';
 
   return (
     <Fragment>
@@ -23,6 +23,7 @@ const PdpSizeSwatches = ({ swatches, products }) => {
             ? swatches.filter(sw => sw.id !== swatch.id).map(sw => sw.id)
             : null
           }
+          isTablet={isTablet}
         />
       ))}
     </Fragment>
@@ -30,6 +31,9 @@ const PdpSizeSwatches = ({ swatches, products }) => {
 };
 
 PdpSizeSwatches.propTypes = {
+  getDeviceInformation: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+  }).isRequired,
   products: PropTypes.arrayOf(PropTypes.shape()),
   swatches: PropTypes.arrayOf(PropTypes.shape()),
 };

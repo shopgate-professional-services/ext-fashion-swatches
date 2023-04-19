@@ -13,7 +13,9 @@ import { swatchSizeUnselectedValue, swatchLabels } from '../../config';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpSizeSwatch = ({ swatch, products, siblingSizeIds }) => {
+const PdpSizeSwatch = ({
+  swatch, products, siblingSizeIds, isTablet,
+}) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   let { characteristics } = useContext(ProductContext);
   const [requireSelection, setRequireSelection] = useState(false);
@@ -75,11 +77,13 @@ const PdpSizeSwatch = ({ swatch, products, siblingSizeIds }) => {
       requireSelection={requireSelection}
       label={label}
       defaultValue={swatchSizeUnselectedValue[swatch.label]}
+      isTablet={isTablet}
     />
   );
 };
 
 PdpSizeSwatch.propTypes = {
+  isTablet: PropTypes.bool.isRequired,
   products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   swatch: PropTypes.shape().isRequired,
   siblingSizeIds: PropTypes.arrayOf(PropTypes.string),
