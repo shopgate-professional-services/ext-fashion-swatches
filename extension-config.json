@@ -145,7 +145,7 @@
     {
       "id": "PdpMediaSwitch",
       "path": "frontend/portals/PdpMediaSwitch",
-      "target": "product.sticky-media",
+      "target": "product.image",
       "type": "portals"
     },
     {
