@@ -13,13 +13,14 @@ import { swatchColorUnselectedValue, swatchLabels } from '../../config';
  * @return {JSX}
  */
 const PdpColorSwatch = ({
-  products, swatch, swatchCharacteristicIds,
-  getDeviceInformation,
+  products,
+  swatch,
+  swatchCharacteristicIds,
+  isTablet,
 }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { characteristics } = useContext(ProductContext);
   const [requireSelection, setRequireSelection] = useState(false);
-  const isTablet = getDeviceInformation.type === 'tablet';
 
   useConditioner('PdpColorSwatch', () => {
     if (!swatch) {
@@ -74,9 +75,7 @@ const PdpColorSwatch = ({
 };
 
 PdpColorSwatch.propTypes = {
-  getDeviceInformation: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-  }).isRequired,
+  isTablet: PropTypes.bool.isRequired,
   products: PropTypes.arrayOf(PropTypes.shape()),
   swatch: PropTypes.shape(),
   swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),

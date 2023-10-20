@@ -10,7 +10,9 @@ import connect from './connector';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpSwatches = ({ swatchCharacteristicIds, products }) => {
+const PdpSwatches = ({
+  swatchCharacteristicIds, products, name, isTablet,
+}) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const pdpContext = useContext(ProductContext);
 
@@ -43,7 +45,9 @@ const PdpSwatches = ({ swatchCharacteristicIds, products }) => {
     return pdpContext;
   }, [products, pdpContext, variantId, characteristics, swatchCharacteristicIds]);
 
-  if (!swatchCharacteristicIds) {
+  // When the fashion-swatches extension is rendered on tablets, the component needs to render
+  // in a different portal than usual.
+  if (!swatchCharacteristicIds || (isTablet && name !== 'product.tablet.right-column.after')) {
     return null;
   }
 
@@ -56,6 +60,8 @@ const PdpSwatches = ({ swatchCharacteristicIds, products }) => {
 };
 
 PdpSwatches.propTypes = {
+  isTablet: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
   products: PropTypes.arrayOf(PropTypes.shape()),
   swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),
 };

@@ -28,11 +28,19 @@ const styles = {
       marginRight: 20,
     },
   }).toString(),
+  swatchesTablet: css({
+    flexWrap: 'wrap',
+    gap: '8px 0',
+    paddingBottom: 16,
+  }).toString(),
   withLabel: css({
     width: 'calc(100% - 16px)',
   }).toString(),
   selected: css({
     boxShadow: '0px 0px 0px 2px rgba(0,0,0,0.7)',
+  }).toString(),
+  selectedTablet: css({
+    border: '2px solid #fff',
   }).toString(),
   swatch: css({
     '&&': {
@@ -41,12 +49,25 @@ const styles = {
       marginRight: 20,
     },
   }).toString(),
+  swatchTablet: css({
+    '&&': {
+      height: 45,
+      width: 45,
+      marginRight: 20,
+      fontSize: 16,
+    },
+  }).toString(),
   labelSwatch: css({
     '&&': {
       width: 'auto',
       padding: '0 12px',
       fontWeight: 600,
-      borderRadius: '18px',
+      borderRadius: '28px',
+    },
+  }).toString(),
+  labelSwatchTablet: css({
+    '&&': {
+      padding: '0 20px',
     },
   }).toString(),
   disabled: css({
@@ -59,7 +80,7 @@ const styles = {
  * @return {JSX}
  */
 const FoldableSwatchesUnfolded = ({
-  values, onClick, highlight, label,
+  values, onClick, highlight, label, isTablet,
 }) => {
   const [highlighted, setHighlighted] = useState(false);
   const [fade, setFade] = useState('');
@@ -97,7 +118,10 @@ const FoldableSwatchesUnfolded = ({
           className={classnames(
             styles.swatches,
             transitions[state],
-            transitions[fade]
+            transitions[fade],
+            {
+              [styles.swatchesTablet]: isTablet,
+            }
           )}
           ref={ulRef}
         >
@@ -105,7 +129,12 @@ const FoldableSwatchesUnfolded = ({
             <Swatch
               key="label"
               style={sizeStyle.default}
-              className={classnames(styles.swatch, styles.labelSwatch)}
+              className={classnames(
+                styles.swatch,
+                isTablet && styles.swatchTablet,
+                styles.labelSwatch,
+                isTablet && styles.labelSwatchTablet
+              )}
             >
               {label}
             </Swatch>
@@ -120,17 +149,20 @@ const FoldableSwatchesUnfolded = ({
                   ...colorStyle.default,
                   ...value.selected && colorStyle.selected,
                   ...!value.selectable && colorStyle.disabled,
+                  ...(value.selected && isTablet ? { boxShadow: `0px 0px 0px 2px ${value.color}` } : null),
                 },
                 ...value.swatchLabel && {
                   ...sizeStyle.default,
                   ...value.selected && sizeStyle.selected,
                   ...!value.selectable && sizeStyle.disabled,
+                  ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
                 },
               }}
               className={classnames({
-                [styles.selected]: value.selected,
+                [styles.selected]: value.selected && !isTablet,
+                [styles.selectedTablet]: value.selected && isTablet,
                 [styles.disabled]: !value.selectable,
-              }, styles.swatch)}
+              }, styles.swatch, isTablet && styles.swatchTablet)}
               onClick={() => onClick(value)}
             >
               {value.swatchLabel}
@@ -146,11 +178,13 @@ FoldableSwatchesUnfolded.propTypes = {
   onClick: PropTypes.func.isRequired,
   values: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   highlight: PropTypes.bool,
+  isTablet: PropTypes.bool,
   label: PropTypes.string,
 };
 
 FoldableSwatchesUnfolded.defaultProps = {
   highlight: false,
+  isTablet: false,
   label: null,
 };
 

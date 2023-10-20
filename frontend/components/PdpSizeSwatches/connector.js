@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
-import { getDeviceInformation } from '@shopgate/pwa-common/selectors/client';
-import { getProductVariantsProducts, getSizeCharacteristics } from '../../variants/selectors';
+import {
+  getProductVariantsProducts,
+  getSizeCharacteristics,
+  getIsTablet,
+} from '../../variants/selectors';
 /**
  * @param {Object} state state
  * @param {Object} props props
@@ -9,7 +12,7 @@ import { getProductVariantsProducts, getSizeCharacteristics } from '../../varian
 const mapStateToProps = (state, { productId }) => ({
   swatches: getSizeCharacteristics(state, { productId }),
   products: getProductVariantsProducts(state, { productId }),
-  getDeviceInformation: getDeviceInformation(state),
+  isTablet: getIsTablet(state),
 });
 
 export default connect(mapStateToProps);

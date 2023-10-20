@@ -133,7 +133,10 @@
     {
       "id": "PdpSwatches",
       "path": "frontend/components/PdpSwatches",
-      "target": "product.sticky-buttons.between",
+      "target": [
+        "product.sticky-buttons.between",
+        "product.tablet.right-column.after"
+      ],
       "type": "portals"
     },
     {

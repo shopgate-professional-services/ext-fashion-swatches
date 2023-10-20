@@ -6,12 +6,10 @@ import PdpSizeSwatch from '../PdpSizeSwatch';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpSizeSwatches = ({ swatches, products, getDeviceInformation }) => {
+const PdpSizeSwatches = ({ swatches, products, isTablet }) => {
   if (!swatches) {
     return null;
   }
-  const isTablet = getDeviceInformation.type === 'tablet';
-
   return (
     <Fragment>
       {swatches.map((swatch, i) => (
@@ -31,9 +29,7 @@ const PdpSizeSwatches = ({ swatches, products, getDeviceInformation }) => {
 };
 
 PdpSizeSwatches.propTypes = {
-  getDeviceInformation: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-  }).isRequired,
+  isTablet: PropTypes.bool.isRequired,
   products: PropTypes.arrayOf(PropTypes.shape()),
   swatches: PropTypes.arrayOf(PropTypes.shape()),
 };

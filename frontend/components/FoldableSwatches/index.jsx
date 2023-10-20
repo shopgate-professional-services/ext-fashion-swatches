@@ -87,6 +87,7 @@ const FoldableSwatches = ({
       values={values}
       highlight={requireSelection}
       label={label}
+      isTablet={isTablet}
     />
   );
 };
