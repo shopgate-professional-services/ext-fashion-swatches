@@ -1,10 +1,18 @@
 import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { css } from 'glamor';
 import { ThemeContext, withCurrentProduct } from '@shopgate/engage/core';
+import { ConditionalWrapper } from '@shopgate/engage/components';
 import { useNavigateToVariant, useRouteCharacteristics } from '../../variants/hook';
 import PdpColorSwatch from '../PdpColorSwatch';
 import PdpSizeSwatches from '../PdpSizeSwatches';
 import connect from './connector';
+
+const styles = {
+  containerTablet: css({
+    paddingTop: 16,
+  }),
+};
 
 /**
  * @param {Object} props Props
@@ -52,10 +60,19 @@ const PdpSwatches = ({
   }
 
   return (
-    <ProductContext.Provider value={prodContext}>
-      <PdpColorSwatch productId={pdpContext.productId} />
-      <PdpSizeSwatches productId={pdpContext.productId} />
-    </ProductContext.Provider>
+    <ConditionalWrapper
+      condition={isTablet}
+      wrapper={children => (
+        <div className={styles.containerTablet}>
+          {children}
+        </div>
+      )}
+    >
+      <ProductContext.Provider value={prodContext}>
+        <PdpColorSwatch productId={pdpContext.productId} />
+        <PdpSizeSwatches productId={pdpContext.productId} />
+      </ProductContext.Provider>
+    </ConditionalWrapper>
   );
 };
 
