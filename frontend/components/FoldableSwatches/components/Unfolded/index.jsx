@@ -40,7 +40,7 @@ const styles = {
     boxShadow: '0px 0px 0px 2px rgba(0,0,0,0.7)',
   }).toString(),
   selectedTablet: css({
-    border: '2px solid #fff',
+    border: '2px solid #000',
   }).toString(),
   swatch: css({
     '&&': {
@@ -51,10 +51,10 @@ const styles = {
   }).toString(),
   swatchTablet: css({
     '&&': {
-      height: 45,
-      width: 45,
+      height: 42,
+      width: 42,
       marginRight: 20,
-      fontSize: 16,
+      fontSize: 15,
     },
   }).toString(),
   labelSwatch: css({
@@ -73,6 +73,50 @@ const styles = {
   disabled: css({
     opacity: 0.1,
   }).toString(),
+};
+
+const darkContrast = '#525345';
+const lightContrast = 'white';
+
+/**
+ * Checks if a string is a hex color
+ * @param {string} hexcolor Input hex color
+ * @returns {boolean}
+ */
+const isHexColor = hexcolor => /^#?([0-9a-f]{6}|[0-9a-f]{3})$/i.test(hexcolor);
+
+/**
+ * Retrieves a contrast color for a passed hex color
+ * @param {string} hexcolor Input hex color
+ * @returns {string}
+ */
+const getContrastColor = (hexcolor) => {
+  if (!isHexColor(hexcolor)) {
+    return lightContrast;
+  }
+
+  let sanitizedColor = hexcolor;
+
+  // If a leading # is provided, remove it
+  if (sanitizedColor.slice(0, 1) === '#') {
+    sanitizedColor = sanitizedColor.slice(1);
+  }
+
+  // If a three-character hexcode, make six-character
+  if (sanitizedColor.length === 3) {
+    sanitizedColor = sanitizedColor.split('').map(hex => hex + hex).join('');
+  }
+
+  // Convert to RGB value
+  const r = parseInt(sanitizedColor.substring(0, 2), 16);
+  const g = parseInt(sanitizedColor.substring(2, 2), 16);
+  const b = parseInt(sanitizedColor.substring(4, 2), 16);
+
+  // Get YIQ ratio
+  const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+
+  // Check contrast
+  return (yiq >= 200) ? darkContrast : lightContrast;
 };
 
 /**
@@ -149,7 +193,10 @@ const FoldableSwatchesUnfolded = ({
                   ...colorStyle.default,
                   ...value.selected && colorStyle.selected,
                   ...!value.selectable && colorStyle.disabled,
-                  ...(value.selected && isTablet ? { boxShadow: `0px 0px 0px 2px ${value.color}` } : null),
+                  ...(value.selected && isTablet ? {
+                    boxShadow: `0px 0px 0px 2px ${isHexColor(value.color) ? value.color : darkContrast}`,
+                    borderColor: getContrastColor(value.color),
+                  } : null),
                 },
                 ...value.swatchLabel && {
                   ...sizeStyle.default,
