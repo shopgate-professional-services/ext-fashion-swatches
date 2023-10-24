@@ -36,7 +36,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: '8px 0',
+    gap: '16px 0',
   }).toString(),
   withLabel: css({
     width: 'calc(100% - 16px)',
@@ -58,7 +58,7 @@ const styles = {
     '&&': {
       height: 42,
       width: 42,
-      marginRight: 20,
+      marginRight: 16,
       fontSize: 15,
     },
   }).toString(),
