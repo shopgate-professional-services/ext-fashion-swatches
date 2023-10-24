@@ -148,7 +148,7 @@
     {
       "id": "PdpMediaSwitch",
       "path": "frontend/portals/PdpMediaSwitch",
-      "target": "product.image",
+      "target": "component.product-image-slider",
       "type": "portals"
     },
     {
