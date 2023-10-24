@@ -109,8 +109,8 @@ const getContrastColor = (hexcolor) => {
 
   // Convert to RGB value
   const r = parseInt(sanitizedColor.substring(0, 2), 16);
-  const g = parseInt(sanitizedColor.substring(2, 2), 16);
-  const b = parseInt(sanitizedColor.substring(4, 2), 16);
+  const g = parseInt(sanitizedColor.substring(2, 4), 16);
+  const b = parseInt(sanitizedColor.substring(4, 6), 16);
 
   // Get YIQ ratio
   const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
