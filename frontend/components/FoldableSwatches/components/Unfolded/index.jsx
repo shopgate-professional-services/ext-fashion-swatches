@@ -80,9 +80,6 @@ const styles = {
   }).toString(),
 };
 
-const darkContrast = '#525345';
-const lightContrast = 'white';
-
 /**
  * Checks if a string is a hex color
  * @param {string} hexcolor Input hex color
@@ -93,9 +90,11 @@ const isHexColor = hexcolor => /^#?([0-9a-f]{6}|[0-9a-f]{3})$/i.test(hexcolor);
 /**
  * Retrieves a contrast color for a passed hex color
  * @param {string} hexcolor Input hex color
+ * @param {string} lightContrast Color applied when the input color is "light"
+ * @param {string} darkContrast Color applied when the input color is "dark"
  * @returns {string}
  */
-const getContrastColor = (hexcolor) => {
+const getContrastColor = (hexcolor, lightContrast, darkContrast) => {
   if (!isHexColor(hexcolor)) {
     return lightContrast;
   }
@@ -121,7 +120,7 @@ const getContrastColor = (hexcolor) => {
   const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
 
   // Check contrast
-  return (yiq >= 200) ? darkContrast : lightContrast;
+  return (yiq >= 230) ? lightContrast : darkContrast;
 };
 
 /**
@@ -207,8 +206,8 @@ const FoldableSwatchesUnfolded = ({
                     ...value.selected && colorStyle.selected,
                     ...!value.selectable && colorStyle.disabled,
                     ...(value.selected && isTablet ? {
-                      boxShadow: `0px 0px 0px 2px ${isHexColor(value.color) ? value.color : darkContrast}`,
-                      borderColor: getContrastColor(value.color),
+                      boxShadow: `0px 0px 0px 2px ${getContrastColor(value.color, '#525345', value.color)}`,
+                      borderColor: '#fff',
                     } : null),
                   },
                   ...value.swatchLabel && {
