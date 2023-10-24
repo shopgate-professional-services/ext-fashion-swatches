@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import { css } from 'glamor';
 import classnames from 'classnames';
+import { ConditionalWrapper } from '@shopgate/engage/components';
 import Swatch from '../../../Swatch';
 import { transitions } from '../../../styles';
 import { swatchColorStyle, swatchSizeStyle } from '../../../../config';
@@ -29,9 +30,13 @@ const styles = {
     },
   }).toString(),
   swatchesTablet: css({
+    paddingBottom: 16,
+  }).toString(),
+  swatchesContainerTablet: css({
+    display: 'flex',
+    flexDirection: 'row',
     flexWrap: 'wrap',
     gap: '8px 0',
-    paddingBottom: 16,
   }).toString(),
   withLabel: css({
     width: 'calc(100% - 16px)',
@@ -141,7 +146,7 @@ const FoldableSwatchesUnfolded = ({
   }, []);
 
   useLayoutEffect(() => {
-    if (ulRef.current) {
+    if (ulRef.current && !isTablet) {
       let selected = values.findIndex(v => !!v.selected);
       if (selected === -1 && !label) {
         // Scroll to most right without label and selection
@@ -149,7 +154,7 @@ const FoldableSwatchesUnfolded = ({
       }
       ulRef.current.scrollLeft = (selected + 1) * 55;
     }
-  }, [values, label]);
+  }, [values, label, isTablet]);
 
   return (
     <Transition
@@ -183,38 +188,47 @@ const FoldableSwatchesUnfolded = ({
               {label}
             </Swatch>
           )}
-          {values.map(value => (
-            <Swatch
-              key={value.id}
-              tagName="li"
-              style={{
-                ...value.swatchColor && {
-                  background: value.swatchColor,
-                  ...colorStyle.default,
-                  ...value.selected && colorStyle.selected,
-                  ...!value.selectable && colorStyle.disabled,
-                  ...(value.selected && isTablet ? {
-                    boxShadow: `0px 0px 0px 2px ${isHexColor(value.color) ? value.color : darkContrast}`,
-                    borderColor: getContrastColor(value.color),
-                  } : null),
-                },
-                ...value.swatchLabel && {
-                  ...sizeStyle.default,
-                  ...value.selected && sizeStyle.selected,
-                  ...!value.selectable && sizeStyle.disabled,
-                  ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
-                },
-              }}
-              className={classnames({
-                [styles.selected]: value.selected && !isTablet,
-                [styles.selectedTablet]: value.selected && isTablet,
-                [styles.disabled]: !value.selectable,
-              }, styles.swatch, isTablet && styles.swatchTablet)}
-              onClick={() => onClick(value)}
-            >
-              {value.swatchLabel}
-            </Swatch>
-          ))}
+          <ConditionalWrapper
+            condition={isTablet}
+            wrapper={children => (
+              <div className={styles.swatchesContainerTablet}>
+                {children}
+              </div>
+            )}
+          >
+            {values.map(value => (
+              <Swatch
+                key={value.id}
+                tagName="li"
+                style={{
+                  ...value.swatchColor && {
+                    background: value.swatchColor,
+                    ...colorStyle.default,
+                    ...value.selected && colorStyle.selected,
+                    ...!value.selectable && colorStyle.disabled,
+                    ...(value.selected && isTablet ? {
+                      boxShadow: `0px 0px 0px 2px ${isHexColor(value.color) ? value.color : darkContrast}`,
+                      borderColor: getContrastColor(value.color),
+                    } : null),
+                  },
+                  ...value.swatchLabel && {
+                    ...sizeStyle.default,
+                    ...value.selected && sizeStyle.selected,
+                    ...!value.selectable && sizeStyle.disabled,
+                    ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
+                  },
+                }}
+                className={classnames({
+                  [styles.selected]: value.selected && !isTablet,
+                  [styles.selectedTablet]: value.selected && isTablet,
+                  [styles.disabled]: !value.selectable,
+                }, styles.swatch, isTablet && styles.swatchTablet)}
+                onClick={() => onClick(value)}
+              >
+                {value.swatchLabel}
+              </Swatch>
+            ))}
+          </ConditionalWrapper>
         </ul>
       )}
     </Transition>
