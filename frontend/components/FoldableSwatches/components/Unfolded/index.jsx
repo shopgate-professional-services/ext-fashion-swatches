@@ -76,7 +76,10 @@ const styles = {
     },
   }).toString(),
   disabled: css({
-    opacity: 0.1,
+    opacity: 0.2,
+  }).toString(),
+  disabledTablet: css({
+    opacity: 0.4,
   }).toString(),
 };
 
@@ -221,6 +224,7 @@ const FoldableSwatchesUnfolded = ({
                   [styles.selected]: value.selected && !isTablet,
                   [styles.selectedTablet]: value.selected && isTablet,
                   [styles.disabled]: !value.selectable,
+                  [styles.disabledTablet]: isTablet && !value.selectable,
                 }, styles.swatch, isTablet && styles.swatchTablet)}
                 onClick={() => onClick(value)}
               >
