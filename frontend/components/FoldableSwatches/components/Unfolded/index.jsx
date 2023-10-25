@@ -120,7 +120,7 @@ const getContrastColor = (hexcolor, lightContrast, darkContrast) => {
   const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
 
   // Check contrast
-  return (yiq >= 230) ? lightContrast : darkContrast;
+  return (yiq >= 220) ? lightContrast : darkContrast;
 };
 
 /**
