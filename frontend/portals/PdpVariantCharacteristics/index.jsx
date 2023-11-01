@@ -16,19 +16,20 @@ const PdpVariantCharacteristics = ({ children, swatchCharacteristicIds }) => {
     return children;
   }
 
-  const restCharacteristics = omit(prodContext.characteristics || {}, ...swatchCharacteristicIds);
-
   /**
    * Eliminate (omit) size and color selection
    * Needed for ProductCharacteristics.checkSelection to work properly
    */
-  return React.cloneElement(
-    children,
-    {
+  const restCharacteristics = omit(prodContext.characteristics || {}, ...swatchCharacteristicIds);
+
+  return (
+    <ProductContext.Provider value={{
       ...prodContext,
       characteristics: prodContext.characteristics && restCharacteristics,
-    },
-    children.props.children
+    }}
+    >
+      {children}
+    </ProductContext.Provider>
   );
 };
 

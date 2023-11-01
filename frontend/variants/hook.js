@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import {
   useEffect, useContext, useCallback, useMemo,
 } from 'react';
@@ -124,3 +125,4 @@ export const useRouteCharacteristics = () => {
     }
   }, [update, setCharacteristics, variantId, preCharacteristics, characteristics]);
 };
+/* eslint-enable require-jsdoc */

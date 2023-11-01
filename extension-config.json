@@ -1,5 +1,5 @@
 {
-  "version": "1.1.1",
+  "version": "1.2.0",
   "id": "@shopgate-project/fashion-swatches",
   "configuration": {
     "swatchColorStyle": {
@@ -133,7 +133,10 @@
     {
       "id": "PdpSwatches",
       "path": "frontend/components/PdpSwatches",
-      "target": "product.sticky-buttons.between",
+      "target": [
+        "product.sticky-buttons.between",
+        "product.tablet.right-column.after"
+      ],
       "type": "portals"
     },
     {
@@ -145,7 +148,7 @@
     {
       "id": "PdpMediaSwitch",
       "path": "frontend/portals/PdpMediaSwitch",
-      "target": "product.sticky-media",
+      "target": "component.product-image-slider",
       "type": "portals"
     },
     {

@@ -9,7 +9,7 @@ import { useIsVariantReady } from '../../variants/hook';
  * @return {JSX}
  */
 const PdpMediaSwitch = ({
-  children, media, colorCharacteristicId, products, fetchProductImages,
+  children, colorCharacteristicId, products, fetchProductImages,
 }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { characteristics, variantId } = useContext(ProductContext);
@@ -46,21 +46,16 @@ const PdpMediaSwitch = ({
 
   if (!products || isVariantReady) {
     // Return Original Media from PDP as is
-    return children({ media });
+    return children;
   }
-
-  return children({
-    media: React.cloneElement(media, {
-      ...media.props,
-      variantId: preVariantId,
-    }),
+  return React.cloneElement(children, {
+    variantId: preVariantId,
   });
 };
 
 PdpMediaSwitch.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
   fetchProductImages: PropTypes.func.isRequired,
-  media: PropTypes.node.isRequired,
   colorCharacteristicId: PropTypes.string,
   products: PropTypes.arrayOf(PropTypes.shape()),
 };

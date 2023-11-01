@@ -12,7 +12,12 @@ import { swatchColorUnselectedValue, swatchLabels } from '../../config';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpColorSwatch = ({ products, swatch, swatchCharacteristicIds }) => {
+const PdpColorSwatch = ({
+  products,
+  swatch,
+  swatchCharacteristicIds,
+  isTablet,
+}) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const { characteristics } = useContext(ProductContext);
   const [requireSelection, setRequireSelection] = useState(false);
@@ -64,11 +69,13 @@ const PdpColorSwatch = ({ products, swatch, swatchCharacteristicIds }) => {
       requireSelection={requireSelection}
       defaultValue={swatchColorUnselectedValue}
       label={label}
+      isTablet={isTablet}
     />
   );
 };
 
 PdpColorSwatch.propTypes = {
+  isTablet: PropTypes.bool.isRequired,
   products: PropTypes.arrayOf(PropTypes.shape()),
   swatch: PropTypes.shape(),
   swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),

@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { getProducts } from '@shopgate/engage/product';
+import { getDeviceInformation } from '@shopgate/engage/core';
 import { getColorSwatch, getSizeSwatches, getSwatchCharacteristicIds as getIds } from './helpers';
 
 /**
@@ -82,4 +83,9 @@ export const getSwatchCharacteristicIds = createSelector(
   getColorCharacteristic,
   getSizeCharacteristics,
   (one, two) => getIds(one, ...two)
+);
+
+export const getIsTablet = createSelector(
+  getDeviceInformation,
+  deviceInformation => deviceInformation && deviceInformation.type === 'tablet'
 );
