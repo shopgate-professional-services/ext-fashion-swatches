@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## 1.3.0
+
+### Added
+
+- Config to set the number of the color swatches that will be shown on product lists.
 
 ## 1.2.0
 
