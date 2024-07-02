@@ -31,8 +31,13 @@ const swatch = bg => css({
   background: bg,
 });
 
+const numberOfShownSwatches = css({
+  marginTop: '-2.5px',
+});
+
 export default {
   list,
   listItem,
   swatch,
+  numberOfShownSwatches,
 };
