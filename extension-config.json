@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "id": "@shopgate-project/fashion-swatches",
   "configuration": {
     "swatchColorStyle": {
@@ -24,7 +24,7 @@
     "propertyWithColors": {
       "type": "admin",
       "destination": "frontend",
-      "default": "hexCodes",
+      "default": "Hexcodes",
       "params": {
         "label": "Name of the parent product property which contains color hexcodes of all variants",
         "type": "text",
@@ -34,7 +34,7 @@
     "propertyWithColor": {
       "type": "admin",
       "destination": "frontend",
-      "default": "hexCode",
+      "default": "",
       "params": {
         "label": "Name of the child product property which contains color hexcode",
         "type": "text",
@@ -90,7 +90,7 @@
     "colorAttribute": {
       "type": "admin",
       "destination": "frontend",
-      "default": "Farbe",
+      "default": "",
       "params": {
         "label": "The csv of product attributes names which are used as color swatch (eg. Color,Shoe color,Farbe)",
         "type": "text",
@@ -100,7 +100,7 @@
     "sizeAttribute": {
       "type": "admin",
       "destination": "frontend",
-      "default": ["Größe"],
+      "default": "",
       "params": {
         "label": "String array of product attributes names which are used as size swatch (eg. Size,Shoe size,Grosse)",
         "type": "json",
@@ -120,6 +120,15 @@
       "params": {
         "label": "Swatches optional labels",
         "type": "json"
+      }
+    },
+    "numberOfShownSwatches": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": 0,
+      "params": {
+        "type": "json",
+        "label": "Reduce shown swatches to the configured number. Enables only for > 0"
       }
     }
   },
