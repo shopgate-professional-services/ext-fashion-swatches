@@ -45,7 +45,7 @@ Default value for unselected color (see example).
 ### swatchSizeUnselectedValue (json)
 Default value for unselected size(s) (see example).
 
-### numberOfShownSwatches (int)
+### maxSwatches (int)
 Reduces shown swatches to the configured number (enables only for > 0). If the number is 0, all swatches will be shown.
 
 #### Example of full config:
@@ -101,7 +101,7 @@ Reduces shown swatches to the configured number (enables only for > 0). If the n
       "Shoe size": "Size"
     }
   },
-  "numberOfShownSwatches": 5
+  "maxSwatches": 5
 }
 ```
 
