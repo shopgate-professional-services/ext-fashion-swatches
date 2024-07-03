@@ -45,6 +45,9 @@ Default value for unselected color (see example).
 ### swatchSizeUnselectedValue (json)
 Default value for unselected size(s) (see example).
 
+### maxSwatches (int)
+Reduces shown swatches to the configured number (enables only for > 0). If the number is 0, all swatches will be shown.
+
 #### Example of full config:
 ```json
 {
@@ -92,12 +95,13 @@ Default value for unselected size(s) (see example).
     }
   },
   "swatchLabels": {
-      "enabled": true,
-      "labels": {
-        "Color": false,
-        "Shoe size": "Size"
-      }
+    "enabled": true,
+    "labels": {
+      "Color": false,
+      "Shoe size": "Size"
     }
+  },
+  "maxSwatches": 5
 }
 ```
 
