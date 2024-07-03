@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import connect from './connector';
 import styles from './style';
-import { numberOfShownSwatches } from '../../config';
+import { maxSwatches } from '../../config';
 
 /**
  * @param {Object} props Props
@@ -14,11 +14,11 @@ const PlpSwatches = ({ swatches }) => {
     return null;
   }
 
-  if (swatches.length > numberOfShownSwatches && numberOfShownSwatches !== 0) {
+  if (swatches.length > maxSwatches && maxSwatches !== 0) {
     return (
       <div>
         <ul className={styles.list}>
-          {swatches.slice(0, numberOfShownSwatches).map(swatch => (
+          {swatches.slice(0, maxSwatches).map(swatch => (
             <li
               className={styles.listItem}
               key={swatch}
@@ -26,9 +26,11 @@ const PlpSwatches = ({ swatches }) => {
               <div className={styles.swatch(swatch)} />
             </li>
           ))}
-          <div className={styles.numberOfShownSwatches}>
-            {`+ ${swatches.length - numberOfShownSwatches}`}
-          </div>
+          <li>
+            <div className={styles.maxSwatches}>
+              {`+ ${swatches.length - maxSwatches}`}
+            </div>
+          </li>
         </ul>
       </div>
     );
