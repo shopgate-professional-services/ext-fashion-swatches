@@ -31,13 +31,21 @@ const swatch = bg => css({
   background: bg,
 });
 
+const plus = css({
+  marginTop: '-1px',
+  fontSize: '0.85rem',
+});
+
 const maxSwatches = css({
-  marginTop: '-2.5px',
+  marginTop: '0px',
+  marginLeft: '2px',
+  fontSize: '0.85rem',
 });
 
 export default {
   list,
   listItem,
   swatch,
+  plus,
   maxSwatches,
 };
