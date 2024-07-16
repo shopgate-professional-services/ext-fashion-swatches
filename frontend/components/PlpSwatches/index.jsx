@@ -27,8 +27,13 @@ const PlpSwatches = ({ swatches }) => {
             </li>
           ))}
           <li>
-            <div className={styles.maxSwatches}>
-              {`+ ${swatches.length - maxSwatches}`}
+            <div className={`fashion-swatches max-swatches plus ${styles.plus}`}>
+             +
+            </div>
+          </li>
+          <li>
+            <div className={`fashion-swatches max-swatches number ${styles.maxSwatches}`}>
+              {`${swatches.length - maxSwatches}`}
             </div>
           </li>
         </ul>
