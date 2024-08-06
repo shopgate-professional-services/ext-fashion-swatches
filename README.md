@@ -1,6 +1,6 @@
 # Shopgate Connect - Fashion swatches
 
-This extension adds color swatches to PLP and PDP.
+This extension adds color swatches and link swatches to PLP and PDP.
 Configured attributes/characteristics are shown in a fashion optimized styling on PDP.
 
 ## Configuration
@@ -14,6 +14,13 @@ CSS styling for swatches as glamor object. Can be any css properties and values.
     - disabled: disabled state (no available product, etc)
 
 ### swatchSizeStyle (json)
+CSS styling for swatches as glamor object. Can be any css properties and values.
+- pdp: styling for swatches on product detail page
+    - default: default state
+    - selected: selected state
+    - disabled: disabled state (no available product, etc)
+
+### swatchLinkStyle (json)
 CSS styling for swatches as glamor object. Can be any css properties and values.
 - pdp: styling for swatches on product detail page
     - default: default state
@@ -47,6 +54,19 @@ Default value for unselected size(s) (see example).
 
 ### maxSwatches (int)
 Reduces shown swatches to the configured number (enables only for > 0). If the number is 0, all swatches will be shown.
+
+### pdpSwatchesDisplayMode (string)
+Swatches are shown with and headline or a lable-swatch (e.g. normal and headline).
+
+### pdpSwatchesPosition (string)
+Position of swatches on PDP. (e.g. sticky-buttons or variants).
+
+### linkSwatchConfiguration (json)
+Configuration for the link swatch
+- `type` (string) Can be `color` to show a color-link-swatch or `image` to show an image-link-swatch.
+- `property` (string) Property that contains the linkSwatch information (see dependencies).
+- `showAdditionalText` (boolean) Shows an additional text underneath the link-swatch.
+- `historyReplace` (boolean) Replaces the route history.
 
 #### Example of full config:
 ```json
@@ -101,7 +121,26 @@ Reduces shown swatches to the configured number (enables only for > 0). If the n
       "Shoe size": "Size"
     }
   },
-  "maxSwatches": 5
+  "maxSwatches": 5,
+  "pdpSwatchesDisplayMode": "normal",
+  "pdpSwatchesPosition": "sticky-buttons",
+  "swatchLinkStyle": {
+    "pdp": {
+      "default": null,
+      "selected": {
+        "border": "2px solid blue"
+      },
+      "disabled":  {
+        "opacity": "0.5"
+      }
+    }
+  },
+  "linkSwatchConfiguration": {
+    "type": "color",
+    "property": "linkSwatch",
+    "showAdditionalText": true,
+    "historyReplace": false
+  }
 }
 ```
 
@@ -111,6 +150,15 @@ Reduces shown swatches to the configured number (enables only for > 0). If the n
     - `addProperties` config. Add the product properties that are configured for this extension.
         - propertyWithColors
         - propertyWithColor
+- Needs a property with the following values
+  - ````{"linkSwatch":{"name":{"label":"","itemNumber":"","hexcode":"","additionalText":"","imgUrl":""},"name2":{"label2":"","itemNumber2":"","hexcode2":"","additionalText2":"","imgUrl2":""}}}````
+    - `linkSwatch`: is the property name.
+    - `name`: Is the name of an entry.
+    - `label`: The label is shown inside the swatch.
+    - `itemNumber`: The itemNumber - is needed for the redirect to the product.
+    - `hexcode`: Is needed for the `swatchType`:`color`. The swatch will be shown with this background color. 
+    - `additionalText`: Is shown underneath the swatch. 
+    - `imgUrl`: Is needed for the `swatchType`:`image`. The swatch will show this image.
 
 ## About Shopgate
 
