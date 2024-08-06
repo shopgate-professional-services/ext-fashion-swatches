@@ -21,11 +21,11 @@ const PdpLinkSwatch = ({ productId, isTablet, linkSwatch }) => {
         linkSwatchValues.push({
           id: value,
           itemNumber: swatch[value].itemNumber,
-          swatchLabel: null,
+          swatchLabel: swatch[value].label,
           swatchColor: swatch[value].hexcode,
           selected: productId === swatch[value].itemNumber,
           selectable: true,
-          swatchImage: null,
+          swatchImage: swatch[value].img,
           additionalText: swatch[value].label,
         });
         return null;
