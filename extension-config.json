@@ -1,5 +1,5 @@
 {
-  "version": "1.3.1",
+  "version": "1.4.0",
   "id": "@shopgate-project/fashion-swatches",
   "configuration": {
     "swatchColorStyle": {
@@ -46,11 +46,11 @@
       "destination": "frontend",
       "default": {
         "pdp": {
-          "default": null,
-          "selected": {
-            "background": "#000",
-            "color": "#fff",
+          "default": {
             "boxShadow": "none"
+          },
+          "selected": {
+            "border": "1px solid #000"
           },
           "disabled": null
         }
@@ -111,10 +111,11 @@
       "type": "admin",
       "destination": "frontend",
       "default": {
-        "enabled": false,
+        "enabled": true,
         "labels": {
           "Color": false,
-          "Size": "Size"
+          "Size": "Size",
+          "Link": "Link"
         }
       },
       "params": {
@@ -130,6 +131,60 @@
         "type": "json",
         "label": "Reduce shown swatches to the configured number. Enables only for > 0"
       }
+    },
+    "pdpSwatchesDisplayMode": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "normal",
+      "params": {
+        "label": "Swatches are shown with and headline or a lable-swatch (e.g. normal and headline)",
+        "type": "text",
+        "required": true
+      }
+    },
+    "pdpSwatchesPosition": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": "sticky-buttons",
+      "params": {
+        "label": "Position of swatches on PDP. (e.g. sticky-buttons or variants)",
+        "type": "text",
+        "required": true
+      }
+    },
+    "swatchLinkStyle": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": {
+        "plp": null,
+        "pdp": {
+          "default": null,
+          "selected": {
+            "boxShadow": "0px 0px 0px 2px white"
+          },
+          "disabled": null
+        }
+      },
+      "params": {
+        "label": "CSS styling for color swatches as glamor object",
+        "type": "json",
+        "required": true
+      }
+    },
+    "linkSwatchConfiguration": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": {
+        "type": "",
+        "property": "",
+        "showAdditionalText": false,
+        "historyReplace": false
+      },
+      "params": {
+        "label": "Configuration for the link swatch",
+        "type": "json",
+        "required": true
+      }
     }
   },
   "components": [
@@ -144,7 +199,8 @@
       "path": "frontend/components/PdpSwatches",
       "target": [
         "product.sticky-buttons.between",
-        "product.tablet.right-column.after"
+        "product.variant-select.after",
+        "product.tablet.right-column.add-to-cart.before"
       ],
       "type": "portals"
     },
