@@ -6,11 +6,14 @@ import { ConditionalWrapper } from '@shopgate/engage/components';
 import { useNavigateToVariant, useRouteCharacteristics } from '../../variants/hook';
 import PdpColorSwatch from '../PdpColorSwatch';
 import PdpSizeSwatches from '../PdpSizeSwatches';
+import PdpLinkSwatch from '../pdpLinkSwatch';
 import connect from './connector';
+import { pdpSwatchesPosition } from '../../config';
 
 const styles = {
   containerTablet: css({
     paddingTop: 16,
+    paddingBottom: 16,
   }),
 };
 
@@ -23,7 +26,6 @@ const PdpSwatches = ({
 }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const pdpContext = useContext(ProductContext);
-
   const { variantId, characteristics } = pdpContext;
 
   useNavigateToVariant(products);
@@ -33,6 +35,7 @@ const PdpSwatches = ({
     if (!swatchCharacteristicIds) {
       return pdpContext;
     }
+
     if (variantId) {
       const missingChars = swatchCharacteristicIds.filter(char => (
         !characteristics || !characteristics[char]
@@ -53,9 +56,13 @@ const PdpSwatches = ({
     return pdpContext;
   }, [products, pdpContext, variantId, characteristics, swatchCharacteristicIds]);
 
-  // When the fashion-swatches extension is rendered on tablets, the component needs to render
+  // When the fashion-swatches extension is rendered on tablets or
+  // swatches position is configured to be shown at the normal variants position,
+  // the component needs to render
   // in a different portal than usual.
-  if (!swatchCharacteristicIds || (isTablet && name !== 'product.tablet.right-column.after')) {
+  if (!swatchCharacteristicIds || (isTablet && name !== 'product.tablet.right-column.add-to-cart.before') ||
+  (!isTablet && pdpSwatchesPosition === 'variants' && name !== 'product.variant-select.after') ||
+  (!isTablet && pdpSwatchesPosition !== 'variants' && name === 'product.variant-select.after')) {
     return null;
   }
 
@@ -69,6 +76,7 @@ const PdpSwatches = ({
       )}
     >
       <ProductContext.Provider value={prodContext}>
+        <PdpLinkSwatch productId={pdpContext.productId} />
         <PdpColorSwatch productId={pdpContext.productId} />
         <PdpSizeSwatches productId={pdpContext.productId} />
       </ProductContext.Provider>

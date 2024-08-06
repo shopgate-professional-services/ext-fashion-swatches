@@ -4,7 +4,7 @@ import { css } from 'glamor';
 import classnames from 'classnames';
 import Swatch from '../Swatch';
 import Unfolded from './components/Unfolded';
-import { swatchColorStyle, swatchSizeStyle } from '../../config';
+import { swatchColorStyle, swatchSizeStyle, pdpSwatchesPosition } from '../../config';
 
 const { pdp: colorStyle } = swatchColorStyle;
 const { pdp: sizeStyle } = swatchSizeStyle;
@@ -30,9 +30,16 @@ const styles = {
  * @return {JSX}
  */
 const FoldableSwatches = ({
-  values, onClick, requireSelection, defaultValue, label, isTablet,
+  values,
+  onClick,
+  requireSelection,
+  defaultValue,
+  label,
+  isTablet,
+  isLinkSwatch,
+  showAdditionalText,
 }) => {
-  const [isFolded, setIsFolded] = useState(!isTablet);
+  const [isFolded, setIsFolded] = useState(!isTablet && pdpSwatchesPosition !== 'variants');
 
   // Receive props
   useEffect(() => setIsFolded((wasFolded) => {
@@ -44,7 +51,7 @@ const FoldableSwatches = ({
 
   const unfoldedClick = useCallback((value) => {
     onClick(value);
-    if (!isTablet) {
+    if (!isTablet && pdpSwatchesPosition !== 'variants') {
       setIsFolded(true);
     }
   }, [onClick, isTablet]);
@@ -88,6 +95,8 @@ const FoldableSwatches = ({
       highlight={requireSelection}
       label={label}
       isTablet={isTablet}
+      isLinkSwatch={isLinkSwatch}
+      showAdditionalText={showAdditionalText}
     />
   );
 };
@@ -96,14 +105,18 @@ FoldableSwatches.propTypes = {
   isTablet: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   defaultValue: PropTypes.shape(),
+  isLinkSwatch: PropTypes.bool,
   label: PropTypes.string,
   requireSelection: PropTypes.bool,
+  showAdditionalText: PropTypes.bool,
   values: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 FoldableSwatches.defaultProps = {
   requireSelection: false,
+  isLinkSwatch: false,
   label: null,
+  showAdditionalText: false,
   values: null,
   defaultValue: null,
 };
