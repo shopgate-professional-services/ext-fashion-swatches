@@ -60,8 +60,8 @@ const styles = {
   }).toString(),
   swatch: css({
     '&&': {
-      height: 25,
-      width: 25,
+      height: 35,
+      width: 35,
       marginRight: 10,
       marginLeft: 10,
     },
@@ -192,114 +192,6 @@ const FoldableSwatchesUnfolded = ({
     }
   }, [values, label, isTablet, highlighted]);
 
-  if (isLinkSwatch) {
-    return (
-      <Transition
-        in={highlighted}
-        timeout={1500}
-        onEntered={() => setHighlighted(false)}
-      >
-        {state => (
-          <div className={styles.swatchesContainer}>
-            {label && pdpSwatchesDisplayMode === 'headline' && pdpSwatchesPosition === 'variants' && (
-              <p className={styles.swatchHeadline}>{label}</p>
-            )}
-            <ul
-              className={classnames(
-                styles.swatches,
-                transitions[state],
-                transitions[fade],
-                {
-                  [styles.swatchesTablet]: isTablet,
-                }
-              )}
-            >
-              {label && (pdpSwatchesDisplayMode !== 'headline' || pdpSwatchesPosition !== 'variants') && (
-                <Swatch
-                  key="label"
-                  style={sizeStyle.default}
-                  className={classnames(
-                    styles.swatch,
-                    isTablet && styles.swatchTablet,
-                    styles.labelSwatch,
-                    isTablet && styles.labelSwatchTablet
-                  )}
-                >
-                  {label}
-                </Swatch>
-              )}
-              <ConditionalWrapper
-                condition={isTablet}
-                wrapper={children => (
-                  <div className={styles.swatchesContainerTablet}>
-                    {children}
-                  </div>
-                )}
-              >
-                {values.map(value => (
-                  <Link
-                    href={`/item/${bin2hex(value.itemNumber)}`}
-                    className={styles.linkSwatch}
-                    replace={historyReplace}
-                  >
-                    <Swatch
-                      tagName="li"
-                      style={{
-                        ...value.swatchColor && {
-                          background: value.swatchColor,
-                          ...linkStyle.default,
-                          ...value.selected && linkStyle.selected,
-                          ...!value.selectable && linkStyle.disabled,
-                          ...(value.selected ? {
-                            boxShadow: '0px 0px 0px 1px #000',
-                            border: isTablet ? '4px solid' : '3px solid',
-                            borderColor: '#fff',
-                          } : null),
-                        },
-                        ...value.swatchImage && {
-                          background: `url(${value.swatchImage})`,
-                          height: 70,
-                          width: 70,
-                          color: '#fff',
-                          ...linkStyle.default,
-                          ...value.selected && linkStyle.selected,
-                          ...!value.selectable && linkStyle.disabled,
-                          ...(value.selected ? {
-                            boxShadow: '0px 0px 0px 1px #000',
-                            border: isTablet ? '4px solid' : '3px solid',
-                            borderColor: '#fff',
-                          } : null),
-                        },
-                        ...value.swatchLabel && {
-                          ...linkStyle.default,
-                          ...value.selected && linkStyle.selected,
-                          ...!value.selectable && linkStyle.disabled,
-                          ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
-                        },
-                      }}
-                      className={classnames({
-                        [styles.selected]: value.selected && !isTablet,
-                        [styles.selectedTablet]: value.selected && isTablet,
-                        [styles.disabled]: !value.selectable,
-                        [styles.disabledTablet]: isTablet && !value.selectable,
-                      }, styles.swatch, isTablet && styles.swatchTablet)}
-                      onClick={() => onClick(value)}
-                    >
-                      {value.swatchLabel}
-                    </Swatch>
-                    {showAdditionalText && (
-                    <p style={{ fontSize: '0.7rem' }}>{value.additionalText}</p>
-                    )}
-                  </Link>
-                ))}
-              </ConditionalWrapper>
-            </ul>
-          </div>
-        )}
-      </Transition>
-    );
-  }
-
   return (
     <Transition
       in={highlighted}
@@ -345,36 +237,83 @@ const FoldableSwatchesUnfolded = ({
               )}
             >
               {values.map(value => (
-                <Swatch
-                  key={value.id}
-                  tagName="li"
-                  style={{
-                    ...value.swatchColor && {
-                      background: value.swatchColor,
-                      ...colorStyle.default,
-                      ...value.selected && colorStyle.selected,
-                      ...!value.selectable && colorStyle.disabled,
-                      ...(value.selected && isTablet ? {
-                        boxShadow: `0px 0px 0px 2px ${getContrastColor(value.color, '#525345', value.color)}`,
-                        borderColor: '#fff',
-                      } : null),
-                    },
-                    ...value.swatchLabel && {
-                      ...sizeStyle.default,
-                      ...value.selected && sizeStyle.selected,
-                      ...!value.selectable && sizeStyle.disabled,
-                    },
-                  }}
-                  className={classnames({
-                    [styles.selected]: value.selected && !isTablet,
-                    [styles.selectedTablet]: value.selected && isTablet,
-                    [styles.disabled]: !value.selectable,
-                    [styles.disabledTablet]: isTablet && !value.selectable,
-                  }, styles.swatch, isTablet && styles.swatchTablet)}
-                  onClick={() => onClick(value)}
+                <ConditionalWrapper
+                  condition={isLinkSwatch}
+                  wrapper={children => (
+                    <Link
+                      href={`/item/${bin2hex(value.itemNumber)}`}
+                      className={styles.linkSwatch}
+                      replace={historyReplace}
+                    >
+                      {children}
+                    </Link>
+                  )}
                 >
-                  {value.swatchLabel}
-                </Swatch>
+                  <Swatch
+                    tagName="li"
+                    style={{
+                      ...value.swatchColor && isLinkSwatch && {
+                        background: value.swatchColor,
+                        ...linkStyle.default,
+                        ...value.selected && linkStyle.selected,
+                        ...!value.selectable && linkStyle.disabled,
+                        ...(value.selected ? {
+                          boxShadow: `0px 0px 0px 1px ${getContrastColor(value.color, '#525345', value.color)}`,
+                          border: isTablet ? '4px solid' : '3px solid',
+                          borderColor: '#fff',
+                        } : null),
+                      },
+                      ...value.swatchColor && !isLinkSwatch && {
+                        background: value.swatchColor,
+                        ...colorStyle.default,
+                        ...value.selected && colorStyle.selected,
+                        ...!value.selectable && colorStyle.disabled,
+                        ...(value.selected ? {
+                          boxShadow: `0px 0px 0px 1px ${getContrastColor(value.color, '#525345', value.color)}`,
+                          border: isTablet ? '4px solid' : '3px solid',
+                          borderColor: '#fff',
+                        } : null),
+                      },
+                      ...value.swatchImage && {
+                        background: `url(${value.swatchImage})`,
+                        height: 70,
+                        width: 70,
+                        color: '#fff',
+                        ...linkStyle.default,
+                        ...value.selected && linkStyle.selected,
+                        ...!value.selectable && linkStyle.disabled,
+                        ...(value.selected ? {
+                          boxShadow: '0px 0px 0px 1px #000',
+                          border: isTablet ? '4px solid' : '3px solid',
+                          borderColor: '#fff',
+                        } : null),
+                      },
+                      ...value.swatchLabel && isLinkSwatch && {
+                        ...linkStyle.default,
+                        ...value.selected && linkStyle.selected,
+                        ...!value.selectable && linkStyle.disabled,
+                        ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
+                      },
+                      ...value.swatchLabel && !isLinkSwatch && {
+                        ...sizeStyle.default,
+                        ...value.selected && sizeStyle.selected,
+                        ...!value.selectable && sizeStyle.disabled,
+                      },
+                    }}
+                    className={classnames({
+                      [styles.selected]: value.selected && !isTablet,
+                      [styles.selectedTablet]: value.selected && isTablet,
+                      [styles.disabled]: !value.selectable,
+                      [styles.disabledTablet]: isTablet && !value.selectable,
+                    }, styles.swatch, isTablet && styles.swatchTablet)}
+                    onClick={() => onClick(value)}
+                  >
+                    {value.swatchLabel}
+                  </Swatch>
+                  {showAdditionalText && (
+                  <p style={{ fontSize: '0.7rem' }}>{value.additionalText}</p>
+                  )}
+                </ConditionalWrapper>
               ))}
             </ConditionalWrapper>
           </ul>
