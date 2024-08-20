@@ -46,11 +46,11 @@
       "destination": "frontend",
       "default": {
         "pdp": {
-          "default": {
-            "boxShadow": "none"
-          },
+          "default": null,
           "selected": {
-            "border": "1px solid #000"
+            "background": "#000",
+            "color": "#fff",
+            "boxShadow": "none"
           },
           "disabled": null
         }
@@ -111,7 +111,7 @@
       "type": "admin",
       "destination": "frontend",
       "default": {
-        "enabled": false,
+        "enabled": true,
         "labels": {
           "Color": false,
           "Size": "Size",
@@ -135,9 +135,9 @@
     "pdpSwatchesDisplayMode": {
       "type": "admin",
       "destination": "frontend",
-      "default": "normal",
+      "default": "swatch",
       "params": {
-        "label": "Swatches are shown with and headline or a lable-swatch (e.g. normal and headline)",
+        "label": "Swatches are shown with and headline or a lable-swatch (e.g. swatch and headline)",
         "type": "text",
         "required": true
       }
