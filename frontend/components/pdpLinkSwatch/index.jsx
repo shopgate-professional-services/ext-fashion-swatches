@@ -60,7 +60,7 @@ const PdpLinkSwatch = ({ productId, isTablet, linkSwatch }) => {
       defaultValue={swatchColorUnselectedValue}
       label={swatchLabels.enabled ? label : null}
       isTablet={isTablet}
-      isLinkSwatch={!false}
+      isLinkSwatch
       showAdditionalText={linkSwatchConfiguration.showAdditionalText}
     />
   );
