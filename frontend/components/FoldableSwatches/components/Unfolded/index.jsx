@@ -35,7 +35,7 @@ const styles = {
     opacity: 0,
     transition: 'opacity 1.5s',
     boxShadow: 'none !important',
-    justifyContent: pdpSwatchesPosition === 'variants' ? 'center' : 'start',
+    justifyContent: pdpSwatchesPosition === 'variants' ? 'safe center' : 'start',
     ' li': {
       marginRight: 20,
     },
