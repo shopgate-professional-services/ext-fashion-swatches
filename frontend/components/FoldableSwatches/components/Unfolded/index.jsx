@@ -303,7 +303,7 @@ const FoldableSwatchesUnfolded = ({
                             borderColor: '#fff',
                           } : null),
                         },
-                        ...value.swatchLabel && isLinkSwatch && {
+                        ...isLinkSwatch && value.swatchLabel && !value.swatchColor && {
                           ...linkStyle.default,
                           ...value.selected && linkStyle.selected,
                           ...!value.selectable && linkStyle.disabled,
