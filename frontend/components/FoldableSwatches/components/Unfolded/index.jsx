@@ -92,7 +92,6 @@ const styles = {
   }).toString(),
   swatchesContainer: css({
     marginBottom: 20,
-    background: 'lightgrey',
   }).toString(),
   linkSwatch: css({
     width: 'unset',
