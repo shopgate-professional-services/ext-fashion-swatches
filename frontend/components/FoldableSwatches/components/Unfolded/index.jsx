@@ -36,6 +36,7 @@ const styles = {
     transition: 'opacity 1.5s',
     boxShadow: 'none !important',
     justifyContent: pdpSwatchesPosition === 'variants' ? 'safe center' : 'start',
+    alignItems: 'center',
     ' li': {
       marginRight: 20,
     },
@@ -48,6 +49,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: '16px 0',
+    alignItems: 'center',
   }).toString(),
   withLabel: css({
     width: 'calc(100% - 16px)',

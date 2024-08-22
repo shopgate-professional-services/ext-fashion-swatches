@@ -48,7 +48,7 @@ const PdpLinkSwatch = ({ productId, isTablet, linkSwatch }) => {
 
   /**
    * Pseudo function
-   @returns {void}
+   * @returns {void}
    */
   const pseudoFunction = () => null;
 
