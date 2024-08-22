@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useRef, useLayoutEffect,
+  useState, useEffect, useRef, useLayoutEffect, useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import { bin2hex } from '@shopgate/engage/core';
@@ -18,9 +18,9 @@ import {
   linkSwatchConfiguration,
 } from '../../../../config';
 
-const { pdp: colorStyle = {} } = swatchColorStyle;
-const { pdp: sizeStyle = {} } = swatchSizeStyle;
-const { pdp: linkStyle = {} } = swatchLinkStyle;
+const { pdp: colorStyleDefault = {}, pdpTablet: colorStyleTablet } = swatchColorStyle;
+const { pdp: sizeStyleDefault = {}, pdpTablet: sizeStyleTablet } = swatchSizeStyle;
+const { pdp: linkStyleDefault = {}, pdpTablet: linkStyleTablet } = swatchLinkStyle;
 const { historyReplace } = linkSwatchConfiguration;
 
 const styles = {
@@ -53,10 +53,7 @@ const styles = {
     width: 'calc(100% - 16px)',
   }).toString(),
   selected: css({
-    boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.7)',
-  }).toString(),
-  selectedTablet: css({
-    border: '1px solid #000',
+    border: '2px solid #000',
   }).toString(),
   swatch: css({
     '&&': {
@@ -95,6 +92,7 @@ const styles = {
   }).toString(),
   swatchesContainer: css({
     marginBottom: 20,
+    background: 'lightgrey',
   }).toString(),
   linkSwatch: css({
     width: 'unset',
@@ -160,6 +158,16 @@ const FoldableSwatchesUnfolded = ({
   const [fade, setFade] = useState('');
   const ulRef = useRef(null);
 
+  const {
+    colorStyle,
+    linkStyle,
+    sizeStyle,
+  } = useMemo(() => ({
+    colorStyle: isTablet && colorStyleTablet ? colorStyleTablet : colorStyleDefault,
+    linkStyle: isTablet && linkStyleTablet ? linkStyleTablet : linkStyleDefault,
+    sizeStyle: isTablet && sizeStyleTablet ? sizeStyleTablet : sizeStyleDefault,
+  }), [isTablet]);
+
   useEffect(() => {
     if (highlight) {
       setHighlighted(true);
@@ -182,7 +190,7 @@ const FoldableSwatchesUnfolded = ({
     if (ulRef.current && !isTablet && pdpSwatchesPosition === 'variants' && highlighted) {
       let selected = values.findIndex(v => !!v.selected);
       if (selected === -1) {
-        // Scroll to unselected and highlited element and postion it in center o the view
+        // Scroll to unselected and highlighted element and postion it in center o the view
         selected = values.length - 1;
         ulRef.current.scrollIntoView({
           block: 'center',
@@ -195,7 +203,7 @@ const FoldableSwatchesUnfolded = ({
   return (
     <Transition
       in={highlighted}
-      timeout={1500}
+      timeout={500}
       onEntered={() => setHighlighted(false)}
     >
       {state => (
@@ -236,85 +244,94 @@ const FoldableSwatchesUnfolded = ({
                 </div>
               )}
             >
-              {values.map(value => (
-                <ConditionalWrapper
-                  condition={isLinkSwatch}
-                  wrapper={children => (
-                    <Link
-                      href={`/item/${bin2hex(value.itemNumber)}`}
-                      className={styles.linkSwatch}
-                      replace={historyReplace}
-                    >
-                      {children}
-                    </Link>
-                  )}
-                >
-                  <Swatch
-                    tagName="li"
-                    style={{
-                      ...value.swatchColor && isLinkSwatch && {
-                        background: value.swatchColor,
-                        ...linkStyle.default,
-                        ...value.selected && linkStyle.selected,
-                        ...!value.selectable && linkStyle.disabled,
-                        ...(value.selected ? {
-                          boxShadow: `0px 0px 0px 1px ${getContrastColor(value.color, '#525345', value.color)}`,
-                          border: isTablet ? '4px solid' : '3px solid',
-                          borderColor: '#fff',
-                        } : null),
-                      },
-                      ...value.swatchColor && !isLinkSwatch && {
-                        background: value.swatchColor,
-                        ...colorStyle.default,
-                        ...value.selected && colorStyle.selected,
-                        ...!value.selectable && colorStyle.disabled,
-                        ...(value.selected ? {
-                          boxShadow: `0px 0px 0px 1px ${getContrastColor(value.color, '#525345', value.color)}`,
-                          border: isTablet ? '4px solid' : '3px solid',
-                          borderColor: '#fff',
-                        } : null),
-                      },
-                      ...value.swatchImage && {
-                        background: `url(${value.swatchImage})`,
-                        height: 70,
-                        width: 70,
-                        color: '#fff',
-                        ...linkStyle.default,
-                        ...value.selected && linkStyle.selected,
-                        ...!value.selectable && linkStyle.disabled,
-                        ...(value.selected ? {
-                          boxShadow: '0px 0px 0px 1px #000',
-                          border: isTablet ? '4px solid' : '3px solid',
-                          borderColor: '#fff',
-                        } : null),
-                      },
-                      ...value.swatchLabel && isLinkSwatch && {
-                        ...linkStyle.default,
-                        ...value.selected && linkStyle.selected,
-                        ...!value.selectable && linkStyle.disabled,
-                        ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
-                      },
-                      ...value.swatchLabel && !isLinkSwatch && {
-                        ...sizeStyle.default,
-                        ...value.selected && sizeStyle.selected,
-                        ...!value.selectable && sizeStyle.disabled,
-                      },
-                    }}
-                    className={classnames({
-                      [styles.selected]: value.selected && !isTablet,
-                      [styles.selectedTablet]: value.selected && isTablet,
-                      [styles.disabled]: !value.selectable,
-                      [styles.disabledTablet]: isTablet && !value.selectable,
-                    }, styles.swatch, isTablet && styles.swatchTablet)}
-                    onClick={() => onClick(value)}
+              {values.map((value) => {
+                // eslint-disable-next-line no-shadow
+                const swatchColorStyle = !isLinkSwatch ? colorStyle : linkStyle;
+
+                return (
+                  <ConditionalWrapper
+                    key={value.id}
+                    condition={isLinkSwatch}
+                    wrapper={children => (
+                      <Link
+                        href={`/item/${bin2hex(value.itemNumber)}`}
+                        className={styles.linkSwatch}
+                        replace={historyReplace}
+                      >
+                        {children}
+                      </Link>
+                    )}
                   >
-                    {value.swatchLabel}
-                  </Swatch>
-                  {showAdditionalText && (
-                  <p style={{ fontSize: '0.7rem' }}>{value.additionalText}</p>
-                  )}
-                </ConditionalWrapper>
-              ))}
+                    <Swatch
+                      tagName="li"
+                      style={{
+                        ...value.swatchColor && {
+                          background: value.swatchColor,
+                          ...swatchColorStyle.default,
+                          ...value.selected && swatchColorStyle.selected,
+                          ...!value.selectable && swatchColorStyle.disabled,
+                          ...(value.selected ? {
+                            ...(!swatchColorStyle?.selected?.boxShadow && {
+                              // When a swatch is selected, a solid boxShadow is used to mimic an
+                              // outer border which has the color of the swatch. As separator
+                              // between the boxShadow and the actual swatch, a white border is used
+                              boxShadow: `0px 0px 0px 2px ${getContrastColor(value.swatchColor, '#525345', value.swatchColor)}`,
+                            }),
+                            ...(!swatchColorStyle?.selected?.borderColor && {
+                              borderColor: '#fff',
+                            }),
+                          } : {
+                            ...(swatchColorStyle?.default?.boxShadow === 'none' && {
+                              // When boxShadows are deactivated via the style config we'll run
+                              // into issues with light colors. Therefor those swatches are
+                              // surrounded with a light gray solid boxShadow that looks like a
+                              // border. By default this boxShadow has the color of the swatch.
+                              boxShadow: `0px 0px 0px 1px ${getContrastColor(value.swatchColor, '#a7a7a7', value.swatchColor)}`,
+                            }),
+                          }),
+                        },
+                        ...value.swatchImage && {
+                          background: `url(${value.swatchImage})`,
+                          height: 70,
+                          width: 70,
+                          color: '#fff',
+                          ...linkStyle.default,
+                          ...value.selected && linkStyle.selected,
+                          ...!value.selectable && linkStyle.disabled,
+                          ...(value.selected ? {
+                            boxShadow: '0px 0px 0px 1px #000',
+                            border: isTablet ? '4px solid' : '3px solid',
+                            borderColor: '#fff',
+                          } : null),
+                        },
+                        ...value.swatchLabel && isLinkSwatch && {
+                          ...linkStyle.default,
+                          ...value.selected && linkStyle.selected,
+                          ...!value.selectable && linkStyle.disabled,
+                          ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
+                        },
+                        ...value.swatchLabel && !isLinkSwatch && {
+                          ...sizeStyle.default,
+                          ...value.selected && sizeStyle.selected,
+                          ...!value.selectable && sizeStyle.disabled,
+                          ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
+                        },
+                      }}
+                      className={classnames({
+                        [styles.selected]: value.selected,
+                        [styles.disabled]: !value.selectable,
+                        [styles.disabledTablet]: isTablet && !value.selectable,
+                      }, styles.swatch, isTablet && styles.swatchTablet)}
+                      onClick={() => onClick(value)}
+                    >
+                      {value.swatchLabel}
+                    </Swatch>
+                    {showAdditionalText && (
+                    <p style={{ fontSize: '0.7rem' }}>{value.additionalText}</p>
+                    )}
+                  </ConditionalWrapper>
+                );
+              })}
             </ConditionalWrapper>
           </ul>
         </div>
