@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0-beta.11",
+  "version": "1.4.0",
   "id": "@shopgate-project/fashion-swatches",
   "configuration": {
     "swatchColorStyle": {
@@ -111,7 +111,7 @@
       "type": "admin",
       "destination": "frontend",
       "default": {
-        "enabled": true,
+        "enabled": false,
         "labels": {
           "Color": false,
           "Size": "Size",
