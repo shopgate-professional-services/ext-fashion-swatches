@@ -35,7 +35,7 @@ const styles = {
     opacity: 0,
     transition: 'opacity 1.5s',
     boxShadow: 'none !important',
-    justifyContent: pdpSwatchesPosition === 'variants' ? 'safe center' : 'start',
+    justifyContent: pdpSwatchesPosition === 'variants' ? 'center' : 'start',
     alignItems: 'center',
     ' li': {
       marginRight: 20,
@@ -49,6 +49,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: '16px 0',
+    justifyContent: 'center',
     alignItems: 'center',
   }).toString(),
   withLabel: css({
@@ -309,13 +310,11 @@ const FoldableSwatchesUnfolded = ({
                           ...linkStyle.default,
                           ...value.selected && linkStyle.selected,
                           ...!value.selectable && linkStyle.disabled,
-                          ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
                         },
                         ...value.swatchLabel && !isLinkSwatch && {
                           ...sizeStyle.default,
                           ...value.selected && sizeStyle.selected,
                           ...!value.selectable && sizeStyle.disabled,
-                          ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
                         },
                       }}
                       className={classnames({
