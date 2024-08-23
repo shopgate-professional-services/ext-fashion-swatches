@@ -35,7 +35,7 @@ const styles = {
     opacity: 0,
     transition: 'opacity 1.5s',
     boxShadow: 'none !important',
-    justifyContent: pdpSwatchesPosition === 'variants' ? 'unset' : 'start',
+    justifyContent: pdpSwatchesPosition === 'variants' ? 'center' : 'start',
     ' li': {
       marginRight: 20,
     },
@@ -48,6 +48,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: '16px 0',
+    justifyContent: 'center',
   }).toString(),
   withLabel: css({
     width: 'calc(100% - 16px)',
@@ -96,7 +97,6 @@ const styles = {
   linkSwatch: css({
     width: 'unset',
     textAlign: 'center',
-    margin: pdpSwatchesPosition === 'variants' ? 'auto' : 'unset',
   }).toString(),
   swatchHeadline: css({
     marginBottom: 5,
