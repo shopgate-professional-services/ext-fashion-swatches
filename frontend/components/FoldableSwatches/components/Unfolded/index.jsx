@@ -35,7 +35,7 @@ const styles = {
     opacity: 0,
     transition: 'opacity 1.5s',
     boxShadow: 'none !important',
-    justifyContent: pdpSwatchesPosition === 'variants' ? 'safe center' : 'start',
+    justifyContent: pdpSwatchesPosition === 'variants' ? 'unset' : 'start',
     ' li': {
       marginRight: 20,
     },
@@ -96,6 +96,7 @@ const styles = {
   linkSwatch: css({
     width: 'unset',
     textAlign: 'center',
+    margin: pdpSwatchesPosition === 'variants' ? 'auto' : 'unset',
   }).toString(),
   swatchHeadline: css({
     marginBottom: 5,
