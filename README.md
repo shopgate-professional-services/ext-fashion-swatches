@@ -12,6 +12,11 @@ CSS styling for swatches as glamor object. Can be any css properties and values.
     - default: default state
     - selected: selected state
     - disabled: disabled state (no available product, etc)
+- pdpTablet: styling for swatches on product detail page for tablets
+  - default: default state
+  - selected: selected state
+  - disabled: disabled state (no available product, etc)
+
 
 ### swatchSizeStyle (json)
 CSS styling for swatches as glamor object. Can be any css properties and values.
@@ -19,6 +24,10 @@ CSS styling for swatches as glamor object. Can be any css properties and values.
     - default: default state
     - selected: selected state
     - disabled: disabled state (no available product, etc)
+- pdpTablet: styling for swatches on product detail page for tablets
+  - default: default state
+  - selected: selected state
+  - disabled: disabled state (no available product, etc)
 
 ### swatchLinkStyle (json)
 CSS styling for swatches as glamor object. Can be any css properties and values.
@@ -26,6 +35,10 @@ CSS styling for swatches as glamor object. Can be any css properties and values.
     - default: default state
     - selected: selected state
     - disabled: disabled state (no available product, etc)
+- pdpTablet: styling for swatches on product detail page for tablets
+  - default: default state
+  - selected: selected state
+  - disabled: disabled state (no available product, etc)
 
 ### propertyWithColors (string[])
 Name of the parent product property which contains all colors of children.
