@@ -1,17 +1,27 @@
 import React, {
-  useState, useEffect, useRef, useLayoutEffect,
+  useState, useEffect, useRef, useLayoutEffect, useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
+import { bin2hex } from '@shopgate/engage/core';
 import Transition from 'react-transition-group/Transition';
 import { css } from 'glamor';
 import classnames from 'classnames';
-import { ConditionalWrapper } from '@shopgate/engage/components';
+import { ConditionalWrapper, Link } from '@shopgate/engage/components';
 import Swatch from '../../../Swatch';
 import { transitions } from '../../../styles';
-import { swatchColorStyle, swatchSizeStyle } from '../../../../config';
+import {
+  swatchColorStyle,
+  swatchSizeStyle,
+  swatchLinkStyle,
+  pdpSwatchesDisplayMode,
+  pdpSwatchesPosition,
+  linkSwatchConfiguration,
+} from '../../../../config';
 
-const { pdp: colorStyle = {} } = swatchColorStyle;
-const { pdp: sizeStyle = {} } = swatchSizeStyle;
+const { pdp: colorStyleDefault = {}, pdpTablet: colorStyleTablet } = swatchColorStyle;
+const { pdp: sizeStyleDefault = {}, pdpTablet: sizeStyleTablet } = swatchSizeStyle;
+const { pdp: linkStyleDefault = {}, pdpTablet: linkStyleTablet } = swatchLinkStyle;
+const { historyReplace } = linkSwatchConfiguration;
 
 const styles = {
   swatches: css({
@@ -25,6 +35,8 @@ const styles = {
     opacity: 0,
     transition: 'opacity 1.5s',
     boxShadow: 'none !important',
+    justifyContent: pdpSwatchesPosition === 'variants' ? 'center' : 'start',
+    alignItems: 'center',
     ' li': {
       marginRight: 20,
     },
@@ -37,21 +49,21 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: '16px 0',
+    justifyContent: 'center',
+    alignItems: 'center',
   }).toString(),
   withLabel: css({
     width: 'calc(100% - 16px)',
   }).toString(),
   selected: css({
-    boxShadow: '0px 0px 0px 2px rgba(0,0,0,0.7)',
-  }).toString(),
-  selectedTablet: css({
     border: '2px solid #000',
   }).toString(),
   swatch: css({
     '&&': {
       height: 35,
       width: 35,
-      marginRight: 20,
+      marginRight: 10,
+      marginLeft: 10,
     },
   }).toString(),
   swatchTablet: css({
@@ -80,6 +92,17 @@ const styles = {
   }).toString(),
   disabledTablet: css({
     opacity: 0.4,
+  }).toString(),
+  swatchesContainer: css({
+    marginBottom: 20,
+  }).toString(),
+  linkSwatch: css({
+    width: 'unset',
+    textAlign: 'center',
+  }).toString(),
+  swatchHeadline: css({
+    marginBottom: 5,
+    textAlign: 'center',
   }).toString(),
 };
 
@@ -131,11 +154,21 @@ const getContrastColor = (hexcolor, lightContrast, darkContrast) => {
  * @return {JSX}
  */
 const FoldableSwatchesUnfolded = ({
-  values, onClick, highlight, label, isTablet,
+  values, onClick, highlight, label, isTablet, isLinkSwatch, showAdditionalText,
 }) => {
   const [highlighted, setHighlighted] = useState(false);
   const [fade, setFade] = useState('');
   const ulRef = useRef(null);
+
+  const {
+    colorStyle,
+    linkStyle,
+    sizeStyle,
+  } = useMemo(() => ({
+    colorStyle: isTablet && colorStyleTablet ? colorStyleTablet : colorStyleDefault,
+    linkStyle: isTablet && linkStyleTablet ? linkStyleTablet : linkStyleDefault,
+    sizeStyle: isTablet && sizeStyleTablet ? sizeStyleTablet : sizeStyleDefault,
+  }), [isTablet]);
 
   useEffect(() => {
     if (highlight) {
@@ -156,7 +189,18 @@ const FoldableSwatchesUnfolded = ({
       }
       ulRef.current.scrollLeft = (selected + 1) * 55;
     }
-  }, [values, label, isTablet]);
+    if (ulRef.current && !isTablet && pdpSwatchesPosition === 'variants' && highlighted) {
+      let selected = values.findIndex(v => !!v.selected);
+      if (selected === -1) {
+        // Scroll to unselected and highlighted element and postion it in center o the view
+        selected = values.length - 1;
+        ulRef.current.scrollIntoView({
+          block: 'center',
+          behavior: 'smooth',
+        });
+      }
+    }
+  }, [values, label, isTablet, highlighted]);
 
   return (
     <Transition
@@ -165,74 +209,132 @@ const FoldableSwatchesUnfolded = ({
       onEntered={() => setHighlighted(false)}
     >
       {state => (
-        <ul
-          className={classnames(
-            styles.swatches,
-            transitions[state],
-            transitions[fade],
-            {
-              [styles.swatchesTablet]: isTablet,
-            }
+        <div className={styles.swatchesContainer}>
+          {label && pdpSwatchesDisplayMode === 'headline' && pdpSwatchesPosition === 'variants' && (
+            <p className={styles.swatchHeadline}>{label}</p>
           )}
-          ref={ulRef}
-        >
-          {label && (
-            <Swatch
-              key="label"
-              style={sizeStyle.default}
-              className={classnames(
-                styles.swatch,
-                isTablet && styles.swatchTablet,
-                styles.labelSwatch,
-                isTablet && styles.labelSwatchTablet
+          <ul
+            className={classnames(
+              styles.swatches,
+              transitions[state],
+              transitions[fade],
+              {
+                [styles.swatchesTablet]: isTablet,
+              }
+            )}
+            ref={ulRef}
+          >
+            {label && (pdpSwatchesDisplayMode !== 'headline' || pdpSwatchesPosition !== 'variants') && (
+              <Swatch
+                key="label"
+                style={sizeStyle.default}
+                className={classnames(
+                  styles.swatch,
+                  isTablet && styles.swatchTablet,
+                  styles.labelSwatch,
+                  isTablet && styles.labelSwatchTablet
+                )}
+              >
+                {label}
+              </Swatch>
+            )}
+            <ConditionalWrapper
+              condition={isTablet}
+              wrapper={children => (
+                <div className={styles.swatchesContainerTablet}>
+                  {children}
+                </div>
               )}
             >
-              {label}
-            </Swatch>
-          )}
-          <ConditionalWrapper
-            condition={isTablet}
-            wrapper={children => (
-              <div className={styles.swatchesContainerTablet}>
-                {children}
-              </div>
-            )}
-          >
-            {values.map(value => (
-              <Swatch
-                key={value.id}
-                tagName="li"
-                style={{
-                  ...value.swatchColor && {
-                    background: value.swatchColor,
-                    ...colorStyle.default,
-                    ...value.selected && colorStyle.selected,
-                    ...!value.selectable && colorStyle.disabled,
-                    ...(value.selected && isTablet ? {
-                      boxShadow: `0px 0px 0px 2px ${getContrastColor(value.color, '#525345', value.color)}`,
-                      borderColor: '#fff',
-                    } : null),
-                  },
-                  ...value.swatchLabel && {
-                    ...sizeStyle.default,
-                    ...value.selected && sizeStyle.selected,
-                    ...!value.selectable && sizeStyle.disabled,
-                    ...(value.selected && isTablet ? { boxShadow: '0px 0px 0px 2px #000' } : null),
-                  },
-                }}
-                className={classnames({
-                  [styles.selected]: value.selected && !isTablet,
-                  [styles.selectedTablet]: value.selected && isTablet,
-                  [styles.disabled]: !value.selectable,
-                  [styles.disabledTablet]: isTablet && !value.selectable,
-                }, styles.swatch, isTablet && styles.swatchTablet)}
-                onClick={() => onClick(value)}
-              >
-                {value.swatchLabel}
-              </Swatch>
-            ))}
-          </ConditionalWrapper>
-        </ul>
+              {values.map((value) => {
+                // eslint-disable-next-line no-shadow
+                const swatchColorStyle = !isLinkSwatch ? colorStyle : linkStyle;
+
+                return (
+                  <ConditionalWrapper
+                    key={value.id}
+                    condition={isLinkSwatch}
+                    wrapper={children => (
+                      <Link
+                        href={`/item/${bin2hex(value.itemNumber)}`}
+                        className={styles.linkSwatch}
+                        replace={historyReplace}
+                      >
+                        {children}
+                      </Link>
+                    )}
+                  >
+                    <Swatch
+                      tagName="li"
+                      style={{
+                        ...value.swatchColor && {
+                          background: value.swatchColor,
+                          ...swatchColorStyle.default,
+                          ...value.selected && swatchColorStyle.selected,
+                          ...!value.selectable && swatchColorStyle.disabled,
+                          ...(value.selected ? {
+                            ...(!swatchColorStyle?.selected?.boxShadow && {
+                              // When a swatch is selected, a solid boxShadow is used to mimic an
+                              // outer border which has the color of the swatch. As separator
+                              // between the boxShadow and the actual swatch, a white border is used
+                              boxShadow: `0px 0px 0px 2px ${getContrastColor(value.swatchColor, '#525345', value.swatchColor)}`,
+                            }),
+                            ...(!swatchColorStyle?.selected?.borderColor && {
+                              borderColor: '#fff',
+                            }),
+                          } : {
+                            ...(swatchColorStyle?.default?.boxShadow === 'none' && {
+                              // When boxShadows are deactivated via the style config we'll run
+                              // into issues with light colors. Therefor those swatches are
+                              // surrounded with a light gray solid boxShadow that looks like a
+                              // border. By default this boxShadow has the color of the swatch.
+                              boxShadow: `0px 0px 0px 1px ${getContrastColor(value.swatchColor, '#a7a7a7', value.swatchColor)}`,
+                            }),
+                          }),
+                        },
+                        ...value.swatchImage && {
+                          background: `url(${value.swatchImage})`,
+                          height: 70,
+                          width: 70,
+                          color: '#fff',
+                          ...linkStyle.default,
+                          ...value.selected && linkStyle.selected,
+                          ...!value.selectable && linkStyle.disabled,
+                          ...(value.selected ? {
+                            boxShadow: '0px 0px 0px 1px #000',
+                            border: isTablet ? '4px solid' : '3px solid',
+                            borderColor: '#fff',
+                          } : null),
+                        },
+                        ...isLinkSwatch && value.swatchLabel && !value.swatchColor && {
+                          ...linkStyle.default,
+                          ...value.selected && linkStyle.selected,
+                          ...!value.selectable && linkStyle.disabled,
+                        },
+                        ...value.swatchLabel && !isLinkSwatch && {
+                          ...sizeStyle.default,
+                          ...value.selected && sizeStyle.selected,
+                          ...!value.selectable && sizeStyle.disabled,
+                        },
+                      }}
+                      className={classnames({
+                        [styles.selected]: value.selected,
+                        [styles.disabled]: !value.selectable,
+                        [styles.disabledTablet]: isTablet && !value.selectable,
+                      }, styles.swatch, isTablet && styles.swatchTablet)}
+                      onClick={() => onClick(value)}
+                    >
+                      {value.swatchLabel}
+                    </Swatch>
+                    {showAdditionalText && (
+                    <p style={{ fontSize: '0.7rem' }}>{value.additionalText}</p>
+                    )}
+                  </ConditionalWrapper>
+                );
+              })}
+            </ConditionalWrapper>
+          </ul>
+        </div>
       )}
     </Transition>
   );
@@ -242,14 +344,18 @@ FoldableSwatchesUnfolded.propTypes = {
   onClick: PropTypes.func.isRequired,
   values: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   highlight: PropTypes.bool,
+  isLinkSwatch: PropTypes.bool,
   isTablet: PropTypes.bool,
   label: PropTypes.string,
+  showAdditionalText: PropTypes.bool,
 };
 
 FoldableSwatchesUnfolded.defaultProps = {
   highlight: false,
+  isLinkSwatch: false,
   isTablet: false,
   label: null,
+  showAdditionalText: false,
 };
 
 export default FoldableSwatchesUnfolded;

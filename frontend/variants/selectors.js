@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
-import { getProducts } from '@shopgate/engage/product';
+import { getProducts, getProduct } from '@shopgate/engage/product';
 import { getDeviceInformation } from '@shopgate/engage/core';
 import { getColorSwatch, getSizeSwatches, getSwatchCharacteristicIds as getIds } from './helpers';
+import { linkSwatchConfiguration } from '../config';
 
 /**
  * @param {Object} state .
@@ -88,4 +89,30 @@ export const getSwatchCharacteristicIds = createSelector(
 export const getIsTablet = createSelector(
   getDeviceInformation,
   deviceInformation => deviceInformation && deviceInformation.type === 'tablet'
+);
+
+export const getLinkSwatch = createSelector(
+  getProduct,
+  (productData) => {
+    if (
+      !productData ||
+      productData.isFetching ||
+      !productData.additionalProperties ||
+      !linkSwatchConfiguration ||
+      !linkSwatchConfiguration.property
+    ) {
+      return null;
+    }
+
+    const linkSwatchProperty = linkSwatchConfiguration.property;
+
+    const linkSwatch = productData.additionalProperties
+      .find(prop => prop.label === linkSwatchProperty);
+
+    if (linkSwatch) {
+      return linkSwatch.value;
+    }
+
+    return null;
+  }
 );
