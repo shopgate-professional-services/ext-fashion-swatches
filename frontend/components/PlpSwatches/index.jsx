@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { i18n } from '@shopgate/engage/core';
 import connect from './connector';
 import styles from './style';
 import { maxSwatches } from '../../config';
@@ -14,9 +15,13 @@ const PlpSwatches = ({ swatches }) => {
     return null;
   }
 
+  const ariaLabel = i18n.text('variants', {
+    swatches: swatches.length,
+  });
+
   if (swatches.length > maxSwatches && maxSwatches !== 0) {
     return (
-      <div>
+      <div aria-label={ariaLabel}>
         <ul className={styles.list}>
           {swatches.slice(0, maxSwatches).map(swatch => (
             <li
@@ -42,7 +47,7 @@ const PlpSwatches = ({ swatches }) => {
   }
 
   return (
-    <div>
+    <div aria-label={ariaLabel}>
       <ul className={styles.list}>
         {swatches.map(swatch => (
           <li
