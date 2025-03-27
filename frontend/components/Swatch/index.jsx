@@ -26,7 +26,7 @@ const styles = {
  * @return {JSX}
  */
 const Swatch = ({
-  tagName: Tag, className, style, children, onClick,
+  tagName: Tag, className, style, children, onClick, ariaSelected,
 }) => (
   <Tag
     style={style}
@@ -35,12 +35,17 @@ const Swatch = ({
       className
     )}
     {...onClick && { onClick }}
+    onClick={onClick}
+    tabIndex={onClick ? 0 : undefined}
+    role={onClick ? 'button' : undefined}
+    aria-pressed={ariaSelected}
   >
     {children}
   </Tag>
 );
 
 Swatch.propTypes = {
+  ariaSelected: PropTypes.bool,
   children: PropTypes.node,
   className: PropTypes.string,
   onClick: PropTypes.func,
@@ -50,6 +55,7 @@ Swatch.propTypes = {
 
 Swatch.defaultProps = {
   children: null,
+  ariaSelected: false,
   className: null,
   onClick: null,
   style: null,
