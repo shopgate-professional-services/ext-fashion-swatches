@@ -52,6 +52,7 @@ const PdpColorSwatch = ({
       swatchColor: value.color,
       selected: characteristics && characteristics[swatch.id] === value.id,
       selectable: true,
+      showSwatchLabel: swatchLabels.labels.Color,
     }));
   }, [swatch, characteristics]);
 

@@ -323,9 +323,10 @@ const FoldableSwatchesUnfolded = ({
                         [styles.disabledTablet]: isTablet && !value.selectable,
                       }, styles.swatch, isTablet && styles.swatchTablet)}
                       onClick={() => onClick(value)}
+                      ariaLabel={value.swatchLabel}
                       ariaSelected={value.selected}
                     >
-                      {value.swatchLabel}
+                      {value.showSwatchLabel ? value.swatchLabel : null}
                     </Swatch>
                     {showAdditionalText && (
                     <p style={{ fontSize: '0.7rem' }}>{value.additionalText}</p>

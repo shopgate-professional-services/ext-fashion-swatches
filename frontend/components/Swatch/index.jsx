@@ -26,7 +26,7 @@ const styles = {
  * @return {JSX}
  */
 const Swatch = ({
-  tagName: Tag, className, style, children, onClick, ariaSelected,
+  tagName: Tag, className, style, children, onClick, ariaSelected, ariaLabel,
 }) => (
   <Tag
     style={style}
@@ -34,17 +34,18 @@ const Swatch = ({
       styles.default,
       className
     )}
+    role="option"
+    tabIndex={0}
+    aria-selected={ariaSelected}
     {...onClick && { onClick }}
-    onClick={onClick}
-    tabIndex={onClick ? 0 : undefined}
-    role={onClick ? 'button' : undefined}
-    aria-pressed={ariaSelected}
   >
     {children}
+    {!children && <span className="sr-only">{ariaLabel}</span>}
   </Tag>
 );
 
 Swatch.propTypes = {
+  ariaLabel: PropTypes.string,
   ariaSelected: PropTypes.bool,
   children: PropTypes.node,
   className: PropTypes.string,
@@ -56,6 +57,7 @@ Swatch.propTypes = {
 Swatch.defaultProps = {
   children: null,
   ariaSelected: false,
+  ariaLabel: '',
   className: null,
   onClick: null,
   style: null,
