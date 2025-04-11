@@ -323,7 +323,7 @@ const FoldableSwatchesUnfolded = ({
                         [styles.disabledTablet]: isTablet && !value.selectable,
                       }, styles.swatch, isTablet && styles.swatchTablet)}
                       onClick={() => onClick(value)}
-                      ariaLabel={value.swatchLabel}
+                      ariaLabel={value.swatchLabel || value.swatchColor}
                       ariaSelected={value.selected}
                     >
                       {value.showSwatchLabel ? value.swatchLabel : null}
