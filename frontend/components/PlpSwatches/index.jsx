@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { i18n } from '@shopgate/engage/core';
 import connect from './connector';
@@ -11,13 +11,15 @@ import { maxSwatches } from '../../config';
  * @return {JSX}
  */
 const PlpSwatches = ({ swatches }) => {
+  const ariaLabel = useMemo(() => {
+    i18n.text('variants', {
+      swatches: swatches.length,
+    });
+  }, [swatches.length]);
+
   if (!swatches || !swatches.length) {
     return null;
   }
-
-  const ariaLabel = i18n.text('variants', {
-    swatches: swatches.length,
-  });
 
   if (swatches.length > maxSwatches && maxSwatches !== 0) {
     return (

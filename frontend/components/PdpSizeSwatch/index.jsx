@@ -55,7 +55,7 @@ const PdpSizeSwatch = ({
     return swatch.values.map(value => ({
       ...value,
       swatchLabel: value.label,
-      showSwatchLabel: swatchLabels.labels.Size,
+      showSwatchLabel: !!swatchLabels.labels.Size,
       selected: characteristics[swatch.id] === value.id,
       selectable: products.some(product => isMatch(product.characteristics, {
         ...selfOmitted,
