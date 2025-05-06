@@ -326,7 +326,7 @@ const FoldableSwatchesUnfolded = ({
                       ariaLabel={value.swatchLabel || value.swatchColor}
                       ariaSelected={value.selected}
                     >
-                      {value.showSwatchLabel ? value.swatchLabel : null}
+                      {value.swatchLabel}
                     </Swatch>
                     {showAdditionalText && (
                     <p style={{ fontSize: '0.7rem' }}>{value.additionalText}</p>
