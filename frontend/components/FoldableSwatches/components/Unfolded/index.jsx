@@ -216,7 +216,7 @@ const FoldableSwatchesUnfolded = ({
               }
             )}
             role="listbox"
-            aria-label={label && pdpSwatchesDisplayMode === 'headline' && pdpSwatchesPosition === 'variants' ? label : ''}
+            aria-label={label}
             aria-activedescendant={values.find(v => !!v.selected)?.id}
             tabIndex={0}
             ref={ulRef}
@@ -224,6 +224,7 @@ const FoldableSwatchesUnfolded = ({
             {label && (pdpSwatchesDisplayMode !== 'headline' || pdpSwatchesPosition !== 'variants') && (
               <Swatch
                 key="label"
+                ariaHidden
                 style={sizeStyle.default}
                 className={classnames(
                   styles.swatch,

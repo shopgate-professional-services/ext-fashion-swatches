@@ -40,6 +40,7 @@ const Swatch = ({
   onClick,
   ariaSelected,
   ariaLabel,
+  ariaHidden,
   id,
 }) => {
   const { push, replace } = useNavigation();
@@ -69,6 +70,7 @@ const Swatch = ({
       tabIndex={0}
       aria-selected={ariaSelected}
       aria-label={ariaLabel}
+      aria-hidden={ariaHidden}
       onClick={handleClick}
     >
       {children}
@@ -77,6 +79,7 @@ const Swatch = ({
 };
 
 Swatch.propTypes = {
+  ariaHidden: PropTypes.bool,
   ariaLabel: PropTypes.string,
   ariaSelected: PropTypes.bool,
   children: PropTypes.node,
@@ -92,6 +95,7 @@ Swatch.propTypes = {
 Swatch.defaultProps = {
   children: null,
   ariaSelected: false,
+  ariaHidden: false,
   ariaLabel: '',
   className: null,
   id: null,
