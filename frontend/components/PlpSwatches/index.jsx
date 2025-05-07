@@ -12,8 +12,12 @@ import { maxSwatches } from '../../config';
  */
 const PlpSwatches = ({ swatches }) => {
   const ariaLabel = useMemo(() => {
-    i18n.text('variants', {
-      swatches: swatches?.length,
+    if (!swatches?.length) {
+      return null;
+    }
+
+    return i18n.text('variants', {
+      swatches: swatches.length,
     });
   }, [swatches]);
 

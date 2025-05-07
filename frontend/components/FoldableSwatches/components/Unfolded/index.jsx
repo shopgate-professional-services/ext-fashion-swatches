@@ -1,12 +1,11 @@
 import React, {
-  useState, useEffect, useRef, useLayoutEffect, useMemo,
+  useState, useEffect, useRef, useLayoutEffect, useMemo, Fragment,
 } from 'react';
 import PropTypes from 'prop-types';
-import { bin2hex } from '@shopgate/engage/core';
 import Transition from 'react-transition-group/Transition';
 import { css } from 'glamor';
 import classnames from 'classnames';
-import { ConditionalWrapper, Link } from '@shopgate/engage/components';
+import { ConditionalWrapper } from '@shopgate/engage/components';
 import Swatch from '../../../Swatch';
 import { transitions } from '../../../styles';
 import {
@@ -15,13 +14,11 @@ import {
   swatchLinkStyle,
   pdpSwatchesDisplayMode,
   pdpSwatchesPosition,
-  linkSwatchConfiguration,
 } from '../../../../config';
 
 const { pdp: colorStyleDefault = {}, pdpTablet: colorStyleTablet } = swatchColorStyle;
 const { pdp: sizeStyleDefault = {}, pdpTablet: sizeStyleTablet } = swatchSizeStyle;
 const { pdp: linkStyleDefault = {}, pdpTablet: linkStyleTablet } = swatchLinkStyle;
-const { historyReplace } = linkSwatchConfiguration;
 
 const styles = {
   swatches: css({
@@ -95,10 +92,6 @@ const styles = {
   }).toString(),
   swatchesContainer: css({
     marginBottom: 20,
-  }).toString(),
-  linkSwatch: css({
-    width: 'unset',
-    textAlign: 'center',
   }).toString(),
   swatchHeadline: css({
     marginBottom: 5,
@@ -211,7 +204,7 @@ const FoldableSwatchesUnfolded = ({
       {state => (
         <div className={styles.swatchesContainer}>
           {label && pdpSwatchesDisplayMode === 'headline' && pdpSwatchesPosition === 'variants' && (
-            <p className={styles.swatchHeadline}>{label}</p>
+            <p className={styles.swatchHeadline} aria-hidden>{label}</p>
           )}
           <ul
             className={classnames(
@@ -222,6 +215,10 @@ const FoldableSwatchesUnfolded = ({
                 [styles.swatchesTablet]: isTablet,
               }
             )}
+            role="listbox"
+            aria-label={label && pdpSwatchesDisplayMode === 'headline' && pdpSwatchesPosition === 'variants' ? label : ''}
+            aria-activedescendant={values.find(v => !!v.selected)?.id}
+            tabIndex={0}
             ref={ulRef}
           >
             {label && (pdpSwatchesDisplayMode !== 'headline' || pdpSwatchesPosition !== 'variants') && (
@@ -251,21 +248,12 @@ const FoldableSwatchesUnfolded = ({
                 const swatchColorStyle = !isLinkSwatch ? colorStyle : linkStyle;
 
                 return (
-                  <ConditionalWrapper
-                    key={value.id}
-                    condition={isLinkSwatch}
-                    wrapper={children => (
-                      <Link
-                        href={`/item/${bin2hex(value.itemNumber)}`}
-                        className={styles.linkSwatch}
-                        replace={historyReplace}
-                      >
-                        {children}
-                      </Link>
-                    )}
-                  >
+                  <Fragment key={value.id}>
                     <Swatch
                       tagName="li"
+                      id={value.id}
+                      isLinkSwatch={isLinkSwatch}
+                      itemNumber={value.itemNumber}
                       style={{
                         ...value.swatchColor && {
                           background: value.swatchColor,
@@ -323,6 +311,7 @@ const FoldableSwatchesUnfolded = ({
                         [styles.disabledTablet]: isTablet && !value.selectable,
                       }, styles.swatch, isTablet && styles.swatchTablet)}
                       onClick={() => onClick(value)}
+                      // TODO Find a way to assign a human readable color name (currently is hex)
                       ariaLabel={value.swatchLabel || value.swatchColor}
                       ariaSelected={value.selected}
                     >
@@ -331,7 +320,7 @@ const FoldableSwatchesUnfolded = ({
                     {showAdditionalText && (
                     <p style={{ fontSize: '0.7rem' }}>{value.additionalText}</p>
                     )}
-                  </ConditionalWrapper>
+                  </Fragment>
                 );
               })}
             </ConditionalWrapper>
