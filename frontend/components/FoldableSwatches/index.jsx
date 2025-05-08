@@ -82,6 +82,8 @@ const FoldableSwatches = ({
           [styles.selected]: hasSelection,
         })}
         onClick={() => setIsFolded(false)}
+        ariaLabel={hasSelection ? `${label}: ${selectedValue.label} ` : label}
+        ariaSelected={selectedValue.selected}
       >
         {selectedValue.swatchLabel}
       </Swatch>

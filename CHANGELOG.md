@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.5.0
+
+### Added
+
+- Improved accessibility for screen readers
+
 ## 1.4.0
 
 ### Added
@@ -40,6 +46,5 @@ To enable full functionality, the following components need to be deployed:
 ## [1.0.0]
 - initial release
 
-[Unreleased]: https://github.com/shopgate-professional-services/ext-fashion-swatches/compare/v1.0.1...HEAD
 [1.0.1]: https://github.com/shopgate-professional-services/ext-fashion-swatches/releases/v1.0.1
 [1.0.0]: https://github.com/shopgate-professional-services/ext-fashion-swatches/releases/v1.0.0
