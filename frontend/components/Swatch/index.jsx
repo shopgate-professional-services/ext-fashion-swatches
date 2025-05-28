@@ -64,7 +64,8 @@ const Swatch = ({
       id={id}
       className={classnames(
         styles.default,
-        className
+        className,
+        'swatch__option'
       )}
       role="option"
       tabIndex={0}

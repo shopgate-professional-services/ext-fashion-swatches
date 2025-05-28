@@ -204,7 +204,7 @@ const FoldableSwatchesUnfolded = ({
       {state => (
         <div className={styles.swatchesContainer}>
           {label && pdpSwatchesDisplayMode === 'headline' && pdpSwatchesPosition === 'variants' && (
-            <p className={styles.swatchHeadline} aria-hidden>{label}</p>
+            <p className={classnames(styles.swatchHeadline, 'swatches__headline')} aria-hidden>{label}</p>
           )}
           <ul
             className={classnames(
@@ -213,7 +213,8 @@ const FoldableSwatchesUnfolded = ({
               transitions[fade],
               {
                 [styles.swatchesTablet]: isTablet,
-              }
+              },
+              'swatches__selection'
             )}
             role="listbox"
             aria-label={label}

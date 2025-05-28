@@ -61,8 +61,8 @@ const PdpSwatches = ({
   // the component needs to render
   // in a different portal than usual.
   if (!swatchCharacteristicIds || (isTablet && name !== 'product.tablet.right-column.add-to-cart.before') ||
-  (!isTablet && pdpSwatchesPosition === 'variants' && name !== 'product.variant-select.after') ||
-  (!isTablet && pdpSwatchesPosition !== 'variants' && name === 'product.variant-select.after')) {
+  (!isTablet && pdpSwatchesPosition === 'variants' && name !== 'product.variant-select.before') ||
+  (!isTablet && pdpSwatchesPosition !== 'variants' && name === 'product.variant-select.before')) {
     return null;
   }
 
