@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.7.0
+
+### Added
+
+- Added config key `showSelectedColorInHeadline` to optionally display the currently selected color swatch value (e.g. “Color: Red”) in the headline.
+
 ## 1.6.0
 
 ### Changed
