@@ -81,6 +81,10 @@ Configuration for the link swatch
 - `showAdditionalText` (boolean) Shows an additional text underneath the link-swatch.
 - `historyReplace` (boolean) Replaces the route history.
 
+### showSelectedColorInHeadline (boolean)
+Displays the currently selected swatch value next to the headline label (e.g. `Color: Red`).  
+If set to `false`, only the label (e.g. `Color`) is shown.
+
 #### Example of full config:
 ```json
 {
@@ -153,7 +157,8 @@ Configuration for the link swatch
     "property": "linkSwatch",
     "showAdditionalText": true,
     "historyReplace": false
-  }
+  },
+  "showSelectedColorInHeadline": true
 }
 ```
 

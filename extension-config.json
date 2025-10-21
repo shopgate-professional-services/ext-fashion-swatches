@@ -1,5 +1,5 @@
 {
-  "version": "1.6.0",
+  "version": "1.7.0-beta.1",
   "id": "@shopgate-project/fashion-swatches",
   "configuration": {
     "swatchColorStyle": {
@@ -183,6 +183,16 @@
       "params": {
         "label": "Configuration for the link swatch",
         "type": "json",
+        "required": true
+      }
+    },
+    "showSelectedColorInHeadline": {
+      "type": "admin",
+      "destination": "frontend",
+      "default": false,
+      "params": {
+        "label": "Show selected color in headline",
+        "type": "boolean",
         "required": true
       }
     }

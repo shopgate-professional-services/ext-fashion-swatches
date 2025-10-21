@@ -14,6 +14,7 @@ import {
   swatchLinkStyle,
   pdpSwatchesDisplayMode,
   pdpSwatchesPosition,
+  showSelectedColorInHeadline,
 } from '../../../../config';
 
 const { pdp: colorStyleDefault = {}, pdpTablet: colorStyleTablet } = swatchColorStyle;
@@ -195,6 +196,11 @@ const FoldableSwatchesUnfolded = ({
     }
   }, [values, label, isTablet, highlighted]);
 
+  // Find selected color for headline
+  const selectedColor = values.find(
+    v => v.selected && (v.swatchColor || v.swatchImage)
+  );
+
   return (
     <Transition
       in={highlighted}
@@ -204,7 +210,9 @@ const FoldableSwatchesUnfolded = ({
       {state => (
         <div className={styles.swatchesContainer}>
           {label && pdpSwatchesDisplayMode === 'headline' && pdpSwatchesPosition === 'variants' && (
-            <p className={classnames(styles.swatchHeadline, 'swatches__headline')} aria-hidden>{label}</p>
+            <p className={classnames(styles.swatchHeadline, 'swatches__headline')} aria-hidden>
+              {`${label}${showSelectedColorInHeadline && selectedColor?.label ? `: ${selectedColor.label}` : ''}`}
+            </p>
           )}
           <ul
             className={classnames(
