@@ -6,6 +6,9 @@ import isMatch from 'lodash.ismatch';
 import {
   router, ThemeContext, useRoute, useNavigation,
 } from '@shopgate/engage/core';
+import {
+  selectCharacteristics as selectSwatchCharacteristics,
+} from '@shopgate/pwa-common/components/ProductCharacteristics/helpers';
 
 export const useNavigateToVariant = (products) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
@@ -32,6 +35,63 @@ export const useNavigateToVariant = (products) => {
       router.update(route.id, { productId: prs[0].id });
     }
   }, [characteristics, variantId, products]);
+};
+
+/**
+ * Automatically preselects swatch characteristics for the PDP.
+ * @param {Object[]|null} variants Available product variants.
+ * @param {string[]} swatchCharacteristicIds Characteristic IDs.
+ * @returns {void}
+ */
+export const useSwatchPreselection = (variants, swatchCharacteristicIds = []) => {
+  const { contexts: { ProductContext } } = useContext(ThemeContext);
+  const {
+    characteristics,
+    setCharacteristics,
+    variantId,
+  } = useContext(ProductContext);
+  const { state: { preCharacteristics } = {} } = useRoute();
+  const hasPreCharacteristics = !!(
+    preCharacteristics && Object.keys(preCharacteristics).length
+  );
+
+  useEffect(() => {
+    if (!variants || !swatchCharacteristicIds || !swatchCharacteristicIds.length) {
+      return;
+    }
+
+    // Selection already exists or was restored from the route
+    if (variantId || hasPreCharacteristics) {
+      return;
+    }
+
+    // Avoid overriding an existing swatch selection
+    const hasSwatchSelection = swatchCharacteristicIds.some(charId => (
+      characteristics && characteristics[charId]
+    ));
+
+    if (hasSwatchSelection) {
+      return;
+    }
+
+    const preselected = selectSwatchCharacteristics({ variants });
+
+    if (!Object.keys(preselected).length) {
+      return;
+    }
+
+    setCharacteristics({
+      ...characteristics,
+      ...preselected,
+    });
+  }, [
+    characteristics,
+    hasPreCharacteristics,
+    setCharacteristics,
+    swatchCharacteristicIds,
+    variantId,
+    variants,
+  ]);
 };
 
 export const useConditioner = (name, condition, priority = 1) => {
