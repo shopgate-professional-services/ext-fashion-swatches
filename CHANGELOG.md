@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 - Support for the core variant preselection mode
 
+### Removed
+
+- Automatic PDP media switching based on the selected color swatch before a variant was fully selected.
+
 ## 1.7.0
 
 ### Added

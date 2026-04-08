@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { getProducts, getProduct } from '@shopgate/engage/product';
+import { getProduct } from '@shopgate/engage/product';
 import { getDeviceInformation } from '@shopgate/engage/core';
 import { getColorSwatch, getSizeSwatches, getSwatchCharacteristicIds as getIds } from './helpers';
 import { linkSwatchConfiguration } from '../config';
@@ -35,27 +35,6 @@ export const getProductVariantsProducts = createSelector(
 /**
  * @returns {null|Object[]}
  */
-export const getProductVariantsProductsData = createSelector(
-  getProductVariantsProducts,
-  getProducts,
-  (products, productsState) => {
-    if (!products || !productsState) {
-      return null;
-    }
-
-    return products
-      .map(p => ({
-        ...p,
-        featuredImageBaseUrl: productsState[p.id]
-          && productsState[p.id].productData
-          && productsState[p.id].productData.featuredImageBaseUrl,
-      }));
-  }
-);
-
-/**
- * @returns {null|Object[]}
- */
 export const getSizeCharacteristics = createSelector(
   getProductVariants,
   variants => getSizeSwatches(variants)
@@ -67,14 +46,6 @@ export const getSizeCharacteristics = createSelector(
 export const getColorCharacteristic = createSelector(
   getProductVariants,
   variants => getColorSwatch(variants)
-);
-
-/**
- * @returns {null|Object[]}
- */
-export const getColorCharacteristicId = createSelector(
-  getColorCharacteristic,
-  char => char && char.id
 );
 
 /**

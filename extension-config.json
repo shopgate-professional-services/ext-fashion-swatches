@@ -221,12 +221,6 @@
       "type": "portals"
     },
     {
-      "id": "PdpMediaSwitch",
-      "path": "frontend/portals/PdpMediaSwitch",
-      "target": "component.product-image-slider",
-      "type": "portals"
-    },
-    {
       "id": "subscribersVariants",
       "path": "frontend/variants/subscriptions.js",
       "type": "subscribers"
