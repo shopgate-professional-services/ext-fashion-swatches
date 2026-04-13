@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.8.0
+
+### Added
+
+- Support for the core variant preselection mode
+
+### Removed
+
+- Automatic PDP media switching based on the selected color swatch before a variant was fully selected.
+
 ## 1.7.0
 
 ### Added

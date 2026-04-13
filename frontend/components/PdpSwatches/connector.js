@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import {
-  getProductVariantsProducts,
+  getProductVariants,
   getSwatchCharacteristicIds,
   getIsTablet,
 } from '../../variants/selectors';
@@ -13,7 +13,7 @@ import {
 const mapStateToProps = (state, { productId }) => ({
   isTablet: getIsTablet(state),
   swatchCharacteristicIds: getSwatchCharacteristicIds(state, { productId }),
-  products: getProductVariantsProducts(state, { productId }),
+  variants: getProductVariants(state, { productId }),
 });
 
 export default connect(mapStateToProps);

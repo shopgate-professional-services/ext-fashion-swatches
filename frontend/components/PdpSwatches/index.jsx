@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import { ThemeContext, withCurrentProduct } from '@shopgate/engage/core';
 import { ConditionalWrapper } from '@shopgate/engage/components';
-import { useNavigateToVariant, useRouteCharacteristics } from '../../variants/hook';
+import {
+  useNavigateToVariant,
+  useRouteCharacteristics,
+  useSwatchPreselection,
+} from '../../variants/hook';
 import PdpColorSwatch from '../PdpColorSwatch';
 import PdpSizeSwatches from '../PdpSizeSwatches';
 import PdpLinkSwatch from '../pdpLinkSwatch';
@@ -22,14 +26,16 @@ const styles = {
  * @return {JSX}
  */
 const PdpSwatches = ({
-  swatchCharacteristicIds, products, name, isTablet,
+  swatchCharacteristicIds, variants, name, isTablet,
 }) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const pdpContext = useContext(ProductContext);
   const { variantId, characteristics } = pdpContext;
+  const products = variants?.products || null;
 
   useNavigateToVariant(products);
   useRouteCharacteristics();
+  useSwatchPreselection(variants, swatchCharacteristicIds);
 
   const prodContext = useMemo(() => {
     if (!swatchCharacteristicIds) {
@@ -87,13 +93,13 @@ const PdpSwatches = ({
 PdpSwatches.propTypes = {
   isTablet: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  products: PropTypes.arrayOf(PropTypes.shape()),
   swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),
+  variants: PropTypes.shape(),
 };
 
 PdpSwatches.defaultProps = {
-  products: null,
   swatchCharacteristicIds: null,
+  variants: null,
 };
 
 export default withCurrentProduct(connect(PdpSwatches));

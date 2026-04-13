@@ -1,5 +1,5 @@
 {
-  "version": "1.7.0",
+  "version": "1.8.0",
   "id": "@shopgate-project/fashion-swatches",
   "configuration": {
     "swatchColorStyle": {
@@ -218,12 +218,6 @@
       "id": "PdpVariantCharacteristics",
       "path": "frontend/portals/PdpVariantCharacteristics",
       "target": "product.variant-select",
-      "type": "portals"
-    },
-    {
-      "id": "PdpMediaSwitch",
-      "path": "frontend/portals/PdpMediaSwitch",
-      "target": "component.product-image-slider",
       "type": "portals"
     },
     {
