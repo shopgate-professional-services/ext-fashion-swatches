@@ -8,7 +8,7 @@ import {
 } from '@shopgate/engage/core';
 import {
   selectCharacteristics as selectSwatchCharacteristics,
-} from '@shopgate/pwa-common/components/ProductCharacteristics/helpers';
+} from '@shopgate/engage/product/components/ProductCharacteristics/helpers';
 
 export const useNavigateToVariant = (products) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);

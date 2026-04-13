@@ -94,7 +94,7 @@ PdpSwatches.propTypes = {
   isTablet: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),
-  variants: PropTypes.arrayOf(PropTypes.shape()),
+  variants: PropTypes.shape(),
 };
 
 PdpSwatches.defaultProps = {
