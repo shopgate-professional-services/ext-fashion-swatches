@@ -8,7 +8,11 @@ import connect from './connector';
  * @param {Object} props Props
  * @return {JSX}
  */
-const PdpVariantCharacteristics = ({ children, swatchCharacteristicIds }) => {
+const PdpVariantCharacteristics = ({
+  children,
+  swatchCharacteristicIds,
+  hasCoreCharacteristics,
+}) => {
   const { contexts: { ProductContext } } = useContext(ThemeContext);
   const prodContext = useContext(ProductContext);
 
@@ -33,6 +37,12 @@ const PdpVariantCharacteristics = ({ children, swatchCharacteristicIds }) => {
     return children;
   }
 
+  if (!hasCoreCharacteristics) {
+    // Every characteristic is rendered as a swatch. The core variant selector has nothing to
+    // select, and since PWA 7.34 its selection check blocks add to cart for empty variants.
+    return null;
+  }
+
   return (
     <ProductContext.Provider value={contextValue}>
       {children}
@@ -42,10 +52,12 @@ const PdpVariantCharacteristics = ({ children, swatchCharacteristicIds }) => {
 
 PdpVariantCharacteristics.propTypes = {
   children: PropTypes.node.isRequired,
+  hasCoreCharacteristics: PropTypes.bool,
   swatchCharacteristicIds: PropTypes.node,
 };
 
 PdpVariantCharacteristics.defaultProps = {
+  hasCoreCharacteristics: true,
   swatchCharacteristicIds: PropTypes.node,
 };
 

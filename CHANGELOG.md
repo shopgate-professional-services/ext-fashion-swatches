@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 
 - Colour swatches in product sliders showed as thin lines on PWA 7.32 and newer.
+- Add to cart did nothing on PWA 7.34 when every characteristic of a product is shown as a swatch.
 
 ### Changed
 
