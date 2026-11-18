@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { i18n } from '@shopgate/engage/core';
 import connect from './connector';
 import styles from './style';
-import { maxSwatches } from '../../config';
+import config from '../../config.json';
+
+const { maxSwatches } = config;
 
 /**
  * @param {Object} props Props
@@ -34,12 +36,12 @@ const PlpSwatches = ({ swatches }) => {
               className={styles.listItem}
               key={swatch}
             >
-              <div className={styles.swatch(swatch)} />
+              <span className={styles.swatch(swatch)} />
             </li>
           ))}
           <li>
             <div className={`fashion-swatches max-swatches plus ${styles.plus}`}>
-             +
+              +
             </div>
           </li>
           <li>
@@ -60,7 +62,7 @@ const PlpSwatches = ({ swatches }) => {
             className={styles.listItem}
             key={swatch}
           >
-            <div className={styles.swatch(swatch)} />
+            <span className={styles.swatch(swatch)} />
           </li>
         ))}
       </ul>

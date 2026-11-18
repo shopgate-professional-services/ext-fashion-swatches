@@ -2,7 +2,9 @@ import { createSelector } from 'reselect';
 import { getProduct } from '@shopgate/engage/product';
 import { getDeviceInformation } from '@shopgate/engage/core';
 import { getColorSwatch, getSizeSwatches, getSwatchCharacteristicIds as getIds } from './helpers';
-import { linkSwatchConfiguration } from '../config';
+import config from '../config.json';
+
+const { linkSwatchConfiguration } = config;
 
 /**
  * @param {Object} state .

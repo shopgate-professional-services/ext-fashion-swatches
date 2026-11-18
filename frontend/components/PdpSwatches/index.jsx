@@ -12,7 +12,9 @@ import PdpColorSwatch from '../PdpColorSwatch';
 import PdpSizeSwatches from '../PdpSizeSwatches';
 import PdpLinkSwatch from '../pdpLinkSwatch';
 import connect from './connector';
-import { pdpSwatchesPosition } from '../../config';
+import config from '../../config.json';
+
+const { pdpSwatchesPosition } = config;
 
 const styles = {
   containerTablet: css({

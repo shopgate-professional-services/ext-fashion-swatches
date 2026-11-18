@@ -1,5 +1,7 @@
-import { propertyWithColor } from '../config';
+import config from '../config.json';
 import { colorAttributes, sizeAttributes } from './config';
+
+const { propertyWithColor } = config;
 
 /**
  * Extract size swatch from product variants

@@ -8,14 +8,16 @@ import classnames from 'classnames';
 import { ConditionalWrapper } from '@shopgate/engage/components';
 import Swatch from '../../../Swatch';
 import { transitions } from '../../../styles';
-import {
+import config from '../../../../config.json';
+
+const {
   swatchColorStyle,
   swatchSizeStyle,
   swatchLinkStyle,
   pdpSwatchesDisplayMode,
   pdpSwatchesPosition,
   showSelectedColorInHeadline,
-} from '../../../../config';
+} = config;
 
 const { pdp: colorStyleDefault = {}, pdpTablet: colorStyleTablet } = swatchColorStyle;
 const { pdp: sizeStyleDefault = {}, pdpTablet: sizeStyleTablet } = swatchSizeStyle;

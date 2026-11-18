@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.8.1
+
+### Fixed
+
+- Colour swatches in product sliders showed as thin lines on PWA 7.32 and newer.
+
+### Changed
+
+- Updated the frontend tooling (ESLint 8, `@shopgate/eslint-config` 7.33, tracked lockfile).
+
 ## 1.8.0
 
 ### Added

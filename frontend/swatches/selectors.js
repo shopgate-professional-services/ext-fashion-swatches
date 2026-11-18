@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect';
 import { getProductDataById } from '@shopgate/engage/product';
 import { logger } from '@shopgate/pwa-core';
-import { propertyWithColors } from '../config';
+import config from '../config.json';
+
+const { propertyWithColors } = config;
 
 export const getPlpSwatches = createSelector(
   getProductDataById,

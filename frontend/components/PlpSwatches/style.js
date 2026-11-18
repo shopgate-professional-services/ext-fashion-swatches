@@ -1,5 +1,7 @@
 import { css } from 'glamor';
-import { swatchColorStyle } from '../../config';
+import config from '../../config.json';
+
+const { swatchColorStyle } = config;
 
 const { plp = {} } = swatchColorStyle;
 
@@ -26,6 +28,9 @@ const listItem = css({
  * @return {Object}
  */
 const swatch = bg => css({
+  // Rendered as a span: the core product card (PWA >= 7.32) hides every empty div
+  // in its details area, which would collapse the colour to 0 px.
+  display: 'block',
   width: imgSize,
   height: imgSize,
   background: bg,
