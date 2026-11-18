@@ -1,4 +1,6 @@
-import React, { useContext, useMemo } from 'react';
+import React, {
+  Children, cloneElement, isValidElement, useContext, useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash.omit';
 import { ThemeContext, withCurrentProduct } from '@shopgate/engage/core';
@@ -37,15 +39,19 @@ const PdpVariantCharacteristics = ({
     return children;
   }
 
-  if (!hasCoreCharacteristics) {
-    // Every characteristic is rendered as a swatch. The core variant selector has nothing to
-    // select, and since PWA 7.34 its selection check blocks add to cart for empty variants.
-    return null;
-  }
+  // Every characteristic is rendered as a swatch, so the core variant selector has nothing to
+  // select. Since PWA 7.34 the selector receives the conditioner as a prop, and its selection
+  // check blocks add to cart for empty variants. It stays mounted without the conditioner;
+  // older themes pass no such prop and keep their behaviour.
+  const content = hasCoreCharacteristics ? children : Children.map(children, child => (
+    isValidElement(child) && Object.prototype.hasOwnProperty.call(child.props, 'conditioner')
+      ? cloneElement(child, { conditioner: null })
+      : child
+  ));
 
   return (
     <ProductContext.Provider value={contextValue}>
-      {children}
+      {content}
     </ProductContext.Provider>
   );
 };
