@@ -59,12 +59,12 @@ const PdpVariantCharacteristics = ({
 PdpVariantCharacteristics.propTypes = {
   children: PropTypes.node.isRequired,
   hasCoreCharacteristics: PropTypes.bool,
-  swatchCharacteristicIds: PropTypes.node,
+  swatchCharacteristicIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 PdpVariantCharacteristics.defaultProps = {
   hasCoreCharacteristics: true,
-  swatchCharacteristicIds: PropTypes.node,
+  swatchCharacteristicIds: null,
 };
 
 export default withCurrentProduct(connect(PdpVariantCharacteristics));
