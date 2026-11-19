@@ -4,7 +4,9 @@ import { css } from 'glamor';
 import classnames from 'classnames';
 import Swatch from '../Swatch';
 import Unfolded from './components/Unfolded';
-import { swatchColorStyle, swatchSizeStyle, pdpSwatchesPosition } from '../../config';
+import config from '../../config.json';
+
+const { swatchColorStyle, swatchSizeStyle, pdpSwatchesPosition } = config;
 
 const { pdp: colorStyle } = swatchColorStyle;
 const { pdp: sizeStyle } = swatchSizeStyle;

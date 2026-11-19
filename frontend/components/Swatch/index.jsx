@@ -5,7 +5,9 @@ import classnames from 'classnames';
 import { themeConfig } from '@shopgate/engage';
 import { getProductRoute } from '@shopgate/engage/product';
 import { useNavigation } from '@shopgate/engage/core/hooks/useNavigation';
-import { linkSwatchConfiguration } from '../../config';
+import config from '../../config.json';
+
+const { linkSwatchConfiguration } = config;
 
 const { historyReplace } = linkSwatchConfiguration;
 

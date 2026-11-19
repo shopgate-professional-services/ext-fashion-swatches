@@ -2,7 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import FoldableSwatches from '../FoldableSwatches';
 import connect from './connector';
-import { swatchColorUnselectedValue, swatchLabels, linkSwatchConfiguration } from '../../config';
+import config from '../../config.json';
+
+const { swatchColorUnselectedValue, swatchLabels, linkSwatchConfiguration } = config;
 
 /**
  * @param {Object} props Props

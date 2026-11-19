@@ -1,4 +1,6 @@
-import { sizeAttribute, colorAttribute } from '../config';
+import config from '../config.json';
+
+const { sizeAttribute, colorAttribute } = config;
 
 /**
  * Convert csv string into string[]

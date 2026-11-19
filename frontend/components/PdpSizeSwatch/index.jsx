@@ -7,7 +7,9 @@ import omit from 'lodash.omit';
 import { logger, ThemeContext } from '@shopgate/engage/core';
 import { useConditioner, useSwatchValueSelect } from '../../variants/hook';
 import FoldableSwatches from '../FoldableSwatches';
-import { swatchSizeUnselectedValue, swatchLabels } from '../../config';
+import config from '../../config.json';
+
+const { swatchSizeUnselectedValue, swatchLabels } = config;
 
 /**
  * @param {Object} props Props

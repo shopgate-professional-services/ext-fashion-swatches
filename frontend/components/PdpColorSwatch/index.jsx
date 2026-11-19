@@ -6,7 +6,9 @@ import { logger, ThemeContext } from '@shopgate/engage/core';
 import { useConditioner, useSwatchValueSelect } from '../../variants/hook';
 import connect from './connector';
 import FoldableSwatches from '../FoldableSwatches';
-import { swatchColorUnselectedValue, swatchLabels } from '../../config';
+import config from '../../config.json';
+
+const { swatchColorUnselectedValue, swatchLabels } = config;
 
 /**
  * @param {Object} props Props
